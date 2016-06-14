@@ -556,6 +556,26 @@ Route::group(['middleware' => ['auth', 'first.run']], function () {
 
         /*
          * -------
+         * Event Enable/Disable Modules
+         * -------
+         */
+        Route::get('{event_id}/modules', [
+            'as'   => 'showEventModules',
+            'uses' => 'EventModuleController@showEventModules',
+        ]);
+
+        /*
+         * --------
+         * Event Module Toggle
+         * --------
+         */
+        Route::get('{event_id}/{module}/toggle',[
+            'as' => 'toggleEventModule',
+            'uses' => 'EventModuleController@toggleModule',
+        ]);
+
+        /*
+         * -------
          * Event Survey page
          * -------
          */

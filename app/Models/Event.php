@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Str;
 use URL;
+use Module;
 
 class Event extends MyBaseModel
 {
@@ -129,6 +130,16 @@ class Event extends MyBaseModel
     public function orders()
     {
         return $this->hasMany('\App\Models\Order');
+    }
+
+    /**
+     * The Modules associated with the event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function modules()
+    {
+        return $this->hasMany('\App\Models\Module');
     }
 
     /**
@@ -284,9 +295,61 @@ class Event extends MyBaseModel
      * The attributes that should be mutated to dates.
      *
      * @var array $dates
+     *
+     * @return Array
      */
     public function getDates()
     {
         return ['created_at', 'updated_at', 'start_date', 'end_date'];
+    }
+
+    /**
+     * Checks whether the Module is enabled or not
+     *
+     * @param $module
+     *
+     * @return bool
+     */
+    public function moduleIsEnabled($module)
+    {
+        return $this->modules->pluck('module')->contains($module);
+    }
+
+
+    /**
+     * Lists installed and available Modules for the event
+     *
+     * @return  Array
+     */
+    public function list_modules()
+    {
+        $installed_modules = collect(self::list_available_modules());
+
+        // Lowercase the modules
+        $installed_modules = $installed_modules->map(function($item, $key){
+           return strtolower($item);
+        });
+
+        // Activated modules
+        $active_modules = $this->modules()->lists('module');
+        // Remove modules which are not installed
+        $active_modules = $active_modules->intersect($installed_modules);
+
+        // Installed but inactive modules
+        $inactive_modules = $installed_modules->diff($active_modules);
+
+        return [
+            'Active' => $active_modules,
+            'Available' => $inactive_modules
+        ];
+    }
+
+    /**
+     * Lists available modules in the App\Modules directory
+     * @return Array
+     */
+    public static function list_available_modules()
+    {
+        return Module::all();
     }
 }

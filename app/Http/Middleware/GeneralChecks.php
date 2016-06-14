@@ -2,6 +2,7 @@
 
 namespace app\Http\Middleware;
 
+use App\Models\Event;
 use Closure;
 
 class GeneralChecks

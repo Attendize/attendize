@@ -68,5 +68,11 @@
                     <span class="text">Widgets</span>
                 </a>
             </li>
+            <li class="{{ Request::is('*modules*') ? 'active' : '' }}">
+                <a href="{{route('showEventModules', array('event_id' => $event->id))}}">
+                    <span class="figure"><i class="ico-plus"></i></span>
+                    <span class="text">Modules</span>
+                </a>
+            </li>
     </section>
 </aside>

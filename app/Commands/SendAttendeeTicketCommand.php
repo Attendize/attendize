@@ -63,7 +63,7 @@ class SendAttendeeTicketCommand extends Command implements ShouldQueue, SelfHand
             'attendees' => [$this->attendee],
         ];
 
-        $pdf_file_name = $this->ticketOrder->order_reference.'-'.$this->attendee->id;
+        $pdf_file_name = $pdf_file_name = $this->attendee->reference;
         $pdf_file_path = public_path(config('attendize.event_pdf_tickets_path')).'/'.$pdf_file_name;
         $pdf_file = $pdf_file_path.'.pdf';
 
