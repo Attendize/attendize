@@ -29,13 +29,12 @@ class EventOrdersController extends MyBaseController
         $allowed_sorts = ['first_name', 'email', 'order_reference', 'order_status_id', 'created_at'];
 
         $searchQuery = $request->get('q');
-        $sort_by = (in_array($request->get('sort_by'), $allowed_sorts) ? $request->get('sort_by') : 'created_at');
-        $sort_order = $request->get('sort_order') == 'asc' ? 'asc' : 'desc';
+        $sort_by     = (in_array($request->get('sort_by'), $allowed_sorts) ? $request->get('sort_by') : 'created_at');
+        $sort_order  = $request->get('sort_order') == 'asc' ? 'asc' : 'desc';
 
         $event = Event::scope()->find($event_id);
 
         if ($searchQuery) {
-
             /*
              * Strip the hash from the start of the search term in case people search for
              * order references like '#EDGC67'
@@ -78,7 +77,7 @@ class EventOrdersController extends MyBaseController
     public function manageOrder(Request $request, $order_id)
     {
         $data = [
-            'order'    => Order::scope()->find($order_id),
+            'order' => Order::scope()->find($order_id),
         ];
 
         return view('ManageEvent.Modals.ManageOrder', $data);
@@ -131,10 +130,11 @@ class EventOrdersController extends MyBaseController
         }
 
         $order = Order::scope()->findOrFail($order_id);
-        $refund_order = ($request->get('refund_order') === 'on') ? true : false;
-        $refund_type = $request->get('refund_type');
+
+        $refund_order  = ($request->get('refund_order') === 'on') ? true : false;
+        $refund_type   = $request->get('refund_type');
         $refund_amount = round(floatval($request->get('refund_amount')), 2);
-        $attendees = $request->get('attendees');
+        $attendees     = $request->get('attendees');
         $error_message = false;
 
         if ($refund_order && $order->payment_gateway->can_refund) {
@@ -147,7 +147,7 @@ class EventOrdersController extends MyBaseController
             } elseif ($order->organiser_amount == 0) {
                 $error_message = 'Nothing to refund';
             } elseif ($refund_type !== 'full' && $refund_amount > round(($order->organiser_amount - $order->amount_refunded), 2)) {
-                $error_message = 'The maximum amount you can refund is '.(money($order->organiser_amount - $order->amount_refunded, $order->event->currency->code));
+                $error_message = 'The maximum amount you can refund is '.(money($order->organiser_amount - $order->amount_refunded, $order->event->currency));
             }
             if (!$error_message) {
                 try {
@@ -257,6 +257,7 @@ class EventOrdersController extends MyBaseController
 
                 $sheet->fromArray($data);
 
+                // Add headings to first row
                 $sheet->row(1, [
                     'First Name', 'Last Name', 'Email', 'Order Reference', 'Amount', 'Fully Refunded', 'Partially Refunded', 'Amount Refunded', 'Order Date',
                 ]);
@@ -328,7 +329,7 @@ class EventOrdersController extends MyBaseController
                 ->subject($data['subject']);
         });
 
-        /* Could bcc in the above? */
+        /* Send a copy to the Organiser with a different subject */
         if ($request->get('send_copy') == '1') {
             Mail::send('Emails.messageOrder', $data, function ($message) use ($order, $data) {
                 $message->to($order->event->organiser->email)
@@ -341,6 +342,28 @@ class EventOrdersController extends MyBaseController
         return response()->json([
             'status'  => 'success',
             'message' => 'Message Successfully Sent',
+        ]);
+    }
+
+    /**
+     * Mark an order as payment received
+     *
+     * @param Request $request
+     * @param $order_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postMarkPaymentReceived(Request $request, $order_id) {
+        $order = Order::scope()->findOrFail($order_id);
+
+        $order->is_payment_received = 1;
+        $order->order_status_id = 1;
+
+        $order->save();
+
+        session()->flash('message', 'Order Payment Status Successfully Updated');
+
+        return response()->json([
+            'status'  => 'success',
         ]);
     }
 }

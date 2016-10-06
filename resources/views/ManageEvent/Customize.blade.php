@@ -97,7 +97,7 @@
             /* Color picker */
             $('.colorpicker').minicolors();
 
-            $('#ticket_design .colorpicker').on('change', function(e) {
+            $('#ticket_design .colorpicker').on('change', function (e) {
                 var borderColor = $('input[name="ticket_border_color"]').val();
                 var bgColor = $('input[name="ticket_bg_color"]').val();
                 var textColor = $('input[name="ticket_text_color"]').val();
@@ -124,15 +124,12 @@
 
             });
 
-
+            $('#enable_offline_payments').change(function () {
+                $('.offline_payment_details').toggle(this.checked);
+            }).change();
         });
-        function replaceUrlParam(url, paramName, paramValue) {
-            var pattern = new RegExp('\\b(' + paramName + '=).*?(&|$)')
-            if (url.search(pattern) >= 0) {
-                return url.replace(pattern, '$1' + paramValue + '$2');
-            }
-            return url + (url.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue
-        }
+
+
     </script>
 
     <style type="text/css">
@@ -252,7 +249,7 @@
                                         <td>{{ $affiliate->name }}</td>
                                         <td>{{ $affiliate->visits }}</td>
                                         <td>{{ $affiliate->tickets_sold }}</td>
-                                        <td>{{ money($affiliate->sales_volume, $event->currency->code) }}</td>
+                                        <td>{{ money($affiliate->sales_volume, $event->currency) }}</td>
                                         <td>{{ $affiliate->updated_at->format('M dS H:i A') }}</td>
                                     </tr>
                                 @endforeach
@@ -301,32 +298,31 @@
                         <br>
 
                         <div class="custom-checkbox mb5">
-
-                                {!! Form::checkbox('social_show_facebook', 1, $event->social_show_facebook, ['data-toggle' => 'toggle']) !!}
+                            {!! Form::checkbox('social_show_facebook', 1, $event->social_show_facebook, ['id' => 'social_show_facebook', 'data-toggle' => 'toggle']) !!}
                             {!! Form::label('social_show_facebook', 'Facebook') !!}
                         </div>
                         <div class="custom-checkbox mb5">
 
-                                {!! Form::checkbox('social_show_twitter', 1, $event->social_show_twitter, ['data-toggle' => 'toggle']) !!}
+                            {!! Form::checkbox('social_show_twitter', 1, $event->social_show_twitter, ['id' => 'social_show_twitter', 'data-toggle' => 'toggle']) !!}
                             {!! Form::label('social_show_twitter', 'Twitter') !!}
 
                         </div>
 
                         <div class="custom-checkbox mb5">
-                            {!! Form::checkbox('social_show_email', 1, $event->social_show_email, ['data-toggle' => 'toggle']) !!}
+                            {!! Form::checkbox('social_show_email', 1, $event->social_show_email, ['id' => 'social_show_email', 'data-toggle' => 'toggle']) !!}
                             {!! Form::label('social_show_email', 'Email') !!}
                         </div>
                         <div class="custom-checkbox mb5">
-                            {!! Form::checkbox('social_show_googleplus', 1, $event->social_show_googleplus, ['data-toggle' => 'toggle']) !!}
+                            {!! Form::checkbox('social_show_googleplus', 1, $event->social_show_googleplus, ['id' => 'social_show_googleplus', 'data-toggle' => 'toggle']) !!}
                             {!! Form::label('social_show_googleplus', 'Google+') !!}
                         </div>
                         <div class="custom-checkbox mb5">
-                            {!! Form::checkbox('social_show_linkedin', 1, $event->social_show_linkedin, ['data-toggle' => 'toggle']) !!}
+                            {!! Form::checkbox('social_show_linkedin', 1, $event->social_show_linkedin, ['id' => 'social_show_linkedin', 'data-toggle' => 'toggle']) !!}
                             {!! Form::label('social_show_linkedin', 'LinkedIn') !!}
                         </div>
                         <div class="custom-checkbox">
 
-                            {!! Form::checkbox('social_show_whatsapp', 1, $event->social_show_whatsapp, ['data-toggle' => 'toggle']) !!}
+                            {!! Form::checkbox('social_show_whatsapp', 1, $event->social_show_whatsapp, ['id' => 'social_show_whatsapp', 'data-toggle' => 'toggle']) !!}
                             {!! Form::label('social_show_whatsapp', 'WhatsApp') !!}
 
 
@@ -340,7 +336,7 @@
                     {!! Form::close() !!}
 
                 </div>
-                <div class="tab-pane {{$tab == 'design' ? 'active' : ''}}" id="design">
+                <div class="tab-pane scale_iframe {{$tab == 'design' ? 'active' : ''}}" id="design">
 
                     <div class="row">
                         <div class="col-sm-6">
@@ -393,6 +389,9 @@
 
                                             {!! Form::hidden('bg_image_path_custom', ($event->bg_type == 'image') ? $event->bg_image_path : '') !!}
                                         </div>
+                                            <a class="btn btn-link" href="https://pixabay.com?ref=attendize" title="PixaBay Free Images">
+                                            Images Provided By <b>PixaBay.com</b>
+                                            </a>
                                     </div>
                                 </div>
 
@@ -413,7 +412,7 @@
                         <div class="col-sm-6">
                             <h4>Event Page Preview</h4>
 
-                            <div style="height: 600px; border: 1px solid #ccc;">
+                            <div class="iframe_wrap" style="overflow:hidden; height: 600px; border: 1px solid #ccc;">
                                 <iframe id="previewIframe"
                                         src="{{route('showEventPagePreview', ['event_id'=>$event->id])}}"
                                         frameborder="0" style="overflow:hidden;height:100%;width:100%" height="100%"
@@ -492,7 +491,7 @@
 
                     </div>
                     <div class="form-group">
-                        {!! Form::label('post_order_display_message', 'Message to display to attendees before after they have completed their order.', array('class'=>'control-label ')) !!}
+                        {!! Form::label('post_order_display_message', 'Message to display to attendees after they have completed their order.', array('class'=>'control-label ')) !!}
 
                         {!!  Form::textarea('post_order_display_message', $event->post_order_display_message, [
                             'class' => 'form-control',
@@ -504,6 +503,22 @@
                         </div>
                     </div>
 
+
+                        <h4>Offline Payment Settings</h4>
+                        <div class="form-group">
+                            <div class="custom-checkbox">
+                                <input {{ $event->enable_offline_payments ? 'checked="checked"' : '' }} data-toggle="toggle" id="enable_offline_payments" name="enable_offline_payments" type="checkbox" value="1">
+                                <label for="enable_offline_payments">Enable Offline Payments</label>
+                            </div>
+                        </div>
+                        <div class="offline_payment_details" style="display: none;">
+                            {!! Form::textarea('offline_payment_instructions', $event->offline_payment_instructions, ['class' => 'form-control editable']) !!}
+                            <div class="help-block">
+                                Enter instructions on how attendees can make payment offline.
+                            </div>
+                        </div>
+
+
                     <div class="panel-footer mt15 text-right">
                         {!! Form::submit('Save Changes', ['class'=>"btn btn-success"]) !!}
                     </div>
@@ -513,15 +528,13 @@
                 </div>
 
 
-
-
                 <div class="tab-pane {{$tab == 'ticket_design' ? 'active' : ''}}" id="ticket_design">
                     {!! Form::model($event, array('url' => route('postEditEventTicketDesign', ['event_id' => $event->id]), 'class' => 'ajax ')) !!}
                     <h4>Ticket Design</h4>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                {!! Form::label('name', 'Ticket Border Color', ['class'=>'control-label required ']) !!}
+                                {!! Form::label('ticket_border_color', 'Ticket Border Color', ['class'=>'control-label required ']) !!}
                                 {!!  Form::input('text', 'ticket_border_color', Input::old('ticket_border_color'),
                                                             [
                                                             'class'=>'form-control colorpicker',
@@ -531,7 +544,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                {!! Form::label('name', 'Ticket Background Color', ['class'=>'control-label required ']) !!}
+                                {!! Form::label('ticket_bg_color', 'Ticket Background Color', ['class'=>'control-label required ']) !!}
                                 {!!  Form::input('text', 'ticket_bg_color', Input::old('ticket_bg_color'),
                                                             [
                                                             'class'=>'form-control colorpicker',
@@ -541,7 +554,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                {!! Form::label('name', 'Ticket Text Color', ['class'=>'control-label required ']) !!}
+                                {!! Form::label('ticket_text_color', 'Ticket Text Color', ['class'=>'control-label required ']) !!}
                                 {!!  Form::input('text', 'ticket_text_color', Input::old('ticket_text_color'),
                                                             [
                                                             'class'=>'form-control colorpicker',
@@ -551,12 +564,18 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                {!! Form::label('name', 'Ticket Sub Text Color', ['class'=>'control-label required ']) !!}
+                                {!! Form::label('ticket_sub_text_color', 'Ticket Sub Text Color', ['class'=>'control-label required ']) !!}
                                 {!!  Form::input('text', 'ticket_sub_text_color', Input::old('ticket_border_color'),
                                                             [
                                                             'class'=>'form-control colorpicker',
                                                             'placeholder'=>'#000000'
                                                             ])  !!}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {!! Form::label('is_1d_barcode_enabled', 'Show 1D barcode on tickets', ['class' => 'control-label required']) !!}
+                                {!! Form::select('is_1d_barcode_enabled', [1 => 'Yes', 0 => 'No'], $event->is_1d_barcode_enabled, ['class'=>'form-control']) !!}
                             </div>
                         </div>
                     </div>

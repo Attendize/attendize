@@ -14,6 +14,39 @@
     Event Tickets
 @stop
 
+
+@section('head')
+    <script>
+        $(function () {
+
+
+            $('.sortable').sortable({
+                handle: '.sortHanlde',
+                forcePlaceholderSize: true,
+                placeholderClass: 'col-md-4 col-sm-6 col-xs-12',
+            }).bind('sortupdate', function (e, ui) {
+
+                var data = $('.sortable tr').map(function () {
+                    return $(this).data('question-id');
+                }).get();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '',//Attendize.postUpdateTicketsOrderRoute,
+                    dataType: 'json',
+                    data: {question_ids: data},
+                    success: function (data) {
+                        showMessage(data.message)
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
+    </script>
+    @stop
+
 @section('menu')
     @include('ManageEvent.Partials.Sidebar')
 @stop
@@ -75,7 +108,7 @@
         </div>
         @endif
                 <!--Start ticket table-->
-        <div class="row">
+        <div class="row sortable">
             @if($tickets->count())
 
                 @foreach($tickets as $ticket)
@@ -89,7 +122,7 @@
                                     <i class="ico-ticket ticket_icon mr5 ellipsis"></i>
                                     {{$ticket->title}}
                                     <span class="pull-right">
-                        {{ ($ticket->is_free) ? "FREE" : money($ticket->price, $event->currency->code) }}
+                        {{ ($ticket->is_free) ? "FREE" : money($ticket->price, $event->currency) }}
                     </span>
                                 </h3>
                             </div>
@@ -115,8 +148,8 @@
                                     <li>
                                         <div class="section">
                                             <h4 class="nm hint--top"
-                                                title="{{money($ticket->sales_volume, $event->currency->code)}} + {{money($ticket->organiser_fees_volume, $event->currency->code)}} Organiser Booking Fees">
-                                                {{money($ticket->sales_volume + $ticket->organiser_fees_volume, $event->currency->code)}}
+                                                title="{{money($ticket->sales_volume, $event->currency)}} + {{money($ticket->organiser_fees_volume, $event->currency)}} Organiser Booking Fees">
+                                                {{money($ticket->sales_volume + $ticket->organiser_fees_volume, $event->currency)}}
                                                 <sub title="Doesn't account for refunds.">*</sub>
                                             </h4>
 
@@ -125,7 +158,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="panel-footer" style="height: 56px;">
+                            <div class="panel-footer sortHandle" style="height: 56px;">
                                 <ul class="nav nav-section nav-justified">
                                     <li>
                                         <a href="javascript:void(0);">

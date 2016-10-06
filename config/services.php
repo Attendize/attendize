@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => '',
-        'secret' => '',
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_SECRET'),
     ],
 
     'mandrill' => [
@@ -36,5 +36,9 @@ return [
 
     'twitter' => [
         'widget_id' => env('TWITTER_WIDGET_ID'),
+    ],
+
+    'sparkpost' => [
+        'secret' => env('SPARKPOST_SECRET')
     ]
 ];

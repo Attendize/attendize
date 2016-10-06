@@ -8,6 +8,11 @@
                background-color: {{$organiser->page_header_bg_color}} !important;
                color: {{$organiser->page_text_color}} !important;
           }
+          .event-list > li > time {
+               color: {{$organiser->page_text_color}};
+               background-color: {{$organiser->page_header_bg_color}};
+          }
+
      </style>
 @stop
 
@@ -16,3 +21,9 @@
      @include('Public.ViewOrganiser.Partials.OrganiserEventsSection')
      @include('Public.ViewOrganiser.Partials.OrganiserFooterSection')
 @stop
+
+@if($organiser->google_analytics_code)
+     @section('foot')
+          @include('Public.Partials.ga', ['analyticsCode' => $organiser->google_analytics_code])
+     @stop
+@endif

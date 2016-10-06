@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Organiser;
 use Carbon\Carbon;
-use DB;
 
 class OrganiserDashboardController extends MyBaseController
 {
@@ -21,8 +20,8 @@ class OrganiserDashboardController extends MyBaseController
         $calendar_events = [];
 
         /* Prepare JSON array for events for use in the dashboard calendar */
-        foreach($organiser->events as $event) {
-            $calendar_events[] =[
+        foreach ($organiser->events as $event) {
+            $calendar_events[] = [
                 'title' => $event->title,
                 'start' => $event->start_date->toIso8601String(),
                 'end'   => $event->end_date->toIso8601String(),

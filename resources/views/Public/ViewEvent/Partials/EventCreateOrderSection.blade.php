@@ -23,7 +23,7 @@
                                 @if((int)ceil($ticket['full_price']) === 0)
                                 FREE
                                 @else
-                                {{ money($ticket['full_price'], $event->currency->code) }}
+                                {{ money($ticket['full_price'], $event->currency) }}
                                 @endif
                             </td>
                         </tr>
@@ -33,7 +33,7 @@
                 @if($order_total > 0)
                 <div class="panel-footer">
                     <h5>
-                        Total: <span style="float: right;"><b>{{ money($order_total + $total_booking_fee,$event->currency->code) }}</b></span>
+                        Total: <span style="float: right;"><b>{{ money($order_total + $total_booking_fee,$event->currency) }}</b></span>
                     </h5>
                 </div>
                 @endif
@@ -119,11 +119,13 @@
                                                     {!! Form::text("ticket_holder_email[{$i}][{$ticket['ticket']['id']}]", null, ['required' => 'required', 'class' => "ticket_holder_email.$i.{$ticket['ticket']['id']} ticket_holder_email form-control"]) !!}
                                                 </div>
                                             </div>
+                                            @include('Public.ViewEvent.Partials.AttendeeQuestions', ['ticket' => $ticket['ticket'],'attendee_number' => $total_attendee_increment++])
+
                                         </div>
+
                                     </div>
 
 
-                                  @include('Public.ViewEvent.Partials.AttendeeQuestions', ['ticket' => $ticket['ticket'],'attendee_number' => $total_attendee_increment++])
                                 </div>
                                 @endfor
                             @endforeach
@@ -131,45 +133,73 @@
                     </div>
                 </div>
 
-                @if($order_requires_payment && @$payment_gateway->is_on_site)
+                <style>
+                    .offline_payment_toggle {
+                        padding: 20px 0;
+                    }
+                </style>
+
+                @if($order_requires_payment)
 
                 <h3>Payment Information</h3>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            {!! Form::label('card-number', 'Card Number') !!}
-                            <input required="required" name="card-number" type="text" autocomplete="off" placeholder="**** **** **** ****" class="form-control card-number" size="20" data-stripe="number">
+                @if($event->enable_offline_payments)
+                    <div class="offline_payment_toggle">
+                        <div class="custom-checkbox">
+                            <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox" value="1">
+                            <label for="pay_offline">Pay using offline method</label>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            {!! Form::label('card-expiry-month', 'Exipry Month') !!}
-                            {!!  Form::selectRange('card-expiry-month',1,12,null, [
-                                    'class' => 'form-control card-expiry-month',
-                                    'data-stripe' => 'exp_month'
-                                ] )  !!}
+                    <div class="offline_payment" style="display: none;">
+                        <h5>Offline Payment Instructions</h5>
+                        <div class="well">
+                            {!! Markdown::parse($event->offline_payment_instructions) !!}
                         </div>
                     </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            {!! Form::label('card-expiry-year', 'Exipry Year') !!}
-                            {!!  Form::selectRange('card-expiry-year',date('Y'),date('Y')+10,null, [
-                                    'class' => 'form-control card-expiry-year',
-                                    'data-stripe' => 'exp_year'
-                                ] )  !!}</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            {!! Form::label('card-expiry-year', 'CVC Number') !!}
-                            <input required="required" name="card-cvc" type="password" placeholder="***"  class="form-control card-cvc" size="4" data-stripe="cvc">
+
+                @endif
+
+
+                @if(@$payment_gateway->is_on_site)
+                    <div class="online_payment">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {!! Form::label('card-number', 'Card Number') !!}
+                                    <input required="required" name="card-number" type="text" autocomplete="off" placeholder="**** **** **** ****" class="form-control card-number" size="20" data-stripe="number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    {!! Form::label('card-expiry-month', 'Exipry Month') !!}
+                                    {!!  Form::selectRange('card-expiry-month',1,12,null, [
+                                            'class' => 'form-control card-expiry-month',
+                                            'data-stripe' => 'exp_month'
+                                        ] )  !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    {!! Form::label('card-expiry-year', 'Exipry Year') !!}
+                                    {!!  Form::selectRange('card-expiry-year',date('Y'),date('Y')+10,null, [
+                                            'class' => 'form-control card-expiry-year',
+                                            'data-stripe' => 'exp_year'
+                                        ] )  !!}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {!! Form::label('card-expiry-year', 'CVC Number') !!}
+                                    <input required="required" name="card-cvc" placeholder="***" class="form-control card-cvc" data-stripe="cvc">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                @endif
 
                 @endif
 

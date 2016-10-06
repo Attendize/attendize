@@ -9,3 +9,4 @@
     @include('Public.ViewEvent.Partials.EventOrganiserSection')
     @include('Public.ViewEvent.Partials.EventFooterSection')
 @stop
+

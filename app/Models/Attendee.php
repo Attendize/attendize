@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Attendee extends MyBaseModel
 {
-
     use SoftDeletes;
 
     /**
@@ -99,10 +98,14 @@ class Attendee extends MyBaseModel
         return $query->where('attendees.is_cancelled', '=', 0);
     }
 
-//
-//    public function getReferenceAttribute() {
-//        return $this->order->order_reference
-//    }
+    /**
+     * Get the attendee reference
+     *
+     * @return string
+     */
+    public function getReferenceAttribute() {
+        return $this->order->order_reference . '-' . $this->reference_index;
+    }
 
     /**
      * Get the full name of the attendee.
@@ -114,15 +117,14 @@ class Attendee extends MyBaseModel
         return $this->first_name.' '.$this->last_name;
     }
 
+
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array $dates
+     * @return array $dates
      */
     public function getDates()
     {
         return ['created_at', 'updated_at', 'arrival_time'];
     }
-
-
 }

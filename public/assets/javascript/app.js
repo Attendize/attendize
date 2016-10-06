@@ -73,8 +73,7 @@ $(function () {
                 return;
             }
 
-            showMessage('Whoops!, it looks like something went wrong on our servers.\n\
-                   Please try again, or contact support if the problem persists.');
+            showMessage('Whoops!, it looks like the server returned an error.');
 
             var $submitButton = $form.find('input[type=submit]');
             toggleSubmitDisabled($submitButton);
@@ -106,7 +105,7 @@ $(function () {
                     }
 
                     if (typeof data.redirectUrl !== 'undefined') {
-                        window.location = data.redirectUrl;
+                        window.location.href = data.redirectUrl;
                     }
 
                     break;
@@ -362,6 +361,68 @@ $(function () {
         }
     });
 
+    /**
+     * Scale the preview iFrames when changing the design of organiser/event pages.
+     */
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+        var target = $(e.target).attr("href");
+
+        if ($(target).hasClass('scale_iframe')) {
+
+            var $iframe = $('iframe', target);
+            var iframeWidth = $('.iframe_wrap').innerWidth();
+            var iframeHeight = $('.iframe_wrap').height();
+
+            $iframe.css({
+                width: 1200,
+                height: 1400
+            });
+
+            var iframeScale = (iframeWidth / 1200);
+            $iframe.css({
+                '-webkit-transform': 'scale(' + iframeScale + ')',
+                '-ms-transform': 'scale(' + iframeScale + ')',
+                'transform': 'scale(' + iframeScale + ')',
+                '-webkit-transform-origin': '0 0',
+                '-ms-transform-origin': '0 0',
+                'transform-origin': '0 0',
+            });
+        }
+    });
+
+    $(document.body).on('click', '.markPaymentReceived', function (e) {
+
+        var orderId = $(this).data('id'),
+            route = $(this).data('route');
+
+        $.post(route, 'order_id=' + orderId)
+            .done(function (data) {
+
+                if (typeof data.message !== 'undefined') {
+                    showMessage(data.message);
+                }
+
+                switch (data.status) {
+                    case 'success':
+                        setTimeout(function () {
+                            document.location.reload();
+                        }, 300);
+                        break;
+                    case 'error':
+                        /* Error */
+                        break;
+
+                    default:
+                        break;
+                }
+            }).fail(function (data) {
+            showMessage(Attendize.GenericErrorMessages);
+        });
+        e.preventDefault();
+    });
+
+
 });
 
 function changeQuestionType(select)
@@ -443,6 +504,43 @@ function toggleSubmitDisabled($submitButton) {
 }
 
 /**
+ * 
+ * @returns {{}}
+ */
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+/**
+ * Replaces a parameter in a URL with a new parameter
+ *
+ * @param url
+ * @param paramName
+ * @param paramValue
+ * @returns {*}
+ */
+function replaceUrlParam(url, paramName, paramValue) {
+    var pattern = new RegExp('\\b(' + paramName + '=).*?(&|$)')
+    if (url.search(pattern) >= 0) {
+        return url.replace(pattern, '$1' + paramValue + '$2');
+    }
+    return url + (url.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue
+}
+
+/**
  * Shows users a message.
  * Currently uses humane.js
  *
@@ -451,7 +549,8 @@ function toggleSubmitDisabled($submitButton) {
  */
 function showMessage(message) {
     humane.log(message, {
-        timeout: 3500
+        timeoutAfterMove: 3000,
+        waitForMove: true
     });
 }
 

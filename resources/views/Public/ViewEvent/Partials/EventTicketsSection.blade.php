@@ -41,7 +41,7 @@
                                         <?php
                                         $is_free_event = false;
                                         ?>
-                                    <span title='{{money($ticket->price, $event->currency->code)}} Ticket Price + {{money($ticket->total_booking_fee, $event->currency->code)}} Booking Fees'>{{money($ticket->total_price, $event->currency->code)}} </span>
+                                    <span title='{{money($ticket->price, $event->currency)}} Ticket Price + {{money($ticket->total_booking_fee, $event->currency)}} Booking Fees'>{{money($ticket->total_price, $event->currency)}} </span>
                                     <meta property="priceCurrency" content="{{ $event->currency->code }}">
                                     <meta property="price" content="{{ number_format($ticket->price, 2, '.', '') }}">
                                     @endif
@@ -72,7 +72,9 @@
                                {!! Form::hidden('tickets[]', $ticket->id) !!}
                                 <meta property="availability" content="http://schema.org/InStock">
                                 <select name="ticket_{{$ticket->id}}" class="form-control" style="text-align: center">
+                                    @if ($tickets->count() > 1)
                                     <option value="0">0</option>
+                                    @endif
                                     @for($i=$ticket->min_per_person; $i<=$ticket->max_per_person; $i++)
                                     <option value="{{$i}}">{{$i}}</option>
                                     @endfor
@@ -87,7 +89,17 @@
                         <tr class="checkout">
                             <td colspan="3">
                                 @if(!$is_free_event)
-                                    <img class="hidden-xs pull-left" src="{{asset('assets/images/public/EventPage/credit-card-logos.png')}}" />
+                                    <div class="hidden-xs pull-left">
+                                    <img class="" src="{{asset('assets/images/public/EventPage/credit-card-logos.png')}}" />
+                                    @if($event->enable_offline_payments)
+
+                                    <div class="help-block" style="font-size: 11px;">
+                                        Offline Payment Methods Available
+                                    </div>
+                                    @endif
+
+                                    </div>
+
                                 @endif
                                 {!!Form::submit('Register', ['class' => 'btn btn-lg btn-primary pull-right'])!!}
                             </td>

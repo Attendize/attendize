@@ -52,6 +52,12 @@ return [
             'prefix'   => '',
         ],
 
+        'sqlite.testing' => [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ],
+
         'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST'),
@@ -60,7 +66,7 @@ return [
             'password'  => env('DB_PASSWORD'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
+            'prefix'    => env('DB_PREFIX'),
             'strict'    => false,
         ],
 
@@ -115,7 +121,7 @@ return [
         'cluster' => false,
 
         'default' => [
-            'host'     => '127.0.0.1',
+            'host'     => 'redis',
             'port'     => 6379,
             'database' => 0,
         ],

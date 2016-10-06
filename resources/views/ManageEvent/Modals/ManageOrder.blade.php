@@ -17,8 +17,15 @@
 
                 @if($order->is_refunded || $order->is_partially_refunded)
                  <div class="alert alert-info">
-                   {{money($order->amount_refunded, $order->event->currency->code)}} of this order has been refunded.
+                   {{money($order->amount_refunded, $order->event->currency)}} of this order has been refunded.
                 </div>
+                @endif
+
+                @if(!$order->is_payment_received)
+                    <div class="alert alert-info">
+                        This order is awaiting payment.
+                    </div>
+                    <a data-id="{{ $order->id }}" data-route="{{ route('postMarkPaymentReceived', ['order_id' => $order->id]) }}" class="btn btn-primary btn-sm markPaymentReceived" href="javascript:void(0);">Mark Payment Received</a>
                 @endif
 
                 <h3>Order Overview</h3>
@@ -40,7 +47,7 @@
                         </div>
 
                         <div class="col-sm-6 col-xs-6">
-                            <b>Amount</b><br>{{money($order->total_amount, $order->event->currency->code)}}
+                            <b>Amount</b><br>{{money($order->total_amount, $order->event->currency)}}
                         </div>
 
                         <div class="col-sm-6 col-xs-6">
@@ -99,7 +106,7 @@
                                         @if((int)ceil($order_item->unit_price) == 0)
                                         FREE
                                         @else
-                                       {{money($order_item->unit_price, $order->event->currency->code)}}
+                                       {{money($order_item->unit_price, $order->event->currency)}}
                                         @endif
 
                                     </td>
@@ -107,7 +114,7 @@
                                         @if((int)ceil($order_item->unit_price) == 0)
                                         -
                                         @else
-                                        {{money($order_item->unit_booking_fee, $order->event->currency->code)}}
+                                        {{money($order_item->unit_booking_fee, $order->event->currency)}}
                                         @endif
 
                                     </td>
@@ -115,7 +122,7 @@
                                         @if((int)ceil($order_item->unit_price) == 0)
                                         FREE
                                         @else
-                                        {{money(($order_item->unit_price + $order_item->unit_booking_fee) * ($order_item->quantity), $order->event->currency->code)}}
+                                        {{money(($order_item->unit_price + $order_item->unit_booking_fee) * ($order_item->quantity), $order->event->currency)}}
                                         @endif
 
                                     </td>
@@ -132,7 +139,7 @@
                                         <b>Sub Total</b>
                                     </td>
                                     <td colspan="2">
-                                        {{money($order->total_amount, $order->event->currency->code)}}
+                                        {{money($order->total_amount, $order->event->currency)}}
                                     </td>
                                 </tr>
                             </tbody>
@@ -156,6 +163,11 @@
                                         <span class="label label-warning">
                                             Cancelled
                                         </span>
+                                        @endif
+                                        @if($attendee->is_refunded)
+                                            <span class="label label-danger">
+                                                Refunded
+                                            </span>
                                         @endif
                                         {{$attendee->first_name}}
                                         {{$attendee->last_name}}

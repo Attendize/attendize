@@ -29,11 +29,11 @@ Attendees
 <div class="col-md-9">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group btn-group-responsive">
-            <button data-modal-id="CreateTicket" href="javascript:void(0);"  data-href="{{route('showCreateAttendee', ['event_id'=>$event->id])}}" class="loadModal btn btn-success" type="button"><i class="ico-ticket"></i> Add Attendee</button>
+            <button data-modal-id="InviteAttendee" href="javascript:void(0);"  data-href="{{route('showInviteAttendee', ['event_id'=>$event->id])}}" class="loadModal btn btn-success" type="button"><i class="ico-user-plus"></i> Invite Attendee</button>
         </div>
         
         <div class="btn-group btn-group-responsive">
-            <button data-modal-id="CreateTicket" href="javascript:void(0);"  data-href="{{route('showImportAttendee', ['event_id'=>$event->id])}}" class="loadModal btn btn-success" type="button"><i class="ico-user-plus"></i> Import Attendees</button>
+            <button data-modal-id="ImportAttendees" href="javascript:void(0);"  data-href="{{route('showImportAttendee', ['event_id'=>$event->id])}}" class="loadModal btn btn-success" type="button"><i class="ico-file"></i> Invite Attendees</button>
         </div>
         
         <div class="btn-group btn-group-responsive">
@@ -108,7 +108,7 @@ Attendees
                             </td>
                             <td>
                                 <a href="javascript:void(0);" data-modal-id="view-order-{{ $attendee->order->id }}" data-href="{{route('showManageOrder', ['order_id'=>$attendee->order->id])}}" title="View Order #{{$attendee->order->order_reference}}" class="loadModal">
-                                    #{{$attendee->order->order_reference}}
+                                    {{$attendee->order->order_reference}}
                                 </a>
                             </td>
                             <td class="text-center">
@@ -129,6 +129,9 @@ Attendees
                                             data-href="{{route('showResendTicketToAttendee', ['attendee_id'=>$attendee->id])}}"
                                             class="loadModal"
                                             > Resend Ticket</a></li>
+                                        <li><a
+                                            href="{{route('showExportTicket', ['event_id'=>$event->id, 'attendee_id'=>$attendee->id])}}"
+                                            >Download PDF Ticket</a></li>
                                     </ul>
                                 </div>
 

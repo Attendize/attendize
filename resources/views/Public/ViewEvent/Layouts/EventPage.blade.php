@@ -26,7 +26,7 @@
         @if($event->images->count())
         <meta property="og:image" content="{{config('attendize.cdn_url_user_assets').'/'.$event->images->first()['image_path']}}" />
         @endif
-        <meta property="og:description" content="{{{Str::words(strip_tags($event->description)), 20}}}" />
+        <meta property="og:description" content="{{Str::words(strip_tags(Markdown::parse($event->description))), 20}}" />
         <meta property="og:site_name" content="Attendize.com" />
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -79,7 +79,13 @@
     <body class="attendize">
         <div id="event_page_wrap" vocab="http://schema.org/" typeof="Event">
             @yield('content')
+
+            {{-- Push for sticky footer--}}
+            @stack('footer')
         </div>
+
+        {{-- Sticky Footer--}}
+        @yield('footer')
 
         <a href="#intro" style="display:none;" class="totop"><i class="ico-angle-up"></i>
             <span style="font-size:11px;">TOP</span></a>

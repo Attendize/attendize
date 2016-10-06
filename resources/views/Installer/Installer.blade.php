@@ -62,11 +62,27 @@
 
                         @if(!extension_loaded($requirement))
                             <div class="alert alert-danger">
-                                Warning: <b>{{$requirement}}</b> extension is not loaded
+                                Error: <b>{{$requirement}}</b> extension is not loaded
                             </div>
                         @else
                             <div class="alert alert-success">
                                 Success: <b>{{$requirement}}</b> extension is loaded
+                            </div>
+                        @endif
+
+                    @endforeach
+
+                    <h3>PHP Optional Requirements Check</h3>
+
+                    @foreach($optional_requirements as $optional_requirement)
+
+                        @if(!extension_loaded($optional_requirement))
+                            <div class="alert alert-warning">
+                                Warning: <b>{{$optional_requirement}}</b> extension is not loaded
+                            </div>
+                        @else
+                            <div class="alert alert-success">
+                                Success: <b>{{$optional_requirement}}</b> extension is loaded
                             </div>
                         @endif
 
@@ -85,20 +101,33 @@
                                     ))  !!}
                     </div>
 
+                    <h3>Database Settings</h3>
 
                     <div class="form-group">
-                        {!! Form::label('database_name', 'Database Name', array('class'=>'required control-label ')) !!}
-                        {!!  Form::text('database_name', Input::old('database_name'),
+                        {!! Form::label('database_type', 'Database Type', array('class'=>'required control-label ')) !!}
+                        {!!  Form::select('database_type', array(
+                                  'pgsql' => "Postgres",
+                                  'mysql' => "MySQL",
+                                    ), Input::old('database_type'),
                                     array(
                                     'class'=>'form-control'
                                     ))  !!}
                     </div>
+
                     <div class="form-group">
                         {!! Form::label('database_host', 'Database Host', array('class'=>'control-label required')) !!}
                         {!!  Form::text('database_host', Input::old('database_host'),
                                     array(
                                     'class'=>'form-control ',
                                     'placeholder'=>''
+                                    ))  !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('database_name', 'Database Name', array('class'=>'required control-label ')) !!}
+                        {!!  Form::text('database_name', Input::old('database_name'),
+                                    array(
+                                    'class'=>'form-control'
                                     ))  !!}
                     </div>
 
@@ -223,10 +252,16 @@
                             Installation may make take several minutes to complete. Once you click '<b>Install Attendize</b>' the config settings will be written to this file: <b>{{base_path('.env')}}</b>. You can manually change these settings in the future by editing this file.
                         </p>
                         <p>
-                            If the install fails be sure to check the log file in <b>{{storage_path('logs')}}</b> to find the error.
+                            If the install fails be sure to check the log file in <b>{{storage_path('logs')}}</b>. If there are no errors in the log files also <b>check other log files on your server</b>.
                         </p>
                         <p>
-                            If you need help you can email us at <a href="mailto:help@attendize.com" target="_blank">help@attendize.com</a>.
+                            If you are using shared hosting please ask your host if they support the Attendize requirements before requesting support.
+                        </p>
+                        <p>
+                            If you still need help you can email us at <a href="mailto:help@attendize.com" target="_blank">help@attendize.com</a>. Please include as much detail as possible, including any errors in the log file.
+                        </p>
+                        <p>
+                            Please also  <a style="text-decoration: underline;" target="_blank" href="https://attendize.com/licence.php?from_installer">read the licence</a> before installing Attendize.
                         </p>
                     </div>
 

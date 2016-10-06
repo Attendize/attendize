@@ -18,7 +18,7 @@ class UserController extends Controller
     public function showEditUser()
     {
         $data = [
-            'user'  => Auth::user(),
+            'user' => Auth::user(),
         ];
 
         return view('ManageUser.Modals.EditUser', $data);
@@ -33,7 +33,7 @@ class UserController extends Controller
     public function postEditUser(Request $request)
     {
         $rules = [
-            'email'        => ['required', 'email', 'exists:users,email,account_id,'.Auth::user()->account_id],
+            'email'        => ['required', 'email', 'unique:users,email,' . Auth::user()->id . ',id,account_id,' . Auth::user()->account_id],
             'new_password' => ['min:5', 'confirmed', 'required_with:password'],
             'password'     => 'passcheck',
             'first_name'   => ['required'],
@@ -44,33 +44,35 @@ class UserController extends Controller
             'email.email'         => 'Please enter a valid E-mail address.',
             'email.required'      => 'E-mail address is required.',
             'password.passcheck'  => 'This password is incorrect.',
-            'email.exists'        => 'This E-mail has is already in use.',
+            'email.unique'        => 'This E-mail is already in use.',
             'first_name.required' => 'Please enter your first name.',
+            'last_name.required'  => 'Please enter your last name.',
         ];
 
         $validation = Validator::make($request->all(), $rules, $messages);
 
         if ($validation->fails()) {
             return response()->json([
-                        'status'   => 'error',
-                        'messages' => $validation->messages()->toArray(),
+                'status'   => 'error',
+                'messages' => $validation->messages()->toArray(),
             ]);
         }
 
         $user = Auth::user();
 
         if ($request->get('password')) {
-            $user->password = Hash::make(Input::get('new_password'));
+            $user->password = Hash::make($request->get('new_password'));
         }
 
         $user->first_name = $request->get('first_name');
-        $user->last_name = $request->get('last_name');
+        $user->last_name  = $request->get('last_name');
+        $user->email      = $request->get('email');
 
         $user->save();
 
         return response()->json([
-                    'status'  => 'success',
-                    'message' => 'Successfully Edited User',
+            'status'  => 'success',
+            'message' => 'Successfully Saved Details',
         ]);
     }
 }

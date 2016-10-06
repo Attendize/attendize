@@ -20,9 +20,9 @@ class EventCustomizeController extends MyBaseController
     public function showCustomize($event_id = '', $tab = '')
     {
         $data = $this->getEventViewData($event_id, [
-            'available_bg_images' => $this->getAvailableBackgroundImages(),
+            'available_bg_images'        => $this->getAvailableBackgroundImages(),
             'available_bg_images_thumbs' => $this->getAvailableBackgroundImagesThumbs(),
-            'tab' => $tab,
+            'tab'                        => $tab,
         ]);
 
         return view('ManageEvent.Customize', $data);
@@ -76,11 +76,11 @@ class EventCustomizeController extends MyBaseController
         $event = Event::scope()->findOrFail($event_id);
 
         $rules = [
-            'social_share_text' => ['max:3000'],
-            'social_show_facebook' => ['boolean'],
-            'social_show_twitter' => ['boolean'],
-            'social_show_linkedin' => ['boolean'],
-            'social_show_email' => ['boolean'],
+            'social_share_text'      => ['max:3000'],
+            'social_show_facebook'   => ['boolean'],
+            'social_show_twitter'    => ['boolean'],
+            'social_show_linkedin'   => ['boolean'],
+            'social_show_email'      => ['boolean'],
             'social_show_googleplus' => ['boolean'],
         ];
 
@@ -92,7 +92,7 @@ class EventCustomizeController extends MyBaseController
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 'error',
+                'status'   => 'error',
                 'messages' => $validator->messages()->toArray(),
             ]);
         }
@@ -107,7 +107,7 @@ class EventCustomizeController extends MyBaseController
         $event->save();
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Social Settings Successfully Updated',
         ]);
 
@@ -125,11 +125,11 @@ class EventCustomizeController extends MyBaseController
         $event = Event::scope()->findOrFail($event_id);
 
         $rules = [
-            //'barcode_type' => ['required'],
-            'ticket_border_color' => ['required'],
-            'ticket_bg_color' => ['required'],
-            'ticket_text_color' => ['required'],
+            'ticket_border_color'   => ['required'],
+            'ticket_bg_color'       => ['required'],
+            'ticket_text_color'     => ['required'],
             'ticket_sub_text_color' => ['required'],
+            'is_1d_barcode_enabled' => ['required'],
         ];
         $messages = [
             'ticket_bg_color.required' => 'Please enter a background color.',
@@ -139,21 +139,21 @@ class EventCustomizeController extends MyBaseController
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 'error',
+                'status'   => 'error',
                 'messages' => $validator->messages()->toArray(),
             ]);
         }
 
-        //$event->barcode_type = $request->get('barcode_type');
         $event->ticket_border_color = $request->get('ticket_border_color');
         $event->ticket_bg_color = $request->get('ticket_bg_color');
         $event->ticket_text_color = $request->get('ticket_text_color');
         $event->ticket_sub_text_color = $request->get('ticket_sub_text_color');
+        $event->is_1d_barcode_enabled = $request->get('is_1d_barcode_enabled');
 
         $event->save();
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Ticket Settings Updated',
         ]);
     }
@@ -171,19 +171,19 @@ class EventCustomizeController extends MyBaseController
 
         $rules = [
             'organiser_fee_percentage' => ['numeric', 'between:0,100'],
-            'organiser_fee_fixed' => ['numeric', 'between:0,100'],
+            'organiser_fee_fixed'      => ['numeric', 'between:0,100'],
         ];
         $messages = [
             'organiser_fee_percentage.numeric' => 'Please enter a value between 0 and 100',
-            'organiser_fee_fixed.numeric' => 'Please check the format. It should be in the format 0.00.',
-            'organiser_fee_fixed.between' => 'Please enter a value between 0 and 100.',
+            'organiser_fee_fixed.numeric'      => 'Please check the format. It should be in the format 0.00.',
+            'organiser_fee_fixed.between'      => 'Please enter a value between 0 and 100.',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 'error',
+                'status'   => 'error',
                 'messages' => $validator->messages()->toArray(),
             ]);
         }
@@ -193,7 +193,7 @@ class EventCustomizeController extends MyBaseController
         $event->save();
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Order Page Successfully Updated',
         ]);
     }
@@ -217,18 +217,19 @@ class EventCustomizeController extends MyBaseController
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 'error',
+                'status'   => 'error',
                 'messages' => $validator->messages()->toArray(),
             ]);
         }
 
         $event->pre_order_display_message = trim($request->get('pre_order_display_message'));
         $event->post_order_display_message = trim($request->get('post_order_display_message'));
-        $event->ask_for_all_attendees_info = ($request->get('ask_for_all_attendees_info') == 'on');
+        $event->offline_payment_instructions = trim($request->get('offline_payment_instructions'));
+        $event->enable_offline_payments = (int) $request->get('enable_offline_payments');
         $event->save();
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Order Page Successfully Updated',
         ]);
     }
@@ -249,14 +250,14 @@ class EventCustomizeController extends MyBaseController
         ];
         $messages = [
             'bg_image_path.mimes' => 'Please ensure you are uploading an image (JPG, PNG, JPEG)',
-            'bg_image_path.max' => 'Please ensure the image is not larger than 2.5MB',
+            'bg_image_path.max'   => 'Please ensure the image is not larger than 2.5MB',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 'error',
+                'status'   => 'error',
                 'messages' => $validator->messages()->toArray(),
             ]);
         }
@@ -300,7 +301,7 @@ class EventCustomizeController extends MyBaseController
         $event->save();
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Event Page Successfully Updated',
             'runThis' => 'document.getElementById(\'previewIframe\').contentWindow.location.reload(true);',
         ]);

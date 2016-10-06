@@ -12,7 +12,6 @@ use Auth;
 use HttpClient;
 use Illuminate\Http\Request;
 use Input;
-use Response;
 use Validator;
 use Hash;
 use Mail;
@@ -70,10 +69,12 @@ class ManageAccountController extends MyBaseController
         }
 
         $account = Account::find(\Auth::user()->account_id);
-        $account->stripe_access_token = $content->access_token;
-        $account->stripe_refresh_token = $content->refresh_token;
+
+        $account->stripe_access_token    = $content->access_token;
+        $account->stripe_refresh_token   = $content->refresh_token;
         $account->stripe_publishable_key = $content->stripe_publishable_key;
-        $account->stripe_data_raw = json_encode($content);
+        $account->stripe_data_raw        = json_encode($content);
+
         $account->save();
 
         \Session::flash('message', 'You have successfully connected your Stripe account.');
@@ -92,20 +93,20 @@ class ManageAccountController extends MyBaseController
         $account = Account::find(Auth::user()->account_id);
 
         if (!$account->validate(Input::all())) {
-            return Response::json([
+            return response()->json([
                 'status' => 'error',
                 'messages' => $account->errors(),
             ]);
         }
 
-        $account->first_name = Input::get('first_name');
-        $account->last_name = Input::get('last_name');
-        $account->email = Input::get('email');
+        $account->first_name  = Input::get('first_name');
+        $account->last_name   = Input::get('last_name');
+        $account->email       = Input::get('email');
         $account->timezone_id = Input::get('timezone_id');
         $account->currency_id = Input::get('currency_id');
         $account->save();
 
-        return Response::json([
+        return response()->json([
             'status' => 'success',
             'id' => $account->id,
             'message' => 'Account Successfully Updated',
@@ -133,6 +134,9 @@ class ManageAccountController extends MyBaseController
             case config('attendize.payment_gateway_coinbase') : //BitPay
                 $config = $request->get('coinbase');
                 break;
+			case config('attendize.payment_gateway_migs') : //MIGS
+				$config = $request->get('migs');
+				break;
         }
 
         $account_payment_gateway = AccountPaymentGateway::firstOrNew(
@@ -167,15 +171,15 @@ class ManageAccountController extends MyBaseController
         ];
 
         $messages = [
-            'email.email' => 'Please enter a valid E-mail address.',
+            'email.email'    => 'Please enter a valid E-mail address.',
             'email.required' => 'E-mail address is required.',
-            'email.unique' => 'E-mail already in use for this account.',
+            'email.unique'   => 'E-mail already in use for this account.',
         ];
 
         $validation = Validator::make(Input::all(), $rules, $messages);
 
         if ($validation->fails()) {
-            return Response::json([
+            return response()->json([
                 'status' => 'error',
                 'messages' => $validation->messages()->toArray(),
             ]);
@@ -184,9 +188,11 @@ class ManageAccountController extends MyBaseController
         $temp_password = str_random(8);
 
         $user = new User();
-        $user->email = Input::get('email');
-        $user->password = Hash::make($temp_password);
+
+        $user->email      = Input::get('email');
+        $user->password   = Hash::make($temp_password);
         $user->account_id = Auth::user()->account_id;
+
         $user->save();
 
         $data = [
@@ -200,7 +206,7 @@ class ManageAccountController extends MyBaseController
                 ->subject($data['inviter']->first_name . ' ' . $data['inviter']->last_name . ' added you to an '. config('attendize.app_name') .' account.');
         });
 
-        return Response::json([
+        return response()->json([
             'status' => 'success',
             'message' => 'Success! <b>' . $user->email . '</b> has been sent further instructions.',
         ]);

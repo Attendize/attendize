@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class OrganiserEventsController extends MyBaseController
 {
-
     /**
      * Show the organiser events page
      *
@@ -41,6 +40,4 @@ class OrganiserEventsController extends MyBaseController
 
         return view('ManageOrganiser.Events', $data);
     }
-
-    
 }

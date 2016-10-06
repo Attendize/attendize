@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Attendize\Utils;
 use App\Models\Affiliate;
 use App\Models\Event;
 use App\Models\EventStats;
@@ -13,7 +14,6 @@ use Validator;
 
 class EventViewController extends Controller
 {
-
     /**
      * Show the homepage for an event
      *
@@ -27,7 +27,7 @@ class EventViewController extends Controller
     {
         $event = Event::findOrFail($event_id);
 
-        if (!Auth::check() && !$event->is_live) {
+        if (!Utils::userOwns($event) && !$event->is_live) {
             return view('Public.ViewEvent.EventNotLivePage');
         }
 
@@ -122,6 +122,18 @@ class EventViewController extends Controller
         return response()->json([
             'status'  => 'success',
             'message' => 'Message Successfully Sent',
+        ]);
+    }
+
+    public function showCalendarIcs(Request $request, $event_id)
+    {
+        $event = Event::findOrFail($event_id);
+
+        $icsContent = $event->getIcsForEvent();
+
+        return response()->make($icsContent, 200, [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="event.ics'
         ]);
     }
 }

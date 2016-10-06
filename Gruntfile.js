@@ -18,16 +18,19 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 separator: ';',
-                stripBanners: true,
-
+                stripBanners: {
+                    block: true,
+                    line: true
+                },
             },
             js_frontend: {
                 src: [
-                    './public/vendor/jquery/jquery.js',
+                    './public/vendor/jquery/dist/jquery.min.js',
                     './public/vendor/bootstrap/dist/js/bootstrap.js',
                     './public/vendor/jquery-form/jquery.form.js',
                     './public/vendor/RRSSB/js/rrssb.js',
                     './public/vendor/humane-js/humane.js',
+                    './public/vendor/jquery.payment/lib/jquery.payment.js',
                     './public/assets/javascript/app-public.js'
                 ],
                 dest: './public/assets/javascript/frontend.js',
@@ -35,6 +38,7 @@ module.exports = function (grunt) {
             js_backend: {
                 src: [
                     './public/vendor/modernizr/modernizr.js',
+                    './public/vendor/html.sortable/dist/html.sortable.js',
                     './public/vendor/bootstrap/dist/js/bootstrap.js',
                     './public/vendor/jquery-form/jquery.form.js',
                     './public/vendor/humane-js/humane.js',
@@ -57,7 +61,7 @@ module.exports = function (grunt) {
             },
             frontend: {
                 files: {
-                    './public/assets/javascript/frontend.js': './public/assets/javascript/frontend.js',
+                    './public/assets/javascript/frontend.js': ['<%= concat.js_frontend.dest %>'],
                 }
             },
             backend: {

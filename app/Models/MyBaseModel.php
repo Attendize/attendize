@@ -120,7 +120,7 @@ class MyBaseModel extends \Illuminate\Database\Eloquent\Model
      *
      * @return bool|null|string
      */
-    public function getFormatedDate($field, $format = 'd-m-Y H:i')
+    public function getFormattedDate($field, $format = 'd-m-Y H:i')
     {
         return $this->$field === null ? null : date($format, strtotime($this->$field));
     }
@@ -130,7 +130,6 @@ class MyBaseModel extends \Illuminate\Database\Eloquent\Model
      *
      * @param $query
      * @param bool $accountId
-     * @param Request $request
      * @return mixed
      */
     public function scopeScope($query, $accountId = false)
