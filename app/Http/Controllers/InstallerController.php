@@ -95,11 +95,13 @@ class InstallerController extends Controller
         $mail['from_address'] = $request->get('mail_from_address');
         $mail['from_name'] = $request->get('mail_from_name');
         $mail['host'] = $request->get('mail_host');
-
+        
         $app_url = $request->get('app_url');
         $app_key = str_random(16);
         $version = file_get_contents(base_path('VERSION'));
-
+        
+        //create database automatically
+        Artisan::call('make:database', ['db_name' => $database['name']]);
         if ($request->get('test') === 'db') {
             $is_db_valid = self::testDatabase($database);
 
