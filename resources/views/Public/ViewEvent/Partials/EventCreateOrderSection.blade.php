@@ -75,6 +75,59 @@
                     </div>
                 </div>
 
+                <h3>Billing Information</h3>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {!! Form::label("order_company", 'Company') !!}
+                            {!! Form::text("order_company", null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {!! Form::label("order_street", 'Street') !!}
+                            {!! Form::text("order_street", null, ['required' => 'required', 'class' => 'form-control']) !!}
+                            {!! Form::text("order_street2", null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label("order_zip", 'Zip code') !!}
+                            {!! Form::text("order_zip", null, ['required' => 'required', 'class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label("order_city", 'City') !!}
+                            {!! Form::text("order_city", null, ['required' => 'required', 'class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label("order_country", 'Country') !!}
+                            {!! Form::text("order_country", null, ['required' => 'required', 'class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label("order_phone", 'Phone') !!}
+                            {!! Form::text("order_phone", null, ['required' => 'required', 'class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <div class="p20 pl0">
                     <a href="javascript:void(0);" class="btn btn-primary btn-xs" id="mirror_buyer_info">
                         Copy buyer details to all ticket holders

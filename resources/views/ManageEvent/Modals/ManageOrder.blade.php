@@ -72,6 +72,23 @@
                     </div>
                 </div>
 
+                <h3>Billing Information</h3>
+                <div class="p0 well bgcolor-white order_overview">
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6">
+                            <b>Address</b><br>
+                            @if($order->billing_company){{$order->billing_company}}<br>@endif
+                            {{$order->billing_street}}<br>
+                            @if($order->billing_street2){{$order->billing_street2}}<br>@endif
+                            {{$order->billing_zip}} {{$order->billing_city}}<br>
+                            {{$order->billing_country}}
+                            @if($order->billing_phone)
+                            <br>Tel: {{$order->billing_phone}}
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
                 <h3>Order Items</h3>
                 <div class="well nopad bgcolor-white p0">
                     <div class="table-responsive">

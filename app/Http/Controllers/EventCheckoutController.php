@@ -527,6 +527,17 @@ class EventCheckoutController extends Controller
             $order->account_id = $event->account->id;
             $order->event_id = $ticket_order['event_id'];
             $order->is_payment_received = isset($request_data['pay_offline']) ? 0 : 1;
+
+            // MMCH Custom
+            $order->billing_company = $request_data['order_company'];
+            $order->billing_street = $request_data['order_street'];
+            $order->billing_street2 = $request_data['order_street2'];
+            $order->billing_city = $request_data['order_city'];
+            $order->billing_zip = $request_data['order_zip'];
+            $order->billing_country = $request_data['order_country'];
+            $order->billing_phone = $request_data['order_phone'];
+            // EOF MMCH Custom
+
             $order->save();
 
             /*
