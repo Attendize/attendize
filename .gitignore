@@ -11,3 +11,4 @@ installed
 /composer.phar
 _ide_helper.php
 *.swp
+/public/user_content
