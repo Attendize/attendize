@@ -407,7 +407,7 @@ class CreateUsersTable extends Migration
             $t->integer('order_id')->unsigned()->index();
             $t->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $t->integer('ticket_id')->unsigned()->index();
-            $t->foreign('ticket_id')->references('id')->on('users')->onDelete('cascade');
+            $t->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
         });
 
 
