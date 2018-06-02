@@ -19,6 +19,11 @@ class Order extends MyBaseModel
         'order_first_name' => ['required'],
         'order_last_name'  => ['required'],
         'order_email'      => ['required', 'email'],
+        'order_street'     => ['required'],
+        'order_zip'        => ['required'],
+        'order_city'       => ['required'],
+        'order_country'    => ['required'],
+        'order_phone'      => ['required'],
     ];
 
     /**
@@ -30,6 +35,11 @@ class Order extends MyBaseModel
         'order_first_name.required' => 'Please enter a valid first name',
         'order_last_name.required'  => 'Please enter a valid last name',
         'order_email.email'         => 'Please enter a valid email',
+        'order_street.required'  => 'Please enter a valid street address',
+        'order_zip.required'  => 'Please enter a valid zip code address',
+        'order_city.required'  => 'Please enter a valid city address',
+        'order_country.required'  => 'Please enter a valid country',
+        'order_phone.required'  => 'Please enter a valid phone number'
     ];
 
     /**
