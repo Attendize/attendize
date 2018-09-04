@@ -93,7 +93,7 @@
         <div class="row">
             <div class="col-md-3 col-xs-6">
                 <div class='order_options'>
-                    <span class="event_count">@lang("Ticket.n_tickets", ["num"=>$tickets->count()])</span>
+                    <span class="event_count">{!! @trans("Ticket.n_tickets", ["num"=>$tickets->count()])!!}</span>
                 </div>
             </div>
             <div class="col-md-2 col-xs-6 col-md-offset-7">

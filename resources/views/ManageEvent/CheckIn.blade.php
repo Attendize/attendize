@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>
-        @lang("Attendee.check_in", ["event"=>$event->title])
+        {!! @trans("Attendee.check_in", ["event"=>$event->title]) !!}
     </title>
 
     {!! HTML::script('vendor/vue/dist/vue.min.js') !!}

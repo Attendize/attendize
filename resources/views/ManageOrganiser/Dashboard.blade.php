@@ -9,7 +9,7 @@
     @include('ManageOrganiser.Partials.TopNav')
 @stop
 @section('page_title')
-    @lang("Organiser.organiser_name_dashboard", ["name"=>$organiser->name])
+    {!! @trans("Organiser.organiser_name_dashboard", ["name"=>$organiser->name])!!}
 @stop
 
 @section('menu')
@@ -27,22 +27,22 @@
     {!! HTML::script('vendor/moment/moment.js')!!}
     {!! HTML::script('vendor/fullcalendar/dist/fullcalendar.min.js')!!}
     <?php
-    if(Lang::locale()!="en")
-        echo HTML::script('vendor/fullcalendar/dist/lang/'.Lang::locale().'.js');
+    if (Lang::locale() != "en")
+        echo HTML::script('vendor/fullcalendar/dist/lang/' . Lang::locale() . '.js');
     ?>
     {!! HTML::style('vendor/fullcalendar/dist/fullcalendar.css')!!}
 
     <script>
-        $(function() {
+        $(function () {
             $('#calendar').fullCalendar({
                 locale: '{{ Lang::locale() }}',
                 events: {!! $calendar_events !!},
                 header: {
-                    left:   'prev,',
+                    left: 'prev,',
                     center: 'title',
-                    right:  'next'
+                    right: 'next'
                 },
-                dayClick: function(date, jsEvent, view) {
+                dayClick: function (date, jsEvent, view) {
 
                 }
             });
@@ -57,7 +57,7 @@
                 <h3>
                     {{$organiser->events->count()}}
                 </h3>
-            <span>
+                <span>
                 @lang("Organiser.events")
             </span>
             </div>
@@ -67,7 +67,7 @@
                 <h3>
                     {{$organiser->attendees->count()}}
                 </h3>
-            <span>
+                <span>
                 @lang("Organiser.tickets_sold")
             </span>
             </div>
@@ -77,7 +77,7 @@
                 <h3>
                     {{ money($organiser->events->sum('sales_volume') + $organiser->events->sum('organiser_fees_volume'), $organiser->account->currency) }}
                 </h3>
-            <span>
+                <span>
                 @lang("Organiser.sales_volume")
             </span>
             </div>
@@ -100,8 +100,8 @@
             @else
                 <div class="alert alert-success alert-lg">
                     @lang("Organiser.no_upcoming_events") <a href="#"
-                                                     data-href="{{route('showCreateEvent', ['organiser_id' => $organiser->id])}}"
-                                                     class=" loadModal">@lang("Organiser.no_upcoming_events_click")</a>
+                                                             data-href="{{route('showCreateEvent', ['organiser_id' => $organiser->id])}}"
+                                                             class=" loadModal">@lang("Organiser.no_upcoming_events_click")</a>
                 </div>
             @endif
         </div>
@@ -119,9 +119,9 @@
                             <p class="list-group-text">
                                 <a href="{{ route('showEventOrders', ['event_id' => $order->event_id, 'q' => $order->order_reference]) }}">
                                     <b>#{{ $order->order_reference }}</b></a> -
-                                @lang("Order.user_registered_n_tickets", ["name"=>$order->full_name,
+                                {!! @trans("Order.user_registered_n_tickets", ["name"=>$order->full_name,
                                 "url"=>route('showEventAttendees', ['event_id'=>$order->event->id,'q'=>$order->order_reference]),
-                                 "n"=>$order->attendees()->withTrashed()->count()])
+                                 "n"=>$order->attendees()->withTrashed()->count()])!!}
                             </p>
                             <h6>
                                 {{ $order->created_at->diffForHumans() }} &bull; <span

@@ -6,7 +6,7 @@
 @stop
 
 @section('page_title')
-    @lang("Organiser.organiser_name_events", ["name"=>$organiser->name])
+    {!! @trans("Organiser.organiser_name_events", ["name"=>$organiser->name])!!}
 @stop
 
 @section('top_nav')
@@ -99,10 +99,14 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <p class="control-label">{!! trans("Organiser.organiser_tax_prompt") !!}</p>
-                                <label for="Yes" class="control-label" id="charge_yes">{!! trans("Organiser.yes") !!}</label>
-                                <input id="charge_yes" name="charge_tax" type="radio" value="1" {{ $organiser->charge_tax == 1 ? 'checked' : '' }}>
-                                <label for="No" class="control-label" id="charge_no">{!! trans("Organiser.no") !!}</label>
-                                <input id="charge_yes" name="charge_tax" type="radio" value="0" {{ $organiser->charge_tax == 0 ? 'checked' : '' }}>
+                                <label for="Yes" class="control-label"
+                                       id="charge_yes">{!! trans("Organiser.yes") !!}</label>
+                                <input id="charge_yes" name="charge_tax" type="radio"
+                                       value="1" {{ $organiser->charge_tax == 1 ? 'checked' : '' }}>
+                                <label for="No" class="control-label"
+                                       id="charge_no">{!! trans("Organiser.no") !!}</label>
+                                <input id="charge_yes" name="charge_tax" type="radio"
+                                       value="0" {{ $organiser->charge_tax == 0 ? 'checked' : '' }}>
                             </div>
                         </div>
                         <div id="tax_fields">

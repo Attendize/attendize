@@ -1,4 +1,4 @@
-<div role="dialog"  class="modal fade " style="display: none;">
+<div role="dialog" class="modal fade " style="display: none;">
     {!! Form::model($ticket, ['url' => route('postEditTicket', ['ticket_id' => $ticket->id, 'event_id' => $event->id]), 'class' => 'ajax']) !!}
     <div class="modal-dialog">
         <div class="modal-content">
@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal">×</button>
                 <h3 class="modal-title">
                     <i class="ico-ticket"></i>
-                    @lang("ManageEvent.edit_ticket", ["title"=>$ticket->title])</h3>
+                    {!! @trans("ManageEvent.edit_ticket", ["title"=>$ticket->title])!!}</h3>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -83,13 +83,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('min_per_person', trans("ManageEvent.minimum_tickets_per_order"), array('class'=>' control-label')) !!}
-                           {!! Form::selectRange('min_per_person', 1, 100, null, ['class' => 'form-control']) !!}
+                            {!! Form::selectRange('min_per_person', 1, 100, null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('max_per_person', trans("ManageEvent.maximum_tickets_per_order"), array('class'=>' control-label')) !!}
-                           {!! Form::selectRange('max_per_person', 1, 100, null, ['class' => 'form-control']) !!}
+                            {!! Form::selectRange('max_per_person', 1, 100, null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                 </div>
@@ -113,6 +113,6 @@
                 {!! Form::submit(trans("ManageEvent.save_ticket"), ['class'=>"btn btn-success"]) !!}
             </div>
         </div><!-- /end modal content-->
-       {!! Form::close() !!}
+        {!! Form::close() !!}
     </div>
 </div>

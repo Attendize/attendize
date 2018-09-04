@@ -5,7 +5,7 @@
             <li>
                 <a href="{{route('showOrganiserDashboard', ['organiser_id' => $event->organiser->id])}}">
                     <span class="figure"><i class="ico-arrow-left"></i></span>
-                    <span class="text">@lang("basic.back_to_page", ["page"=>$event->organiser->name])</span>
+                    <span class="text">{!! @trans("basic.back_to_page", ["page"=>$event->organiser->name])!!}</span>
                 </a>
             </li>
         </ul>

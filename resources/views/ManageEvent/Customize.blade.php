@@ -442,7 +442,7 @@
                             'placeholder' => trans("Fees.service_fee_fixed_price_placeholder")
                         ])  !!}
                         <div class="help-block">
-                            @lang("Fees.service_fee_fixed_price_help", ["cur"=>$event->currency_symbol])
+                            {!! @trans("Fees.service_fee_fixed_price_help", ["cur"=>$event->currency_symbol]) !!}
                         </div>
                     </div>
                     <div class="panel-footer mt15 text-right">
