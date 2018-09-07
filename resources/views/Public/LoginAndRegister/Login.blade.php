@@ -25,17 +25,18 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('password', trans("User.password"), ['class' => 'control-label']) !!}
-                        (<a class="forgotPassword" href="{{route('forgotPassword')}}" tabindex="-1">@lang("User.forgot_password?")</a>)
+                        (<a class="forgotPassword" href="{{route('forgotPassword')}}"
+                            tabindex="-1">@lang("User.forgot_password?")</a>)
                         {!! Form::password('password',  ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-block btn-success">@lang("User.login")</button>
+                        <button type="submit" class="btn btn-block btn-success">{!! trans("User.login") !!}</button>
                     </div>
 
                     @if(Utils::isAttendize())
-                    <div class="signup">
-                        <span>@lang("User.dont_have_account_button", ["url"=> route('showSignup')])</span>
-                    </div>
+                        <div class="signup">
+                            <span>{!! @trans('User.dont_have_account_button', ["url"=> route('showSignup')]) !!}</span>
+                        </div>
                     @endif
                 </div>
             </div>

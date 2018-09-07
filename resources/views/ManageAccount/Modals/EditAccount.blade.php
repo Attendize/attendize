@@ -1,4 +1,4 @@
-<div role="dialog"  class="modal fade" style="display: none;">
+<div role="dialog" class="modal fade" style="display: none;">
     <style>
         .account_settings .modal-body {
             border: 0;
@@ -30,7 +30,8 @@
                     <div class="col-md-12">
                         <!-- tab -->
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#general_account" data-toggle="tab">@lang("ManageAccount.general")</a></li>
+                            <li class="active"><a href="#general_account"
+                                                  data-toggle="tab">@lang("ManageAccount.general")</a></li>
                             <li><a href="#payment_account" data-toggle="tab">@lang("ManageAccount.payment")</a></li>
                             <li><a href="#users_account" data-toggle="tab">@lang("ManageAccount.users")</a></li>
                             <li><a href="#about" data-toggle="tab">@lang("ManageAccount.about")</a></li>
@@ -145,9 +146,9 @@
                                 </h4>
                                 <p>
                                     @if($version_info['is_outdated'])
-                                        @lang("ManageAccount.version_out_of_date", ["installed" => $version_info['installed'], "latest"=> $version_info['latest'], "url"=>"https://attendize.com/documentation.php#download"]).
+                                        {!! @trans("ManageAccount.version_out_of_date", ["installed" => $version_info['installed'], "latest"=> $version_info['latest'], "url"=>"https://attendize.com/documentation.php#download"]).!!}
                                     @else
-                                        @lang("ManageAccount.version_up_to_date", ["installed" => $version_info['installed']])
+                                        {!! @trans("ManageAccount.version_up_to_date", ["installed" => $version_info['installed']]) !!}
                                     @endif
                                 </p>
 

@@ -10,7 +10,7 @@
             {!! Form::open(array('url' => route("showSignup"), 'class' => 'panel')) !!}
             <div class="panel-body">
                 <div class="logo">
-                   {!! HTML::image('assets/images/logo-dark.png') !!}
+                    {!! HTML::image('assets/images/logo-dark.png') !!}
                 </div>
                 <h2>@lang("User.sign_up")</h2>
 
@@ -64,23 +64,23 @@
                 </div>
 
                 @if(Utils::isAttendize())
-                <div class="form-group {{ ($errors->has('terms_agreed')) ? 'has-error' : '' }}">
-                    <div class="checkbox custom-checkbox">
-                        {!! Form::checkbox('terms_agreed', Input::old('terms_agreed'), false, ['id' => 'terms_agreed']) !!}
-                        {!! Form::rawLabel('terms_agreed', trans("User.terms_and_conditions", ["url"=>route('termsAndConditions')])) !!}
-                        @if ($errors->has('terms_agreed'))
-                            <p class="help-block">{{ $errors->first('terms_agreed') }}</p>
-                        @endif
+                    <div class="form-group {{ ($errors->has('terms_agreed')) ? 'has-error' : '' }}">
+                        <div class="checkbox custom-checkbox">
+                            {!! Form::checkbox('terms_agreed', Input::old('terms_agreed'), false, ['id' => 'terms_agreed']) !!}
+                            {!! Form::rawLabel('terms_agreed', trans("User.terms_and_conditions", ["url"=>route('termsAndConditions')])) !!}
+                            @if ($errors->has('terms_agreed'))
+                                <p class="help-block">{{ $errors->first('terms_agreed') }}</p>
+                            @endif
+                        </div>
                     </div>
-                </div>
                 @endif
 
                 <div class="form-group ">
-                   {!! Form::submit(trans("User.sign_up"), array('class'=>"btn btn-block btn-success")) !!}
+                    {!! Form::submit(trans("User.sign_up"), array('class'=>"btn btn-block btn-success")) !!}
                 </div>
-                    <div class="signup">
-                        <span>@lang("User.already_have_account", ["url"=>route("login")])</span>
-                    </div>
+                <div class="signup">
+                    <span>{!! @trans("User.already_have_account", ["url"=>route("login")])!!}</span>
+                </div>
             </div>
             {!! Form::close() !!}
         </div>

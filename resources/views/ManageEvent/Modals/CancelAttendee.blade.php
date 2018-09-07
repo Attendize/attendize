@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h3 class="modal-title">
                     <i class="ico-cancel"></i>
-                    @lang("ManageEvent.cancel_attendee_title", ["cancel"=> $attendee->full_name])</h3>
+                    {!! @trans("ManageEvent.cancel_attendee_title", ["cancel"=> $attendee->full_name])!!}</h3>
             </div>
             <div class="modal-body">
                 <p>
@@ -14,26 +14,26 @@
                 </p>
 
                 <p>
-                    @lang("ManageEvent.cancel_refund", ["url"=>route('showEventOrders', ['event_id' => $attendee->event->id, 'q' => $attendee->order->order_reference])])
-                </p>
-                <br>
-                <div class="form-group">
-                    <div class="checkbox custom-checkbox">
-                        <input type="checkbox" name="notify_attendee" id="notify_attendee" value="1">
-                        <label for="notify_attendee">&nbsp;&nbsp;@lang("ManageEvent.cancel_notify", ["name"=>$attendee->full_name])</label>
-                    </div>
+                {!! @trans("ManageEvent.cancel_refund", ["url"=>route('showEventOrders', ['event_id' => $attendee->event->id, 'q' => $attendee->order->order_reference])])!!}
+            </p>
+            <br>
+            <div class="form-group">
+                <div class="checkbox custom-checkbox">
+                    <input type="checkbox" name="notify_attendee" id="notify_attendee" value="1">
+                    <label for="notify_attendee">&nbsp;&nbsp;{!! @trans("ManageEvent.cancel_notify", ["name"=>$attendee->full_name])!!}</label>
                 </div>
-                @if(config('attendize.default_payment_gateway') == config('attendize.payment_gateway_stripe'))
-                    <div class="form-group">
-                            <div class="checkbox custom-checkbox">
-                                <input type="checkbox" name="refund_attendee" id="refund_attendee" value="1">
-                                <label for="refund_attendee">&nbsp;&nbsp;@lang("ManageEvent.cancel_refund_user", ["name"=>$attendee->full_name])</label>
-                            </div>
-                    </div>
-                @endif
-            </div> <!-- /end modal body-->
-            <div class="modal-footer">
-               {!! Form::hidden('attendee_id', $attendee->id) !!}
+            </div>
+            @if(config('attendize.default_payment_gateway') == config('attendize.payment_gateway_stripe'))
+                <div class="form-group">
+                        <div class="checkbox custom-checkbox">
+                            <input type="checkbox" name="refund_attendee" id="refund_attendee" value="1">
+                            <label for="refund_attendee">&nbsp;&nbsp;{!! @trans("ManageEvent.cancel_refund_user", ["name"=>$attendee->full_name])!!}</label>
+                        </div>
+                </div>
+            @endif
+        </div> <!-- /end modal body-->
+        <div class="modal-footer">
+           {!! Form::hidden('attendee_id', $attendee->id) !!}
                {!! Form::button(trans("basic.cancel"), ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}
                {!! Form::submit(trans("ManageEvent.confirm_cancel"), ['class'=>"btn btn-success"]) !!}
             </div>

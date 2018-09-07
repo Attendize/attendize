@@ -7,7 +7,7 @@
 
     @if($event->end_date->isPast())
         <div class="alert alert-boring">
-            @lang("Public_ViewEvent.event_already", ['started' => trans('Public_ViewEvent.event_already_ended')])
+            {!! @trans("Public_ViewEvent.event_already", ['started' => trans('Public_ViewEvent.event_already_ended')])!!}
         </div>
     @else
 
@@ -91,11 +91,11 @@
                                     </tr>
                                 @endforeach
 
-                                    <tr>
-                                        <td colspan="3" style="text-align: center">
-                                            @lang("Public_ViewEvent.below_tickets")
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align: center">
+                                        @lang("Public_ViewEvent.below_tickets")
+                                    </td>
+                                </tr>
                                 <tr class="checkout">
                                     <td colspan="3">
                                         @if(!$is_free_event)

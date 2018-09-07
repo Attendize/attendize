@@ -168,7 +168,8 @@
                                     <td>
                                         {{ $question->title }}<br>
                                         <span style="font-size: 11px; color: #888;"
-                                              class="muted">@lang("Surveys.tickets_list", ["list"=>implode(', ', array_column($question->tickets->toArray(), 'title'))])</span>
+                                              class="muted">
+                                            {!! @trans("Surveys.tickets_list", ["list"=>implode(', ', array_column($question->tickets->toArray(), 'title'))]) !!}</span>
                                     </td>
                                     <td>
                                         {{ $question->is_required ? 'Yes' : 'No' }}
