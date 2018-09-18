@@ -27,6 +27,7 @@ services:
       - redis
     volumes:
       - .:/usr/share/nginx/html/attendize
+      - ./vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib/wkhtmltopdf-amd64:/usr/local/bin/wkhtmltopdf-amd64
     networks: 
       - attendizenet
   composer:
@@ -49,6 +50,7 @@ services:
       - redis
     volumes:
       - .:/usr/share/nginx/html/attendize
+      - ./vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib/wkhtmltopdf-amd64:/usr/local/bin/wkhtmltopdf-amd64
     command: php artisan queue:work --daemon
     networks:
       - attendizenet
@@ -67,6 +69,21 @@ services:
       - "3306:3306"
     volumes:
       - "mysql-data:/var/lib/mysql"
+    networks:
+    - attendizenet
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    env_file:
+      - ./.env
+    environment:
+      PMA_HOST: ${DB_HOST}
+      PMA_PORT: ${DB_PORT}
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+    - 8088:80
+    depends_on:
+    - db
     networks:
     - attendizenet
   maildev:
