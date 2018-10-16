@@ -36,6 +36,7 @@ return array (
   'expiry_year' => 'Expiry year',
   'first_name' => 'First name',
   'free' => 'FREE',
+  'Grand Total' => 'Grand Total',
   'inc_fees' => '(inc. :fees Fees)',
   'last_name' => 'Last name',
   'offline_payment_instructions' => 'Offline payment instructions',
