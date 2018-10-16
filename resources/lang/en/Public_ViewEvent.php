@@ -1,6 +1,6 @@
 <?php
 
-return array (
+return [
   'Contact' => 'Contact',
   'DETAILS' => 'DETAILS',
   'Facebook' => 'Facebook',
@@ -37,7 +37,7 @@ return array (
   'first_name' => 'First name',
   'free' => 'FREE',
   'Grand Total' => 'Grand Total',
-  'inc_fees' => '(inc. :fees Fees)',
+  'inc_fees' => 'Booking Fees',
   'last_name' => 'Last name',
   'offline_payment_instructions' => 'Offline payment instructions',
   'offline_payment_methods_available' => 'Offline Payment Methods Available',
@@ -76,4 +76,4 @@ return array (
   'your_message' => 'Your message',
   'your_name' => 'Your name',
   'your' => 'Your'
-);
+];
