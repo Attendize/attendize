@@ -15,6 +15,7 @@ class OrganiserController extends MyBaseController
      */
     public function showSelectOrganiser()
     {
+
         return view('ManageOrganiser.SelectOrganiser');
     }
 

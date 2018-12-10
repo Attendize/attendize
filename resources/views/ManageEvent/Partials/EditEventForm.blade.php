@@ -4,14 +4,24 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="form-group">
-            {!! Form::label('is_live', trans("Event.event_visibility"), array('class'=>'control-label required')) !!}
-            {!!  Form::select('is_live', [
-            '1' => trans("Event.vis_public"),
-            '0' => trans("Event.vis_hide")],null,
-                                        array(
-                                        'class'=>'form-control'
-                                        ))  !!}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {!! Form::label('category',trans('Category.event_category'), array('class'=>'control-label required')) !!}
+                    {!! Form::select('category_id',$categories, $event->category_id, ['class' => 'form-control']) !!}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {!! Form::label('is_live', trans("Event.event_visibility"), array('class'=>'control-label required')) !!}
+                    {!!  Form::select('is_live', [
+                    '1' => trans("Event.vis_public"),
+                    '0' => trans("Event.vis_hide")],null,
+                                                array(
+                                                'class'=>'form-control'
+                                                ))  !!}
+                </div>
+            </div>
         </div>
         <div class="form-group">
             {!! Form::label('title', trans("Event.event_title"), array('class'=>'control-label required')) !!}

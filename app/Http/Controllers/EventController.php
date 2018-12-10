@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Event;
 use App\Models\EventImage;
 use App\Models\Organiser;
@@ -24,6 +25,7 @@ class EventController extends MyBaseController
         $data = [
             'modal_id'     => $request->get('modal_id'),
             'organisers'   => Organiser::scope()->pluck('name', 'id'),
+            'categories'   => Category::pluck(trans('Category.category_title'),'id'),
             'organiser_id' => $request->get('organiser_id') ? $request->get('organiser_id') : false,
         ];
 
@@ -50,7 +52,7 @@ class EventController extends MyBaseController
         $event->title = $request->get('title');
         $event->description = strip_tags($request->get('description'));
         $event->start_date = $request->get('start_date');
-
+        $event->category_id = $request->get('category_id');
         /*
          * Venue location info (Usually auto-filled from google maps)
          */
@@ -223,7 +225,7 @@ class EventController extends MyBaseController
         $event->title = $request->get('title');
         $event->description = strip_tags($request->get('description'));
         $event->start_date = $request->get('start_date');
-
+        $event->category_id = $request->get('category_id');
         /*
          * If the google place ID is the same as before then don't update the venue
          */

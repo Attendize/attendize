@@ -1,0 +1,277 @@
+/* Hide the browser's default checkbox */
+		.containerq input {
+		    position: absolute;
+		    opacity: 0;
+		    cursor: pointer;
+		    height: 0;
+		    width: 0;
+		}
+
+		/* Create a custom checkbox */
+		.checkmark {
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    height: 25px;
+		    width: 25px;
+		    background-color: #ffffff;
+		    border-radius: 5px;
+		    border: 1px solid #000000;
+		}
+
+		/* On mouse-over, add a grey background color */
+		.containerq:hover input ~ .checkmark {
+		    background-color: #ccc;
+
+		}
+
+		/* When the checkbox is checked, add a blue background */
+		.containerq input:checked ~ .checkmark {
+		    background-color: #2196F3;
+
+		}
+
+		/* Create the checkmark/indicator (hidden when not checked) */
+		.checkmark:after {
+		    content: "";
+		    position: absolute;
+		    display: none;
+		}
+
+		/* Show the checkmark when checked */
+		.containerq input:checked ~ .checkmark:after {
+		    display: block;
+		}
+
+		/* Style the checkmark/indicator */
+		.containerq .checkmark:after {
+		    left: 9px;
+		    top: 5px;
+		    width: 5px;
+		    height: 10px;
+		    border: solid white;
+		    border-width: 0 3px 3px 0;
+		    -webkit-transform: rotate(45deg);
+		    -ms-transform: rotate(45deg);
+		    transform: rotate(45deg);
+		}
+		.containerq input:checked ~ .checkmark {
+		    background-color: #44405f;
+		}
+
+
+		.middle {
+          width: 100%;
+          text-align: left;
+          /* Made by */
+          }
+          .middle h1 {
+          font-family: "Dax", sans-serif;
+          color: #fff;
+          }
+          .middle input[type="radio"] {
+          display: none;
+          }
+          .middle input[type="radio"]:checked + .box {
+          background-color: #FF4159;
+          border: 1px solid #c2c2c200;
+          margin-left: 1.5px;
+          margin-right: 1.5px;
+          }
+          .middle input[type="radio"]:checked + .box span {
+          color: white;
+          transform: translateY(25px);
+          }
+          .middle input[type="radio"]:checked + .box span:before {
+          transform: translateY(0px);
+          opacity: 1;
+          }
+          .middle .box {
+          width: 130px;
+          height: 130px;
+          background-color: #fff;
+          transition: all 250ms ease;
+          will-change: transition;
+          display: inline-block;
+          text-align: center;
+          cursor: pointer;
+          position: relative;
+          font-family: "Dax", sans-serif;
+          font-weight: 400;
+          border: 1px solid #C2C2C2;
+          border-radius: 23px;
+          margin-left: 1.5px;
+          margin-right: 1.5px;
+          }
+          .middle .box:active {
+          transform: translateY(10px);
+          }
+          .middle .box span {
+          position: absolute;
+          transform: translate(0, 30px);
+          left: 0;
+          right: 0;
+          transition: all 300ms ease;
+          font-size: 1.7em;
+          user-select: none;
+          color: #5E636A;
+          }
+          .middle .box span:before {
+          font-size: 1.2em;
+          font-family: FontAwesome;
+          display: block;
+          transform: translateY(-80px);
+          opacity: 0;
+          transition: all 300ms ease-in-out;
+          font-weight: normal;
+          color: white;
+          }
+
+          .middle p {
+          color: #fff;
+          font-family: "Dax", sans-serif;
+          font-weight: 400;
+          }
+          .middle p span:after {
+          content: '\f0e7';
+          font-family: FontAwesome;
+          color: yellow;
+          }
+          .date {
+            position: absolute;
+            transform: translate(0, 70px) !important;
+            left: 0;
+            right: 0;
+            transition: all 300ms ease;
+            font-size: 1.5em;
+            user-select: none;
+            color: #5E636A;
+            margin-right: 5px;
+          }
+          
+
+
+/*for time radio button*/
+
+          .middleq {
+          width: 100%;
+          text-align: left;
+          /* Made by */
+          }
+          .middleq h1 {
+          font-family: "Dax", sans-serif;
+          color: #fff;
+          }
+          .middleq input[type="radio"] {
+          display: none;
+          }
+          .middleq input[type="radio"]:checked + .box {
+          background-color: #FF4159;
+          border: 1px solid #c2c2c200;
+          margin-left: 1.5px;
+          margin-right: 1.5px;
+          }
+          .middleq input[type="radio"]:checked + .box span {
+          color: white;
+          transform: translateY(7px);
+          }
+          .middleq input[type="radio"]:checked + .box span:before {
+          transform: translateY(0px);
+          opacity: 1;
+          }
+          .middleq .box {
+          width: 160px;
+    	  height: 50px;
+          background-color: #fff;
+          transition: all 250ms ease;
+          will-change: transition;
+          display: inline-block;
+          text-align: center;
+          cursor: pointer;
+          position: relative;
+          font-family: "Dax", sans-serif;
+          font-weight: 400;
+          border: 1px solid #C2C2C2;
+          border-radius: 16px;
+          margin-left: 1.5px;
+          margin-right: 1.5px;
+          }
+          .middleq .box:active {
+          transform: translateY(5px);
+          }
+          .middleq .box span {
+          position: absolute;
+          transform: translate(0, 5px);
+          left: 0;
+          right: 0;
+          transition: all 300ms ease;
+          font-size: 1.7em;
+          user-select: none;
+          color: #5E636A;
+          }
+          .middleq .box span:before {
+          font-size: 1.2em;
+          font-family: FontAwesome;
+          display: block;
+          transform: translateY(-80px);
+          opacity: 0;
+          transition: all 300ms ease-in-out;
+          font-weight: normal;
+          color: white;
+          }
+
+          .middleq p {
+          color: #fff;
+          font-family: "Dax", sans-serif;
+          font-weight: 400;
+          }
+          .middleq p span:after {
+          content: '\f0e7';
+          font-family: FontAwesome;
+          color: yellow;
+          }
+          .dateq {
+            position: absolute;
+            transform: translate(0, 70px) !important;
+            left: 0;
+            right: 0;
+            transition: all 300ms ease;
+            font-size: 1.5em;
+            user-select: none;
+            color: #5E636A;
+            margin-right: 5px;
+          }
+        .u-accordion-brd-primary .u-accordion__header [aria-expanded="true"] {
+            border-color: #868E96 !important;
+        }
+
+        .u-accordion-color-primary .u-accordion__header [aria-expanded="true"] {
+            color: #060606 !important;
+        }
+		::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            font-weight: 600; /* Firefox */
+	      }
+
+	      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+	        font-weight: 600;
+	      }
+
+	      ::-ms-input-placeholder { /* Microsoft Edge */
+	        font-weight: 600;
+	      }
+
+	      input.other::-webkit-input-placeholder { font-weight: 400;text-align: center;font-size: 22px;}
+	      input.other::-moz-placeholder { font-weight: 400;text-align: center;font-size: 22px; }
+	      input.other:-ms-input-placeholder { font-weight: 400;text-align: center;font-size: 22px; }
+	      input.other:-moz-placeholder { font-weight: 400;text-align: center; font-size: 22px;}
+
+	      input.otherq::-webkit-input-placeholder { font-weight: 400;text-align: left;font-size: 22px;color: #5C5C5C;}
+	      input.otherq::-moz-placeholder { font-weight: 400;text-align: left;font-size: 22px;color: #5C5C5C; }
+	      input.otherq:-ms-input-placeholder { font-weight: 400;text-align: left;font-size: 22px;color: #5C5C5C; }
+	      input.otherq:-moz-placeholder { font-weight: 400;text-align: left; font-size: 22px;color: #5C5C5C;}
+
+
+	      input[type=text]:focus {
+	        border: 2px solid #44405f;
+	      }
+          

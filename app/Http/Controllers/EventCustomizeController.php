@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Event;
 use File;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class EventCustomizeController extends MyBaseController
             'available_bg_images'        => $this->getAvailableBackgroundImages(),
             'available_bg_images_thumbs' => $this->getAvailableBackgroundImagesThumbs(),
             'tab'                        => $tab,
+            'categories'                 => Category::pluck(trans('Category.category_title'),'id')
         ]);
 
         return view('ManageEvent.Customize', $data);
