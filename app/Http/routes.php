@@ -120,6 +120,15 @@ Route::group(
     /*
      * Public event page routes
      */
+    Route::group(['prefix' => 'category'], function () {
+        /**
+         * Events by category
+         */
+        Route::get('/{category_id}', [
+            'as'   => 'showCategoryEventsPage',
+            'uses' => 'PublicController@showCategoryEvents',
+        ]);
+    });
     Route::group(['prefix' => 'e'], function () {
 
         /*
@@ -694,12 +703,12 @@ Route::group(
             ]);
         });
     });
-
-    Route::get('/', function () {
-        return Redirect::route('showSelectOrganiser');
-        // I prefer it that way:
-        // return Redirect::route('showOrganiserHome', ["organiser_id"=>1]);
-    });
+    Route::get('/','PublicController@showHomePage');
+//    Route::get('/', function () {
+//        return Redirect::route('showSelectOrganiser');
+//        // I prefer it that way:
+//        // return Redirect::route('showOrganiserHome', ["organiser_id"=>1]);
+//    });
 
     Route::get('/terms_and_conditions', [
         'as' => 'termsAndConditions',
