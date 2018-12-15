@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AttendeesExport;
 use App\Jobs\GenerateTicket;
 use App\Jobs\SendAttendeeInvite;
 use App\Jobs\SendAttendeeTicket;
@@ -12,8 +13,8 @@ use App\Models\EventStats;
 use App\Models\Message;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Services\Order as OrderService;
 use App\Models\Ticket;
+use App\Services\Order as OrderService;
 use Auth;
 use Config;
 use DB;
@@ -566,62 +567,12 @@ class EventAttendeesController extends MyBaseController
      *
      * @param $event_id
      * @param string $export_as (xlsx, xls, csv, html)
+     *
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function showExportAttendees($event_id, $export_as = 'xls')
     {
-
-        Excel::create('attendees-as-of-' . date('d-m-Y-g.i.a'), function ($excel) use ($event_id) {
-
-            $excel->setTitle('Attendees List');
-
-            // Chain the setters
-            $excel->setCreator(config('attendize.app_name'))
-                ->setCompany(config('attendize.app_name'));
-
-            $excel->sheet('attendees_sheet_1', function ($sheet) use ($event_id) {
-                DB::connection();
-                $data = DB::table('attendees')
-                    ->where('attendees.event_id', '=', $event_id)
-                    ->where('attendees.is_cancelled', '=', 0)
-                    ->where('attendees.account_id', '=', Auth::user()->account_id)
-                    ->join('events', 'events.id', '=', 'attendees.event_id')
-                    ->join('orders', 'orders.id', '=', 'attendees.order_id')
-                    ->join('tickets', 'tickets.id', '=', 'attendees.ticket_id')
-                    ->select([
-                        'attendees.first_name',
-                        'attendees.last_name',
-                        'attendees.email',
-			'attendees.private_reference_number',
-                        'orders.order_reference',
-                        'tickets.title',
-                        'orders.created_at',
-                        DB::raw("(CASE WHEN attendees.has_arrived THEN 'YES' ELSE 'NO' END) AS has_arrived"),
-                        'attendees.arrival_time',
-                    ])->get();
-
-                $data = array_map(function($object) {
-                    return (array)$object;
-                }, $data->toArray());
-
-                $sheet->fromArray($data);
-                $sheet->row(1, [
-                    'First Name',
-                    'Last Name',
-                    'Email',
-		    'Ticket ID',
-                    'Order Reference',
-                    'Ticket Type',
-                    'Purchase Date',
-                    'Has Arrived',
-                    'Arrival Time',
-                ]);
-
-                // Set gray background on first row
-                $sheet->row(1, function ($row) {
-                    $row->setBackground('#f5f5f5');
-                });
-            });
-        })->export($export_as);
+        return (new AttendeesExport($event_id))->download('Attendees.' . $export_as);
     }
 
     /**
@@ -863,7 +814,7 @@ class EventAttendeesController extends MyBaseController
      *
      * @param Request $request
      * @param $attendee_id
-     * @return bool
+     * @return \Illuminate\Http\Response
      */
     public function showAttendeeTicket(Request $request, $attendee_id)
     {
@@ -874,13 +825,13 @@ class EventAttendeesController extends MyBaseController
             'event'     => $attendee->event,
             'tickets'   => $attendee->ticket,
             'attendees' => [$attendee],
-            'css'       => file_get_contents(public_path('assets/stylesheet/ticket.css')),
+            'css'       => file_get_contents(public_path('css/ticket.css')),
             'image'     => base64_encode(file_get_contents(public_path($attendee->event->organiser->full_logo_path))),
 
         ];
 
         if ($request->get('download') == '1') {
-            return PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, 'Tickets');
+            return PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data)->download('Tickets.pdf');
         }
         return view('Public.ViewEvent.Partials.PDFTicket', $data);
     }
