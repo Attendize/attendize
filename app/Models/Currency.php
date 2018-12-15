@@ -13,6 +13,7 @@ namespace App\Models;
  */
 class Currency extends \Illuminate\Database\Eloquent\Model
 {
+    use \Backpack\CRUD\CrudTrait;
     /**
      * Indicates whether the model should be timestamped.
      *

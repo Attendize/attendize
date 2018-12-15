@@ -10,6 +10,7 @@ use Image;
 
 class Organiser extends MyBaseModel implements AuthenticatableContract
 {
+    use \Backpack\CRUD\CrudTrait;
     use Authenticatable;
     /**
      * The validation rules for the model.

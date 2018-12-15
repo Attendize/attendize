@@ -10,7 +10,7 @@ use URL;
 class Event extends MyBaseModel
 {
     use SoftDeletes;
-
+    use \Backpack\CRUD\CrudTrait;
     protected $dates = ['start_date', 'end_date', 'on_sale_date'];
 
     /**

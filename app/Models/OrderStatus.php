@@ -13,5 +13,6 @@ namespace App\Models;
  */
 class OrderStatus extends \Illuminate\Database\Eloquent\Model
 {
+    use \Backpack\CRUD\CrudTrait;
     public $timestamps = false;
 }

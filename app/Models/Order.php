@@ -9,7 +9,7 @@ use PDF;
 class Order extends MyBaseModel
 {
     use SoftDeletes;
-
+    use \Backpack\CRUD\CrudTrait;
     /**
      * The validation rules of the model.
      *

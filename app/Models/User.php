@@ -10,10 +10,12 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Backpack\CRUD\CrudTrait;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword, SoftDeletes, Notifiable;
+    use Authenticatable, CanResetPassword, SoftDeletes, Notifiable, HasRoles, CrudTrait;
 
     /**
      * The database table used by the model.

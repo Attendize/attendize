@@ -13,5 +13,6 @@ namespace App\Models;
  */
 class EventImage extends MyBaseModel
 {
+    use \Backpack\CRUD\CrudTrait;
     //put your code here.
 }

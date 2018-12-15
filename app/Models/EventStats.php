@@ -7,6 +7,7 @@ use DB;
 
 class EventStats extends \Illuminate\Database\Eloquent\Model
 {
+    use \Backpack\CRUD\CrudTrait;
     /**
      * Indicates if the model should be timestamped.
      *
