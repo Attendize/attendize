@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -44,7 +46,7 @@ return [
     |
     */
 
-    'encrypt' => env('SESSION_ENCRYPTED', false),
+    'encrypt' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +59,7 @@ return [
     |
     */
 
-    'files' => storage_path().'/framework/sessions',
+    'files' => storage_path('framework/sessions'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,6 +97,7 @@ return [
     | correspond with one of the application's configured cache stores.
     |
     */
+
     'store' => env('SESSION_STORE', null),
 
     /*
@@ -120,9 +123,10 @@ return [
     | new session cookie is created by the framework for every driver.
     |
     */
+
     'cookie' => env(
         'SESSION_COOKIE',
-        str_slug(env('APP_NAME', 'laravel'), '_').'_session'
+        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
     ),
 
     /*
@@ -174,6 +178,7 @@ return [
     | the HTTP protocol. You are free to modify this option if needed.
     |
     */
+
     'http_only' => true,
 
     /*
@@ -188,5 +193,7 @@ return [
     | Supported: "lax", "strict"
     |
     */
+
     'same_site' => null,
+
 ];
