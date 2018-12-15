@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Organiser;
+use Tests\TestCase;
 
 class OrganiserCustomizeTest extends TestCase
 {
@@ -15,14 +16,14 @@ class OrganiserCustomizeTest extends TestCase
         $organiser = factory(App\Models\Organiser::class)->create();
 
         $this->actingAs($organiser)
-            ->visit(route('showOrganiserCustomize', ['organiser_id' => $organiser->id]))
+            ->get(route('showOrganiserCustomize', ['organiser_id' => $organiser->id]))
             ->type($this->faker->name, 'name')
             ->type($this->faker->email, 'email')
             ->type($this->faker->word, 'facebook')
             ->type($this->faker->word, 'twitter')
             ->press('Save Organiser')
-            ->seeJson([
+            ->assertJson(json_encode([
                 'status' => 'success'
-            ]);
+            ]));
     }
 }

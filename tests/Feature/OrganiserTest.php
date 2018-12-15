@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Organiser;
+use Tests\TestCase;
 
 class OrganiserTest extends TestCase
 {
@@ -16,14 +17,14 @@ class OrganiserTest extends TestCase
         $email = $this->faker->email;
 
         $this->actingAs($this->test_user)
-            ->visit(route('showCreateOrganiser'))
+            ->get(route('showCreateOrganiser'))
             ->type($this->faker->name, 'name')
             ->type($email, 'email')
             ->type('No', 'charge_tax')
             ->press('Create Organiser')
-            ->seeJson([
+            ->assertJson(json_encode([
                 'status' => 'success'
-            ]);
+            ]));
 
         //get the most recently created organiser from database
         $this->organiser = Organiser::where('email','=', $email)->orderBy('created_at', 'desc')->first();
@@ -39,7 +40,7 @@ class OrganiserTest extends TestCase
         $email = $this->faker->email;
 
         $this->actingAs($this->test_user)
-            ->visit(route('showCreateOrganiser'))
+            ->get(route('showCreateOrganiser'))
             ->type($this->faker->name, 'name')
             ->type($email, 'email')
             ->type('organisers', 'tax_name')
@@ -47,9 +48,9 @@ class OrganiserTest extends TestCase
             ->type(15, 'tax_value')
             ->type('Yes', 'charge_tax')
             ->press('Create Organiser')
-            ->seeJson([
+            ->assertJson(json_encode([
                 'status' => 'success'
-            ]);
+            ]));
 
         //get the most recently created organiser from database
         $this->organiser = Organiser::where('email','=', $email)->orderBy('created_at', 'desc')->first();
@@ -63,13 +64,13 @@ class OrganiserTest extends TestCase
     public function test_create_organiser_fails_when_organiser_details_missing()
     {
         $this->actingAs($this->test_user)
-            ->visit(route('showCreateOrganiser'))
+            ->get(route('showCreateOrganiser'))
             ->type('', 'name')
             ->type('', 'email')
             ->type('No', 'charge_tax')
             ->press('Create Organiser')
-            ->seeJson([
+            ->assertJson(json_encode([
                 'status' => 'error'
-            ]);
+            ]));
     }
 }

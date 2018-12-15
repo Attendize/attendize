@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Organiser;
+use Tests\TestCase;
 
 class OrganiserEventsTest extends TestCase
 {
@@ -24,9 +25,9 @@ class OrganiserEventsTest extends TestCase
         ]);
 
         $this->actingAs($this->test_user)
-            ->visit(route('showOrganiserEvents', ['organiser_id' => $organiser->id]))
-            ->see($event1->title)
-            ->see($event2->title)
-            ->see('2 events');
+            ->get(route('showOrganiserEvents', ['organiser_id' => $organiser->id]))
+            ->assertSee($event1->title)
+            ->assertSee($event2->title)
+            ->assertSee('2 events');
     }
 }

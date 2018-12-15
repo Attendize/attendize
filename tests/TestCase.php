@@ -1,10 +1,17 @@
 <?php
 
+namespace Tests;
+
 use App\Models\Timezone;
 use App\Models\User;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 
-class TestCase extends Illuminate\Foundation\Testing\TestCase
+abstract class TestCase extends BaseTestCase
 {
+    use CreatesApplication;
+
     /**
      * The base URL to use while testing the application.
      *
@@ -48,19 +55,20 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
         $app->loadEnvironmentFrom('.env.testing');
-        $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+        $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
         return $app;
     }
 
-    public function setUp(){
+    public function setUp()
+    {
         parent::setUp();
 
         /*
          * Set up faker
          */
-        $this->faker = Faker\Factory::create();
+        $this->faker = \Faker\Factory::create();
 
         /*
          * Migrate & Seed the DB
@@ -73,18 +81,19 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         /*
          * Set up our test user
          */
-        if(User::where('email','=','test@test.test')->count() === 0) {
-            $this->test_user = factory(App\Models\User::class)->create([
+        if (User::where('email', '=', 'test@test.test')->count() === 0) {
+            $this->test_user = factory(User::class)->create([
                 'email'    => $this->test_user_email,
                 'password' => Hash::make($this->test_user_password),
             ]);
         } else {
-            $this->test_user = User::where('email','=','test@test.test')->first();
+            $this->test_user = User::where('email', '=', 'test@test.test')->first();
         }
 
     }
 
-    public function tearDown(){
+    public function tearDown()
+    {
         parent::tearDown();
     }
 }
