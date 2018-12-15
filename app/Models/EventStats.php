@@ -5,6 +5,30 @@ namespace App\Models;
 use Cookie;
 use DB;
 
+/**
+ * App\Models\EventStats
+ *
+ * @property int $id
+ * @property string $date
+ * @property int $views
+ * @property int $unique_views
+ * @property int $tickets_sold
+ * @property float $sales_volume
+ * @property float $organiser_fees_volume
+ * @property int $event_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats whereEventId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats whereOrganiserFeesVolume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats whereSalesVolume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats whereTicketsSold($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats whereUniqueViews($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EventStats whereViews($value)
+ * @mixin \Eloquent
+ */
 class EventStats extends \Illuminate\Database\Eloquent\Model
 {
     /**
