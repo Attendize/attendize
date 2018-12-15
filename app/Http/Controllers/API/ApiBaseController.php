@@ -1,7 +1,6 @@
 <?php
 
-namespace app\Http\Controllers\API;
-
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -12,8 +11,8 @@ class ApiBaseController extends Controller
 
     public function __construct()
     {
-        $this->account_id = Auth::guard('api')->user()->account_id;
+        if (Auth::guard('api')->check()) {
+            $this->account_id = Auth::guard('api')->user()->account_id;
+        }
     }
-
-
 }
