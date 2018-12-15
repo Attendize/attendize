@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Event;
+use Tests\TestCase;
 
 class EventAttendeesTest extends TestCase
 {
@@ -26,9 +27,9 @@ class EventAttendeesTest extends TestCase
         ]);
 
         $this->actingAs($this->test_user)
-            ->visit(route('showEventAttendees', ['event_id' => $attendee->event->id]))
-            ->see('Attendees')
-            ->see('Test First Name')
-            ->see('Test Last Name');
+            ->get(route('showEventAttendees', ['event_id' => $attendee->event->id]))
+            ->assertSee('Attendees')
+            ->assertSee('Test First Name')
+            ->assertSee('Test Last Name');
     }
 }

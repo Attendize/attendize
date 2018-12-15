@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Attendize\Utils;
+use Tests\TestCase;
 
 class UserSignUpTest extends TestCase
 {
@@ -14,7 +15,7 @@ class UserSignUpTest extends TestCase
      */
     public function test_signup_is_successful()
     {
-        $this->visit(route('showSignup'))
+        $this->get(route('showSignup'))
             ->type($this->faker->firstName, 'first_name')
             ->type($this->faker->lastName, 'last_name')
             ->type($this->faker->email, 'email')
@@ -39,7 +40,7 @@ class UserSignUpTest extends TestCase
      */
     public function test_signup_is_unsuccessful_because_of_no_values()
     {
-        $this->visit(route('showSignup'))
+        $this->get(route('showSignup'))
             ->press('Sign Up')
             ->seePageIs(route('showSignup'));
     }
@@ -51,7 +52,7 @@ class UserSignUpTest extends TestCase
      */
     public function test_signup_is_unsuccessful_because_of_invalid_email()
     {
-        $this->visit(route('showSignup'))
+        $this->get(route('showSignup'))
             ->type($this->faker->firstName, 'first_name')
             ->type($this->faker->lastName, 'last_name')
             ->type('test@test', 'email')
@@ -68,7 +69,7 @@ class UserSignUpTest extends TestCase
      */
     public function test_signup_is_unsuccessful_because_of_unmatched_password()
     {
-        $this->visit(route('showSignup'))
+        $this->get(route('showSignup'))
             ->type($this->faker->firstName, 'first_name')
             ->type($this->faker->lastName, 'last_name')
             ->type($this->faker->email, 'email')

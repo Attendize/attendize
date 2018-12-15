@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Event;
+use Tests\TestCase;
 
 class EventTest extends TestCase
 {
@@ -30,10 +31,10 @@ class EventTest extends TestCase
 
         $this->call('post', route('postCreateEvent'), $post, $server);
 
-        $this->seeJson([
+        $this->assertJson(json_encode([
             'status' => 'success',
             'id' => 1,
-        ]);
+        ]));
     }
 
     public function test_event_is_not_created_and_validation_error_messages_show()
@@ -50,9 +51,9 @@ class EventTest extends TestCase
 
         $this->call('post', route('postCreateEvent'), $post, $server);
 
-        $this->seeJson([
+        $this->assertJson(json_encode([
             'status' => 'error',
-        ]);
+        ]));
     }
 
     public function test_event_can_be_edited()
@@ -65,12 +66,12 @@ class EventTest extends TestCase
         ]);
 
         $this->actingAs($this->test_user)
-            ->visit(route('showEventCustomize', ['event_id' => $event->id]))
+            ->get(route('showEventCustomize', ['event_id' => $event->id]))
             ->type($this->faker->text, 'title')
             ->type($this->faker->paragraph, 'description')
             ->press('Save Changes')
-            ->seeJson([
+            ->assertJson(json_encode([
                 'status' => 'success',
-            ]);
+            ]));
     }
 }

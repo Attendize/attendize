@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Attendize\Utils;
+use Tests\TestCase;
 
 class UserLoginTest extends TestCase
 {
@@ -14,7 +15,7 @@ class UserLoginTest extends TestCase
      */
     public function test_login_is_successful()
     {
-        $this->visit(route('login'))
+        $this->get(route('login'))
             ->type($this->test_user_email, 'email')
             ->type($this->test_user_password, 'password')
             ->press('Login')
@@ -28,7 +29,7 @@ class UserLoginTest extends TestCase
      */
     public function test_login_is_unsuccessful_with_wrong_password()
     {
-        $this->visit(route('login'))
+        $this->get(route('login'))
             ->type($this->test_user_email, 'email')
             ->type('incorrect_password', 'password')
             ->press('Login')
@@ -43,7 +44,7 @@ class UserLoginTest extends TestCase
      */
     public function test_login_is_unsuccessful_with_wrong_email_address()
     {
-        $this->visit(route('login'))
+        $this->get(route('login'))
             ->type('other@email.com', 'email')
             ->type($this->test_user_password, 'password')
             ->press('Login')

@@ -1,9 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Attendize\Utils;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {
@@ -20,16 +17,16 @@ class UserTest extends TestCase
         $email = 'new@email.com.au';
         $post = array(
             'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $email,
+            'last_name'  => $lastName,
+            'email'      => $email,
         );
 
         $this->call('post', route('postEditUser'), $post, $server);
 
-        $this->seeJson([
-            'status' => 'success',
+        $this->assertJson(json_encode([
+            'status'  => 'success',
             'message' => 'Successfully Saved Details',
-        ]);
+        ]));
 
         $user = App\Models\User::find($this->test_user->id);
 
@@ -52,20 +49,20 @@ class UserTest extends TestCase
         $lastName = $this->faker->lastName;
         $email = 'new@email.com.au';
         $post = array(
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $email,
-            'password' => $this->test_user_password,
-            'new_password' => 'newpassword',
+            'first_name'                => $firstName,
+            'last_name'                 => $lastName,
+            'email'                     => $email,
+            'password'                  => $this->test_user_password,
+            'new_password'              => 'newpassword',
             'new_password_confirmation' => 'newpassword',
         );
 
         $this->call('post', route('postEditUser'), $post, $server);
 
-        $this->seeJson([
-            'status' => 'success',
+        $this->assertJson(json_encode([
+            'status'  => 'success',
             'message' => 'Successfully Saved Details',
-        ]);
+        ]));
 
         $user = App\Models\User::find($this->test_user->id);
 
@@ -88,15 +85,15 @@ class UserTest extends TestCase
         $email = 'new@email';
         $post = array(
             'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $email,
+            'last_name'  => $lastName,
+            'email'      => $email,
         );
 
         $this->call('post', route('postEditUser'), $post, $server);
 
-        $this->seeJson([
+        $this->assertJson(json_encode([
             'status' => 'error',
-        ]);
+        ]));
     }
 
     public function test_edit_user_is_unsuccessful_because_of_no_first_name()
@@ -111,15 +108,15 @@ class UserTest extends TestCase
         $email = 'new@email';
         $post = array(
             'first_name' => '',
-            'last_name' => $lastName,
-            'email' => $email,
+            'last_name'  => $lastName,
+            'email'      => $email,
         );
 
         $this->call('post', route('postEditUser'), $post, $server);
 
-        $this->seeJson([
+        $this->assertJson(json_encode([
             'status' => 'error',
-        ]);
+        ]));
     }
 
     public function test_edit_user_is_unsuccessful_because_of_no_last_name()
@@ -134,14 +131,14 @@ class UserTest extends TestCase
         $email = 'new@email';
         $post = array(
             'first_name' => $firstName,
-            'last_name' => '',
-            'email' => $email,
+            'last_name'  => '',
+            'email'      => $email,
         );
 
         $this->call('post', route('postEditUser'), $post, $server);
 
-        $this->seeJson([
+        $this->assertJson(json_encode([
             'status' => 'error',
-        ]);
+        ]));
     }
 }
