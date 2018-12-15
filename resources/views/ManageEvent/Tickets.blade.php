@@ -78,7 +78,7 @@
     <div class="col-md-3">
         {!! Form::open(array('url' => route('showEventTickets', ['event_id'=>$event->id,'sort_by'=>$sort_by]), 'method' => 'get')) !!}
         <div class="input-group">
-            <input name='q' value="{{$q or ''}}" placeholder="@lang("Ticket.search_tickets")" type="text" class="form-control">
+            <input name='q' value="{{$q || ''}}" placeholder="@lang("Ticket.search_tickets")" type="text" class="form-control">
         <span class="input-group-btn">
             <button class="btn btn-default" type="submit"><i class="ico-search"></i></button>
         </span>
