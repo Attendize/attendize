@@ -5,8 +5,7 @@ namespace App\Handlers;
 use App\Mailers\OrderMailer;
 use Attendee;
 use Order;
-
-//use PDF;
+use PDF;
 
 class QueueHandler
 {
@@ -40,8 +39,10 @@ class QueueHandler
         $pdf_file = storage_path() . '/' . $order->order_reference;
         exit($pdf_file);
 
-        PDF::setOutputMode('F'); // force to file
-        PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, $pdf_file);
+        /**
+         * This code is unreachable Todo: Remove it or edit it
+
+        PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data)->save($pdf_file);
 
         //1
         $this->orderMailer->sendOrderNotification($order);
@@ -52,6 +53,9 @@ class QueueHandler
         $this->orderMailer->sendTickets($order);
 
         $job->delete();
+
+         */
+
     }
 
     public function messageAttendees($job, $data)
