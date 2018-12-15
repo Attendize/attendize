@@ -7,6 +7,154 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Str;
 use URL;
 
+/**
+ * App\Models\Event
+ *
+ * @property int $id
+ * @property string $title
+ * @property string|null $location
+ * @property string $bg_type
+ * @property string $bg_color
+ * @property string|null $bg_image_path
+ * @property string $description
+ * @property \Illuminate\Support\Carbon|null $start_date
+ * @property \Illuminate\Support\Carbon|null $end_date
+ * @property string|null $on_sale_date
+ * @property int $account_id
+ * @property int $user_id
+ * @property int|null $currency_id
+ * @property float $sales_volume
+ * @property float $organiser_fees_volume
+ * @property float $organiser_fee_fixed
+ * @property float $organiser_fee_percentage
+ * @property int $organiser_id
+ * @property string $venue_name
+ * @property string|null $venue_name_full
+ * @property string|null $location_address
+ * @property string $location_address_line_1
+ * @property string $location_address_line_2
+ * @property string|null $location_country
+ * @property string|null $location_country_code
+ * @property string $location_state
+ * @property string $location_post_code
+ * @property string|null $location_street_number
+ * @property string|null $location_lat
+ * @property string|null $location_long
+ * @property string|null $location_google_place_id
+ * @property string|null $pre_order_display_message
+ * @property string|null $post_order_display_message
+ * @property string|null $social_share_text
+ * @property int $social_show_facebook
+ * @property int $social_show_linkedin
+ * @property int $social_show_twitter
+ * @property int $social_show_email
+ * @property int $social_show_googleplus
+ * @property int $location_is_manual
+ * @property int $is_live
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property string $barcode_type
+ * @property string $ticket_border_color
+ * @property string $ticket_bg_color
+ * @property string $ticket_text_color
+ * @property string $ticket_sub_text_color
+ * @property int $social_show_whatsapp
+ * @property string $questions_collection_type
+ * @property int $checkout_timeout_after
+ * @property int $is_1d_barcode_enabled
+ * @property int $enable_offline_payments
+ * @property string|null $offline_payment_instructions
+ * @property-read \App\Models\Account $account
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Affiliate[] $affiliates
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Attendee[] $attendees
+ * @property-read \App\Models\Currency|null $currency
+ * @property-read string $bg_image_url
+ * @property-read \Illuminate\Support\Collection $currency_code
+ * @property-read \Illuminate\Support\Collection $currency_symbol
+ * @property-read string $embed_html_code
+ * @property-read mixed $embed_url
+ * @property-read string $event_url
+ * @property-read mixed $fixed_fee
+ * @property-read bool $happening_now
+ * @property-read mixed $map_address
+ * @property-read mixed $percentage_fee
+ * @property-read \Illuminate\Support\Collection|mixed|static $sales_and_fees_voulme
+ * @property-read array $survey_answers
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EventImage[] $images
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Message[] $messages
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @property-read \App\Models\Organiser $organiser
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Question[] $questions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Question[] $questions_with_trashed
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EventStats[] $stats
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Ticket[] $tickets
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Event onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel scope($accountId = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereBarcodeType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereBgColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereBgImagePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereBgType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereCheckoutTimeoutAfter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereCurrencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereEnableOfflinePayments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereIs1dBarcodeEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereIsLive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationAddressLine1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationAddressLine2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationCountryCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationGooglePlaceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationIsManual($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationLat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationLong($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationPostCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereLocationStreetNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereOfflinePaymentInstructions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereOnSaleDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereOrganiserFeeFixed($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereOrganiserFeePercentage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereOrganiserFeesVolume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereOrganiserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event wherePostOrderDisplayMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event wherePreOrderDisplayMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereQuestionsCollectionType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSalesVolume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSocialShareText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSocialShowEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSocialShowFacebook($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSocialShowGoogleplus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSocialShowLinkedin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSocialShowTwitter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereSocialShowWhatsapp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereTicketBgColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereTicketBorderColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereTicketSubTextColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereTicketTextColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereVenueName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Event whereVenueNameFull($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Event withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Event withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Event extends MyBaseModel
 {
     use SoftDeletes;
@@ -22,15 +170,15 @@ class Event extends MyBaseModel
     {
         $format = config('attendize.default_datetime_format');
         return [
-                'title'               => 'required',
-                'description'         => 'required',
-                'location_venue_name' => 'required_without:venue_name_full',
-                'venue_name_full'     => 'required_without:location_venue_name',
-                'start_date'          => 'required|date_format:"'.$format.'"',
-                'end_date'            => 'required|date_format:"'.$format.'"',
-                'organiser_name'      => 'required_without:organiser_id',
-                'event_image'         => 'mimes:jpeg,jpg,png|max:3000',
-            ];
+            'title'               => 'required',
+            'description'         => 'required',
+            'location_venue_name' => 'required_without:venue_name_full',
+            'venue_name_full'     => 'required_without:location_venue_name',
+            'start_date'          => 'required|date_format:"' . $format . '"',
+            'end_date'            => 'required|date_format:"' . $format . '"',
+            'organiser_name'      => 'required_without:organiser_id',
+            'event_image'         => 'mimes:jpeg,jpg,png|max:3000',
+        ];
     }
 
     /**
@@ -208,14 +356,15 @@ class Event extends MyBaseModel
     }
 
     /**
-     * Parse start_date to a Carbon instance
+     * Parse start_date to a Carbon instance if necessary
      *
-     * @param string $date DateTime
+     * @param mixed $date DateTime
      */
     public function setStartDateAttribute($date)
     {
         $format = config('attendize.default_datetime_format');
-        $this->attributes['start_date'] = Carbon::createFromFormat($format, $date);
+
+        $this->attributes['start_date'] = ($date instanceof Carbon) ? $date : Carbon::createFromFormat($format, $date);
     }
 
     /**
@@ -228,14 +377,15 @@ class Event extends MyBaseModel
     }
 
     /**
-     * Parse end_date to a Carbon instance
+     * Parse end_date to a Carbon instance if necessary
      *
-     * @param string $date DateTime
+     * @param mixed $date DateTime
      */
     public function setEndDateAttribute($date)
     {
         $format = config('attendize.default_datetime_format');
-        $this->attributes['end_date'] = Carbon::createFromFormat($format, $date);
+
+        $this->attributes['end_date'] = ($date instanceof Carbon) ? $date : Carbon::createFromFormat($format, $date);
     }
 
     /**
@@ -361,7 +511,7 @@ class Event extends MyBaseModel
      */
     public function getEventUrlAttribute()
     {
-        return route("showEventPage", ["event_id"=>$this->id, "event_slug"=>Str::slug($this->title)]);
+        return route("showEventPage", ["event_id" => $this->id, "event_slug" => Str::slug($this->title)]);
         //return URL::to('/') . '/e/' . $this->id . '/' . Str::slug($this->title);
     }
 

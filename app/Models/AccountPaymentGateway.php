@@ -5,6 +5,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
+/**
+ * App\Models\AccountPaymentGateway
+ *
+ * @property int $id
+ * @property int $account_id
+ * @property int $payment_gateway_id
+ * @property mixed $config
+ * @property string|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Account $account
+ * @property-read \App\Models\PaymentGateway $payment_gateway
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\AccountPaymentGateway onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel scope($accountId = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway whereAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway whereConfig($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway wherePaymentGatewayId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AccountPaymentGateway whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\AccountPaymentGateway withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\AccountPaymentGateway withoutTrashed()
+ * @mixin \Eloquent
+ */
 class AccountPaymentGateway extends MyBaseModel
 {
 

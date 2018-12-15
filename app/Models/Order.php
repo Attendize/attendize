@@ -7,6 +7,89 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use PDF;
 use Illuminate\Support\Str;
 
+/**
+ * App\Models\Order
+ *
+ * @property mixed email
+ * @property mixed order_reference
+ * @property string ticket_pdf_path
+ * @property Event event
+ * @property mixed attendees
+ * @property int $id
+ * @property int $account_id
+ * @property int $order_status_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property string|null $ticket_pdf_path
+ * @property string $order_reference
+ * @property string|null $transaction_id
+ * @property float|null $discount
+ * @property float|null $booking_fee
+ * @property float|null $organiser_booking_fee
+ * @property string|null $order_date
+ * @property string|null $notes
+ * @property int $is_deleted
+ * @property int $is_cancelled
+ * @property int $is_partially_refunded
+ * @property int $is_refunded
+ * @property float $amount
+ * @property float|null $amount_refunded
+ * @property int $event_id
+ * @property int|null $payment_gateway_id
+ * @property int $is_payment_received
+ * @property float $taxamt
+ * @property-read \App\Models\Account $account
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Attendee[] $attendees
+ * @property-read \App\Models\Event $event
+ * @property-read string $full_name
+ * @property-read \Illuminate\Support\Collection|mixed|static $organiser_amount
+ * @property-read \Illuminate\Support\Collection|mixed|static $total_amount
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrderItem[] $orderItems
+ * @property-read \App\Models\OrderStatus $orderStatus
+ * @property-read \App\Models\PaymentGateway|null $payment_gateway
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Ticket[] $tickets
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Order onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel scope($accountId = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereAmountRefunded($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereBookingFee($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereDiscount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereEventId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereIsCancelled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereIsDeleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereIsPartiallyRefunded($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereIsPaymentReceived($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereIsRefunded($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereOrderDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereOrderReference($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereOrderStatusId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereOrganiserBookingFee($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order wherePaymentGatewayId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereTaxamt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereTicketPdfPath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereTransactionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Order withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Order withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Order extends MyBaseModel
 {
     use SoftDeletes;
@@ -144,7 +227,7 @@ class Order extends MyBaseModel
             'event'     => $this->event,
             'tickets'   => $this->event->tickets,
             'attendees' => $this->attendees,
-            'css'       => file_get_contents(public_path('assets/stylesheet/ticket.css')),
+            'css'       => file_get_contents(public_path('css/ticket.css')),
             'image'     => base64_encode(file_get_contents(public_path($this->event->organiser->full_logo_path))),
         ];
 
@@ -159,8 +242,7 @@ class Order extends MyBaseModel
             File::makeDirectory(dirname($pdf_file_path), 0777, true, true);
         }
 
-        PDF::setOutputMode('F'); // force to file
-        PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, $pdf_file_path);
+        PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data)->save($pdf_file_path);
 
         $this->ticket_pdf_path = config('attendize.event_pdf_tickets_path') . '/' . $this->order_reference . '.pdf';
         $this->save();

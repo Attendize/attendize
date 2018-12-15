@@ -8,6 +8,42 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Description of Questions.
  *
  * @author Dave
+ * @property int $id
+ * @property string $title
+ * @property int $question_type_id
+ * @property int $account_id
+ * @property int $is_required
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int $sort_order
+ * @property int $is_enabled
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\QuestionAnswer[] $answers
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\QuestionOption[] $options
+ * @property-read \App\Models\QuestionType $question_type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Ticket[] $tickets
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question isEnabled()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Question onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel scope($accountId = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereIsEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereIsRequired($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereQuestionTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereSortOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Question whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Question withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Question withoutTrashed()
+ * @mixin \Eloquent
  */
 class Question extends MyBaseModel
 {

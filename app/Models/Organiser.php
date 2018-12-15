@@ -2,12 +2,81 @@
 
 namespace App\Models;
 
+use App\Scopes\AccountIdScope;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Str;
-use Image;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
+/**
+ * App\Models\Organiser
+ *
+ * @property string full_logo_path
+ * @property string logo_path
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int $account_id
+ * @property string $name
+ * @property string $about
+ * @property string $email
+ * @property string|null $phone
+ * @property string $confirmation_key
+ * @property string $facebook
+ * @property string $twitter
+ * @property string|null $logo_path
+ * @property int $is_email_confirmed
+ * @property int $show_twitter_widget
+ * @property int $show_facebook_widget
+ * @property string $page_header_bg_color
+ * @property string $page_bg_color
+ * @property string $page_text_color
+ * @property int $enable_organiser_page
+ * @property string|null $google_analytics_code
+ * @property string $tax_name
+ * @property float $tax_value
+ * @property string $tax_id
+ * @property int $charge_tax
+ * @property-read \App\Models\Account $account
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Attendee[] $attendees
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
+ * @property-read mixed|string $full_logo_path
+ * @property-read mixed|\number $organiser_sales_volume
+ * @property-read string $organiser_url
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel scope($accountId = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereAbout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereChargeTax($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereConfirmationKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereEnableOrganiserPage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereFacebook($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereGoogleAnalyticsCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereIsEmailConfirmed($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereLogoPath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser wherePageBgColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser wherePageHeaderBgColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser wherePageTextColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereShowFacebookWidget($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereShowTwitterWidget($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereTaxId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereTaxName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereTaxValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereTwitter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organiser whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Organiser extends MyBaseModel implements AuthenticatableContract
 {
     use Authenticatable;
@@ -50,7 +119,18 @@ class Organiser extends MyBaseModel implements AuthenticatableContract
         'organiser_logo.size'  => 'Please upload an image smaller than 10Mb',
         'organiser_logo.mimes' => 'Please select a valid image type (jpeg, jpg, png)',
     ];
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::addGlobalScope(new AccountIdScope);
+    }
+    
     /**
      * The account associated with the organiser
      *
@@ -58,7 +138,7 @@ class Organiser extends MyBaseModel implements AuthenticatableContract
      */
     public function account()
     {
-        return $this->belongsTo(\App\Models\Account::class);
+        return $this->belongsTo(Account::class);
     }
 
     /**
@@ -68,7 +148,7 @@ class Organiser extends MyBaseModel implements AuthenticatableContract
      */
     public function events()
     {
-        return $this->hasMany(\App\Models\Event::class);
+        return $this->hasMany(Event::class);
     }
 
     /**
@@ -78,7 +158,7 @@ class Organiser extends MyBaseModel implements AuthenticatableContract
      */
     public function attendees()
     {
-        return $this->hasManyThrough(\App\Models\Attendee::class, \App\Models\Event::class);
+        return $this->hasManyThrough(Attendee::class, Event::class);
     }
 
     /**
@@ -88,7 +168,7 @@ class Organiser extends MyBaseModel implements AuthenticatableContract
      */
     public function orders()
     {
-        return $this->hasManyThrough(\App\Models\Order::class, \App\Models\Event::class);
+        return $this->hasManyThrough(Order::class, Event::class);
     }
 
     /**
