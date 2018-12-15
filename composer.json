@@ -38,7 +38,9 @@
         "omnipay/common": "~3",
         "omnipay/dummy": "~3",
         "omnipay/paypal": "~3",
-        "omnipay/stripe": "~3"
+        "omnipay/stripe": "~3",
+        "backpack/crud": "^3.5",
+        "barryvdh/laravel-elfinder": "^0.4.1"
 
 
     },
@@ -47,7 +49,9 @@
         "phpspec/phpspec": "5.0.*",
         "fzaninotto/faker": "1.8.*",
         "symfony/dom-crawler": "~3.0",
-      "symfony/css-selector": "~3.0"
+      "symfony/css-selector": "~3.0",
+        "backpack/generators": "^1.2",
+        "laracasts/generators": "dev-master"
     },
     "autoload": {
         "classmap": [
