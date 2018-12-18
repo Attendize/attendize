@@ -13,6 +13,11 @@
 <li><a href='{{ backpack_url('page') }}'><i class='fa fa-file-o'></i> <span>Pages</span></a></li>
 <li><a href='{{ backpack_url('setting') }}'><i class='fa fa-cog'></i> <span>Settings</span></a></li>
 <li><a href='{{ backpack_url('backup') }}'><i class='fa fa-hdd-o'></i> <span>Backups</span></a></li>
-<li><a href='{{ backpack_url('category') }}'><i class='fa fa-tag'></i> <span>Categories</span></a></li>
-<li><a href='{{ backpack_url('country') }}'><i class='fa fa-tag'></i> <span>Countries</span></a></li>
-<li><a href='{{ backpack_url('event') }}'><i class='fa fa-tag'></i> <span>Events</span></a></li>
+<li class="treeview">
+    <a href="#"><i class="fa fa-group"></i> <span>CRUD ...</span> <i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+        <li><a href='{{ backpack_url('category') }}'><i class='fa fa-tag'></i> <span>Categories</span></a></li>
+        <li><a href='{{ backpack_url('country') }}'><i class='fa fa-tag'></i> <span>Countries</span></a></li>
+        <li><a href='{{ backpack_url('event') }}'><i class='fa fa-tag'></i> <span>Events</span></a></li>
+    </ul>
+</li>
