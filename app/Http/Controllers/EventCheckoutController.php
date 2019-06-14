@@ -2,29 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\OrderCompletedEvent;
-use App\Models\Account;
-use App\Models\AccountPaymentGateway;
-use App\Models\Affiliate;
-use App\Models\Attendee;
+use DB;
+use Log;
+use PDF;
+use Cookie;
+use Omnipay;
+use Validator;
+use Carbon\Carbon;
 use App\Models\Event;
-use App\Models\EventStats;
 use App\Models\Order;
+use App\Models\Ticket;
+use App\Models\Account;
+use App\Models\Attendee;
+use App\Models\Affiliate;
 use App\Models\OrderItem;
+use App\Models\EventStats;
+use App\Models\AnswerOption;
+use Illuminate\Http\Request;
 use App\Models\PaymentGateway;
 use App\Models\QuestionAnswer;
+use App\Models\QuestionOption;
 use App\Models\ReservedTickets;
-use App\Models\Ticket;
-use App\Services\Order as OrderService;
-use Carbon\Carbon;
-use Cookie;
-use DB;
-use Illuminate\Http\Request;
-use Log;
-use Omnipay;
-use PDF;
 use PhpSpec\Exception\Exception;
-use Validator;
+use App\Events\OrderCompletedEvent;
+use App\Models\AccountPaymentGateway;
+use App\Services\Order as OrderService;
 
 class EventCheckoutController extends Controller
 {
@@ -299,7 +301,7 @@ class EventCheckoutController extends Controller
         $event = Event::findOrFail($event_id);
         $order = new Order();
         $ticket_order = session()->get('ticket_order_' . $event_id);
-
+        $ticket_questions = isset($request->ticket_holder_questions) ? $request->ticket_holder_questions : [];
         $validation_rules = $ticket_order['validation_rules'];
         $validation_messages = $ticket_order['validation_messages'];
 
@@ -329,7 +331,7 @@ class EventCheckoutController extends Controller
         try {
             //more transation data being put in here.
             $transaction_data = [];
-            if (config('attendize.enable_dummy_payment_gateway') == TRUE) {
+            if (config('attendize.enable_dummy_payment_gateway') == true) {
                 $formData = config('attendize.fake_card_data');
                 $transaction_data = [
                     'card' => $formData
@@ -345,9 +347,12 @@ class EventCheckoutController extends Controller
                     ]);
             }
 
-            $orderService = new OrderService($ticket_order['order_total'], $ticket_order['total_booking_fee'], $event);
-            $orderService->calculateFinalCosts();
+            $extras_price = getExtrasPrice($ticket_order, $ticket_questions);
+            Log::debug('extras_price:', [$extras_price]);
 
+            $orderService = new OrderService($ticket_order['order_total'], $ticket_order['total_booking_fee'], $event, $extras_price);
+            $orderService->calculateFinalCosts();
+            Log::debug(['GrandTotal (inc tax): '.$orderService->getGrandTotal()]);
             $transaction_data += [
                     'amount'      => $orderService->getGrandTotal(),
                     'currency'    => $event->currency->code,
@@ -395,6 +400,7 @@ class EventCheckoutController extends Controller
                     ]);
                     break;
             }
+
 
             $transaction = $gateway->purchase($transaction_data);
 
@@ -514,8 +520,6 @@ class EventCheckoutController extends Controller
             $event = Event::findOrFail($ticket_order['event_id']);
             $attendee_increment = 1;
             $ticket_questions = isset($request_data['ticket_holder_questions']) ? $request_data['ticket_holder_questions'] : [];
-
-
             /*
              * Create the order
              */
@@ -530,6 +534,7 @@ class EventCheckoutController extends Controller
             $order->email = $request_data['order_email'];
             $order->order_status_id = isset($request_data['pay_offline']) ? config('attendize.order_awaiting_payment') : config('attendize.order_complete');
             $order->amount = $ticket_order['order_total'];
+            $order->extras = getExtrasPrice($ticket_order, $ticket_questions);
             $order->booking_fee = $ticket_order['booking_fee'];
             $order->organiser_booking_fee = $ticket_order['organiser_booking_fee'];
             $order->discount = 0.00;
@@ -538,7 +543,7 @@ class EventCheckoutController extends Controller
             $order->is_payment_received = isset($request_data['pay_offline']) ? 0 : 1;
 
             // Calculating grand total including tax
-            $orderService = new OrderService($ticket_order['order_total'], $ticket_order['total_booking_fee'], $event);
+            $orderService = new OrderService($order->amount, $order->booking_fee, $event, $order->extras);
             $orderService->calculateFinalCosts();
 
             $order->taxamt = $orderService->getTaxAmount();
@@ -629,8 +634,33 @@ class EventCheckoutController extends Controller
 
                         $ticket_answer = isset($ticket_questions[$attendee_details['ticket']->id][$i][$question->id]) ? $ticket_questions[$attendee_details['ticket']->id][$i][$question->id] : null;
 
-                        if (is_null($ticket_answer)) {
+                        if (is_null($ticket_answer) || $ticket_answer == "") {
                             continue;
+                        }
+                        $optionIds = [];
+                        $optionPrices = [];
+                        // convert drop-down indexes to answer text
+                        switch ($question->question_type_id) {
+                            case 3: // Dropdown (single selection)
+                            case 6: // Radio input
+                                $option = $question->options->firstWhere('id', $ticket_answer);
+                                array_push($optionIds, $option->id);
+                                array_push($optionPrices, $option->price);
+                                $ticket_answer = $option->name;
+                                break;
+                            case 4: // Dropdown (multiple selection)
+                            case 5: // Checkbox
+                                $tmp_ticket_answers = [];
+                                foreach ($ticket_answer as $answer) {
+                                    $option = $question->options->firstWhere('id', $answer);
+                                    array_push($optionIds, $option->id);
+                                    array_push($optionPrices, $option->price);
+                                    array_push($tmp_ticket_answers, $option->name);
+                                }
+                                $ticket_answer = $tmp_ticket_answers;
+                                break;
+                            default:
+                                break;
                         }
 
                         /*
@@ -638,16 +668,38 @@ class EventCheckoutController extends Controller
                          * and treat them as a single answer.
                          */
                         $ticket_answer = is_array($ticket_answer) ? implode(', ', $ticket_answer) : $ticket_answer;
-
                         if (!empty($ticket_answer)) {
-                            QuestionAnswer::create([
+                            $questionAnswer = new QuestionAnswer([
                                 'answer_text' => $ticket_answer,
                                 'attendee_id' => $attendee->id,
                                 'event_id'    => $event->id,
                                 'account_id'  => $event->account->id,
                                 'question_id' => $question->id
                             ]);
+                            $questionAnswer->save();
 
+                            foreach ($optionIds as $i => $optionId) {
+                                $answerOption = new AnswerOption([
+                                    'question_answer_id' => $question->id,
+                                    'question_option_id' => $optionId,
+                                    'price' => $optionPrices[$i],
+                                ]);
+                                $questionAnswer->answeredOptions()->save($answerOption);
+
+                                // add items with a price to order
+                                $option = QuestionOption::findOrFail($answerOption->question_option_id);
+                                // array_push($awnser_qty, $option); // todo
+                                if ($option->price > 0) {
+                                    $orderItem = new OrderItem();
+                                    $orderItem->title = $option->name;
+                                    $orderItem->quantity = 1; // todo
+                                    $orderItem->order_id = $order->id;
+                                    $orderItem->unit_price = $answerOption->price;
+                                    $orderItem->unit_booking_fee = 0.00;
+                                    $orderItem->save();
+                                }
+
+                            }
                         }
                     }
 
@@ -716,7 +768,7 @@ class EventCheckoutController extends Controller
             abort(404);
         }
 
-        $orderService = new OrderService($order->amount, $order->organiser_booking_fee, $order->event);
+        $orderService = new OrderService($order->amount, $order->organiser_booking_fee, $order->event, $order->extras);
         $orderService->calculateFinalCosts();
 
         $data = [
