@@ -12,6 +12,7 @@
 */
 
 
+use App\Http\Controllers\EventAccessCodesController;
 use App\Http\Controllers\EventAttendeesController;
 use App\Http\Controllers\EventCheckInController;
 use App\Http\Controllers\EventCheckoutController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\EventTicketsController;
 use App\Http\Controllers\EventViewController;
 use App\Http\Controllers\EventViewEmbeddedController;
 use App\Http\Controllers\EventWidgetsController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InstallerController;
 use App\Http\Controllers\ManageAccountController;
 use App\Http\Controllers\OrganiserController;
@@ -39,7 +41,6 @@ use App\Http\Controllers\UserLogoutController;
 use App\Http\Controllers\UserSignupController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group(
@@ -168,6 +169,10 @@ Route::group(
         Route::post('/{event_id}/contact_organiser',
             [EventViewController::class, 'postContactOrganiser']
         )->name('postContactOrganiser');
+
+        Route::post('/{event_id}/show_hidden', [
+            [EventViewController::class, 'postShowHiddenTickets']
+        ])->name('postShowHiddenTickets');
 
         /*
          * Used for previewing designs in the backend. Doesn't log page views etc.
@@ -330,23 +335,10 @@ Route::group(
                 ]);
             });
 
-            /*
-             * @todo Move to a controller
-             */
             Route::get('{event_id}/go_live', [
-                'as' => 'MakeEventLive',
-                function ($event_id) {
-                    $event = \App\Models\Event::scope()->findOrFail($event_id);
-                    $event->is_live = 1;
-                    $event->save();
-                    Session::flash('message',
-                        'Event Successfully Made Live! You can undo this action in event settings page.');
-
-                    return Redirect::route('showEventDashboard', [
-                        'event_id' => $event_id,
-                    ]);
-                }
-            ]);
+                EventController::class,
+                'makeEventLive'
+            ])->name('MakeEventLive');
 
             /*
              * -------
@@ -567,6 +559,32 @@ Route::group(
                 [EventWidgetsController::class, 'showEventWidgets']
             )->name('showEventWidgets');
 
+
+            /*
+             * -------
+             * Event Access Codes page
+             * -------
+             */
+            Route::get('{event_id}/access_codes', [
+                [EventAccessCodesController::class, 'show']
+            ])->name('showEventAccessCodes');
+
+            Route::get('{event_id}/access_codes/create', [
+                EventAccessCodesController::class,
+                'showCreate'
+            ])->name('showCreateEventAccessCode');
+
+            Route::post('{event_id}/access_codes/create', [
+                EventAccessCodesController::class,
+                'postCreate'
+            ])->name('postCreateEventAccessCode');
+
+            Route::post('{event_id}/access_codes/{access_code_id}/delete', [
+                EventAccessCodesController::class,
+                'postDelete'
+            ])->name('postDeleteEventAccessCode');
+
+
             /*
              * -------
              * Event Survey page
@@ -650,17 +668,8 @@ Route::group(
         });
     });
 
-    Route::get('/', function () {
-        return Redirect::route('showSelectOrganiser');
-        // I prefer it that way:
-        // return Redirect::route('showOrganiserHome', ["organiser_id"=>1]);
-    });
-
-    Route::get('/terms_and_conditions', [
-        'as' => 'termsAndConditions',
-        function () {
-            return 'TODO: add terms and cond';
-        }
-    ]);
+    Route::get('/',
+        [IndexController::class, 'showIndex']
+    )->name('index');
 
 });
