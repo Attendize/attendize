@@ -23,23 +23,23 @@
         </whitelist>
     </filter>
     <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="BCRYPT_ROUNDS" value="4"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="MAIL_DRIVER" value="log"/>
-        <env name="QUEUE_CONNECTION" value="sync"/>
-        <env name="SESSION_DRIVER" value="array"/>
+        <server name="APP_ENV" value="testing"/>
+        <server name="BCRYPT_ROUNDS" value="4"/>
+        <server name="CACHE_DRIVER" value="array"/>
+        <server name="MAIL_DRIVER" value="array"/>
+        <server name="QUEUE_CONNECTION" value="sync"/>
+        <server name="SESSION_DRIVER" value="array"/>
 
         <!-- DATABASE CONFIG -->
 
-        <env name="DB_PORT" value="3306"/>
+        <server name="DB_PORT" value="3306"/>
         <!--
             Use this with the mysql command line to create the test database
 
             CREATE DATABASE attendize_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
         -->
 
-        <env name="DB_DATABASE" value="attendize_test"/>
+        <server name="DB_DATABASE" value="attendize_test"/>
 
         <!--
             Use this with the mysql command line to create the test user
@@ -47,7 +47,7 @@
             CREATE USER 'attendize'@'%' IDENTIFIED BY 'attendize';
             GRANT ALL ON *.* TO 'attendize'@'%';
         -->
-        <env name="DB_USERNAME" value="attendize"/>
-        <env name="DB_PASSWORD" value="attendize"/>
+        <server name="DB_USERNAME" value="attendize"/>
+        <server name="DB_PASSWORD" value="attendize"/>
     </php>
 </phpunit>
