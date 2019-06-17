@@ -82,7 +82,7 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
      *
      * @var array
      */
-    protected $hidden = ['password'];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that are mass assignable.
@@ -101,6 +101,15 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
         'is_confirmed',
         'is_parent',
         'remember_token'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -209,7 +218,7 @@ class User extends Authenticatable implements AuthenticatableContract, CanResetP
     /**
      * Send the password reset notification.
      *
-     * @param  string $token
+     * @param string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
