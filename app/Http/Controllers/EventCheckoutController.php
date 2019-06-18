@@ -40,7 +40,7 @@ class EventCheckoutController extends Controller
 
     /**
      * EventCheckoutController constructor.
-     * @param Request $request
+     * @param  Request  $request
      */
     public function __construct(Request $request)
     {
@@ -53,7 +53,7 @@ class EventCheckoutController extends Controller
     /**
      * Validate a ticket request. If successful reserve the tickets and redirect to checkout
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $event_id
      * @return JsonResponse|RedirectResponse
      */
@@ -95,7 +95,7 @@ class EventCheckoutController extends Controller
         $quantity_available_validation_rules = [];
 
         foreach ($ticket_ids as $ticket_id) {
-            $current_ticket_quantity = (int)$request->get('ticket_' . $ticket_id);
+            $current_ticket_quantity = (int) $request->get('ticket_' . $ticket_id);
 
             if ($current_ticket_quantity < 1) {
                 continue;
@@ -117,7 +117,7 @@ class EventCheckoutController extends Controller
                 'ticket_' . $ticket_id . '.min' => 'You must select at least ' . $ticket->min_per_person . ' tickets.',
             ];
 
-            $validator = Validator::make(['ticket_' . $ticket_id => (int)$request->get('ticket_' . $ticket_id)],
+            $validator = Validator::make(['ticket_' . $ticket_id => (int) $request->get('ticket_' . $ticket_id)],
                 $quantity_available_validation_rules, $quantity_available_validation_messages);
 
             if ($validator->fails()) {
@@ -245,7 +245,7 @@ class EventCheckoutController extends Controller
     /**
      * Show the checkout page
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $event_id
      * @return RedirectResponse|View
      */
@@ -282,7 +282,7 @@ class EventCheckoutController extends Controller
     /**
      * Create the order, handle payment, update stats, fire off email jobs then redirect user
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $event_id
      * @return JsonResponse
      */
@@ -312,19 +312,19 @@ class EventCheckoutController extends Controller
         if ($request->has('is_business') && $request->get('is_business')) {
             // Dynamic validation on the new business fields, only gets validated if business selected
             $businessRules = [
-                'business_name' => 'required',
-                'business_tax_number' => 'required',
+                'business_name'          => 'required',
+                'business_tax_number'    => 'required',
                 'business_address_line1' => 'required',
-                'business_address_city' => 'required',
-                'business_address_code' => 'required',
+                'business_address_city'  => 'required',
+                'business_address_code'  => 'required',
             ];
 
             $businessMessages = [
-                'business_name.required' => 'Please enter a valid business name',
-                'business_tax_number.required' => 'Please enter a valid business tax number',
+                'business_name.required'          => 'Please enter a valid business name',
+                'business_tax_number.required'    => 'Please enter a valid business tax number',
                 'business_address_line1.required' => 'Please enter a valid street address',
-                'business_address_city.required' => 'Please enter a valid city',
-                'business_address_code.required' => 'Please enter a valid code',
+                'business_address_city.required'  => 'Please enter a valid city',
+                'business_address_code.required'  => 'Please enter a valid code',
             ];
 
             $order->rules = $order->rules + $businessRules;
@@ -480,7 +480,7 @@ class EventCheckoutController extends Controller
      * Attempt to complete a user's payment when they return from
      * an off-site gateway
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $event_id
      * @return JsonResponse|RedirectResponse
      */
@@ -523,7 +523,7 @@ class EventCheckoutController extends Controller
      * Complete an order
      *
      * @param $event_id
-     * @param bool|true $return_json
+     * @param  bool|true  $return_json
      * @return JsonResponse|RedirectResponse
      */
     public function completeOrder($event_id, $return_json = true)
@@ -562,13 +562,13 @@ class EventCheckoutController extends Controller
             $order->is_payment_received = isset($request_data['pay_offline']) ? 0 : 1;
 
             // Business details is selected, we need to save the business details
-            if (isset($request_data['is_business']) && (bool)$request_data['is_business']) {
+            if (isset($request_data['is_business']) && (bool) $request_data['is_business']) {
                 $order->is_business = $request_data['is_business'];
                 $order->business_name = sanitise($request_data['business_name']);
                 $order->business_tax_number = sanitise($request_data['business_tax_number']);
                 $order->business_address_line_one = sanitise($request_data['business_address_line1']);
-                $order->business_address_line_two  = sanitise($request_data['business_address_line2']);
-                $order->business_address_state_province  = sanitise($request_data['business_address_state']);
+                $order->business_address_line_two = sanitise($request_data['business_address_line2']);
+                $order->business_address_state_province = sanitise($request_data['business_address_state']);
                 $order->business_address_city = sanitise($request_data['business_address_city']);
                 $order->business_address_code = sanitise($request_data['business_address_code']);
 
@@ -741,7 +741,7 @@ class EventCheckoutController extends Controller
     /**
      * Show the order details page
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $order_reference
      * @return View
      */
@@ -775,7 +775,7 @@ class EventCheckoutController extends Controller
     /**
      * Shows the tickets for an order - either HTML or PDF
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $order_reference
      * @return Response|View
      */
