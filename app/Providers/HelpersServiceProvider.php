@@ -20,13 +20,14 @@ class HelpersServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        self::blade_custom();
-        self::form_macros();
-        self::html_macros();
-        self::javascript();
-        self::view_shares();
+        $this->blade_custom();
+        $this->form_macros();
+        $this->html_macros();
+        $this->javascript();
+        $this->view_shares();
 
         require_once app_path('Helpers/helpers.php');
+        require_once app_path('Helpers/strings.php');
     }
 
     /**
