@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Redirect;
-use View;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Redirect;
 
 class UserLoginController extends Controller
 {
@@ -20,9 +20,8 @@ class UserLoginController extends Controller
     /**
      * Shows login form.
      *
-     * @param Request $request
-     *
-     * @return mixed
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
      */
     public function showLogin(Request $request)
     {
@@ -43,9 +42,8 @@ class UserLoginController extends Controller
     /**
      * Handles the login request.
      *
-     * @param Request $request
-     *
-     * @return mixed
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postLogin(Request $request)
     {

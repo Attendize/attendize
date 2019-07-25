@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Hash;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Validator;
 
 class UserController extends Controller
 {
     /**
      * Show the edit user modal
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function showEditUser()
     {
@@ -26,8 +26,8 @@ class UserController extends Controller
     /**
      * Updates the current user
      *
-     * @param Request $request
-     * @return mixed
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postEditUser(Request $request)
     {

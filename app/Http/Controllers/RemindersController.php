@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\View;
+use Illuminate\Contracts\Auth\PasswordBroker;
 
 class RemindersController extends Controller
 {
@@ -33,17 +34,19 @@ class RemindersController extends Controller
     /**
      * Display the password reminder view.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function getRemind()
     {
-        return \View::make('Public.LoginAndRegister.ForgotPassword');
+        return View::make('Public.LoginAndRegister.ForgotPassword');
     }
 
     /**
      * Handle a POST request to remind a user of their password.
      *
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function postRemind(Request $request)
     {
@@ -75,23 +78,24 @@ class RemindersController extends Controller
     /**
      * Display the password reset view for the given token.
      *
-     * @param string $token
-     *
-     * @return Response
+     * @param  string  $token
+     * @return \Illuminate\Contracts\View\View
      */
     public function getReset($token = null)
     {
         if (is_null($token)) {
-            \App::abort(404);
+            abort(404);
         }
 
-        return \View::make('Public.LoginAndRegister.ResetPassword')->with('token', $token);
+        return View::make('Public.LoginAndRegister.ResetPassword')->with('token', $token);
     }
 
     /**
      * Handle a POST request to reset a user's password.
      *
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function postReset(Request $request)
     {
@@ -115,7 +119,7 @@ class RemindersController extends Controller
 
         switch ($response) {
             case PasswordBroker::PASSWORD_RESET:
-                \Session::flash('message', 'Password Successfully Reset');
+                session()->flash('message', 'Password Successfully Reset');
 
                 return redirect(route('login'));
 
