@@ -10,6 +10,18 @@ namespace App\Models;
  * Description of DateTimeFormat.
  *
  * @author Dave
+ * @property int $id
+ * @property string $format
+ * @property string $picker_format
+ * @property string $label
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DateTimeFormat newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DateTimeFormat newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DateTimeFormat query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DateTimeFormat whereFormat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DateTimeFormat whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DateTimeFormat whereLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DateTimeFormat wherePickerFormat($value)
+ * @mixin \Eloquent
  */
 class DateTimeFormat extends \Illuminate\Database\Eloquent\Model
 {

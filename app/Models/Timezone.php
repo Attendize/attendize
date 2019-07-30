@@ -10,6 +10,16 @@ namespace App\Models;
  * Description of Timezone.
  *
  * @author Dave
+ * @property int $id
+ * @property string $name
+ * @property string $location
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone whereLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Timezone whereName($value)
+ * @mixin \Eloquent
  */
 class Timezone extends \Illuminate\Database\Eloquent\Model
 {

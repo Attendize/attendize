@@ -23,11 +23,11 @@
    <!--/Meta-->
 
     <!--JS-->
-    {!! HTML::script(config('attendize.cdn_url_static_assets').'/vendor/jquery/dist/jquery.min.js') !!}
+    {!! Html::script(config('attendize.cdn_url_static_assets').'/vendor/jquery/dist/jquery.min.js') !!}
     <!--/JS-->
 
     <!--Style-->
-    {!! HTML::style(config('attendize.cdn_url_static_assets').'/assets/stylesheet/application.css') !!}
+    {!! Html::style(config('attendize.cdn_url_static_assets').'/stylesheet/application.css') !!}
     <!--/Style-->
 
     @yield('head')
@@ -38,7 +38,7 @@
 
     <div class="navbar-header">
         <a class="navbar-brand" href="javascript:void(0);">
-            <img style="width: 150px;" class="logo" alt="Attendize" src="{{asset('assets/images/logo-light.png')}}"/>
+            <img style="width: 150px;" class="logo" alt="Attendize" src="{{asset('images/logo-light.png')}}"/>
         </a>
     </div>
 
@@ -125,7 +125,7 @@
 
 <!--JS-->
 @include("Shared.Partials.LangScript")
-{!! HTML::script('assets/javascript/backend.js') !!}
+{!! Html::script('javascript/backend.js') !!}
 <script>
     $(function () {
         $.ajaxSetup({

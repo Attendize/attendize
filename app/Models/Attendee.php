@@ -13,6 +13,57 @@ use Illuminate\Support\Str;
  * Description of Attendees.
  *
  * @author Dave
+ * @property int $id
+ * @property int $order_id
+ * @property int $event_id
+ * @property int $ticket_id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property int $private_reference_number
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int $is_cancelled
+ * @property int $has_arrived
+ * @property \Illuminate\Support\Carbon|null $arrival_time
+ * @property int $account_id
+ * @property int $reference_index
+ * @property int $is_refunded
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\QuestionAnswer[] $answers
+ * @property-read \App\Models\Event $event
+ * @property-read string $full_name
+ * @property-read string $reference
+ * @property-read \App\Models\Order $order
+ * @property-read \App\Models\Ticket $ticket
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Attendee onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel scope($accountId = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereArrivalTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereEventId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereHasArrived($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereIsCancelled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereIsRefunded($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee wherePrivateReferenceNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereReferenceIndex($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereTicketId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Attendee withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Attendee withoutCancelled()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Attendee withoutTrashed()
+ * @mixin \Eloquent
  */
 class Attendee extends MyBaseModel
 {

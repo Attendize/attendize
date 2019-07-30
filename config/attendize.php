@@ -7,7 +7,7 @@ return [
     'ticket_status_sold_out'        => 1,
     'ticket_status_after_sale_date' => 2,//
     'enable_test_payments'          => env('ENABLE_TEST_PAYMENTS', false),
-    'enable_dummy_payment_gateway'  => false,
+    'enable_dummy_payment_gateway'  => env('ENABLE_DUMMY_PAYMENT_GATEWAY', false),
     'payment_gateway_dummy'    => 0,
     'payment_gateway_stripe'   => 1,
     'payment_gateway_paypal'   => 2,
@@ -24,14 +24,14 @@ return [
 
     'app_name'               => 'Attendize Event Ticketing',
     'event_default_bg_color' => '#B23333',
-    'event_default_bg_image' => 'assets/images/public/EventPage/backgrounds/5.jpg',
+    'event_default_bg_image' => 'images/public/EventPage/backgrounds/5.jpg',
 
     'event_images_path'      => 'user_content/event_images',
     'organiser_images_path'  => 'user_content/organiser_images',
     'event_pdf_tickets_path' => 'user_content/pdf_tickets',
-    'event_bg_images'        => 'assets/images/public/EventPage/backgrounds',
+    'event_bg_images'        => 'images/public/EventPage/backgrounds',
 
-    'fallback_organiser_logo_url' => '/assets/images/logo-dark.png',
+    'fallback_organiser_logo_url' => '/images/logo-dark.png',
     'cdn_url'                     => '',
 
     'checkout_timeout_after' => env('CHECKOUT_TIMEOUT_AFTER', 30), #minutes

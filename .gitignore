@@ -1,16 +1,26 @@
-/.env.testing
-/.phpstorm.meta.php
-/vendor
-/node_modules
+*.swp
+.DS_Store
 .env
 .idea
-installed
-/.settings/
-/.project
+.phpunit.result.cache
 /.buildpath
+/.env.testing
+/.phpstorm.meta.php
+/.project
+/.settings/
 /composer.phar
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
 _ide_helper.php
-*.swp
+Homestead.json
+Homestead.yaml
+installed
+npm-debug.log
+yarn-error.log
+
 
 
 # Do not include backup lang files

@@ -2,14 +2,26 @@
 
 namespace App\Models;
 
-use Auth;
-use Validator;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 /*
  * Adapted from: https://github.com/hillelcoren/invoice-ninja/blob/master/app/models/EntityModel.php
  */
 
-class MyBaseModel extends \Illuminate\Database\Eloquent\Model
+/**
+ * App\Models\MyBaseModel
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel scope($accountId = false)
+ * @mixin \Eloquent
+ */
+class MyBaseModel extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -47,8 +59,8 @@ class MyBaseModel extends \Illuminate\Database\Eloquent\Model
     /**
      * Create a new model.
      *
-     * @param int $account_id
-     * @param int $user_id
+     * @param bool|int $account_id
+     * @param bool|int $user_id
      * @param bool $ignore_user_id
      *
      * @return \className
@@ -60,7 +72,7 @@ class MyBaseModel extends \Illuminate\Database\Eloquent\Model
 
         if (Auth::check()) {
             if (!$ignore_user_id) {
-                $entity->user_id = Auth::user()->id;
+                $entity->user_id = Auth::id();
             }
 
             $entity->account_id = Auth::user()->account_id;
@@ -71,7 +83,7 @@ class MyBaseModel extends \Illuminate\Database\Eloquent\Model
 
             $entity->account_id = $account_id;
         } else {
-            App::abort(500);
+            abort(500);
         }
 
         return $entity;
@@ -137,23 +149,23 @@ class MyBaseModel extends \Illuminate\Database\Eloquent\Model
      */
     public function scopeScope($query, $accountId = false)
     {
-
         /*
          * GOD MODE - DON'T UNCOMMENT!
          * returning $query before adding the account_id condition will let you
          * browse all events etc. in the system.
          * //return  $query;
          */
-
-        if (!$accountId) {
+        if ($accountId === false && Auth::check()) {
             $accountId = Auth::user()->account_id;
         }
 
         $table = $this->getTable();
 
-        $query->where(function ($query) use ($accountId, $table) {
-            $query->whereRaw(\DB::raw('(' . $table . '.account_id = ' . $accountId . ')'));
-        });
+        if($accountId !== false){
+            $query->where(function ($query) use ($accountId, $table) {
+                $query->whereRaw(\DB::raw('(' . $table . '.account_id = ' . $accountId . ')'));
+            });
+        }
 
         return $query;
     }

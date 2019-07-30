@@ -3,9 +3,84 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
+/**
+ * App\Models\Ticket
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $edited_by_user_id
+ * @property int $account_id
+ * @property int|null $order_id
+ * @property int $event_id
+ * @property string $title
+ * @property string $description
+ * @property float $price
+ * @property int|null $max_per_person
+ * @property int|null $min_per_person
+ * @property int|null $quantity_available
+ * @property int $quantity_sold
+ * @property \Illuminate\Support\Carbon|null $start_sale_date
+ * @property \Illuminate\Support\Carbon|null $end_sale_date
+ * @property float $sales_volume
+ * @property float $organiser_fees_volume
+ * @property int $is_paused
+ * @property int|null $public_id
+ * @property int $user_id
+ * @property int $sort_order
+ * @property int $is_hidden
+ * @property-read \App\Models\Event $event
+ * @property-read float|int $booking_fee
+ * @property-read bool $is_free
+ * @property-read float|int $organiser_booking_fee
+ * @property-read \Illuminate\Support\Collection|int|mixed|static $quantity_remaining
+ * @property-read mixed $quantity_reserved
+ * @property-read int $sale_status
+ * @property-read array $ticket_max_min_rang
+ * @property-read float|int $total_booking_fee
+ * @property-read float|int $total_price
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $order
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Question[] $questions
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Ticket onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MyBaseModel scope($accountId = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket soldOut()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereEditedByUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereEndSaleDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereEventId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereIsHidden($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereIsPaused($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereMaxPerPerson($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereMinPerPerson($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereOrganiserFeesVolume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket wherePublicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereQuantityAvailable($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereQuantitySold($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereSalesVolume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereSortOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereStartSaleDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ticket whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Ticket withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Ticket withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Ticket extends MyBaseModel
 {
     use SoftDeletes;
@@ -24,9 +99,9 @@ class Ticket extends MyBaseModel
             'title'              => 'required',
             'price'              => 'required|numeric|min:0',
             'description'        => '',
-            'start_sale_date'    => 'date_format:"'.$format.'"',
-            'end_sale_date'      => 'date_format:"'.$format.'"|after:start_sale_date',
-            'quantity_available' => 'integer|min:'.($this->quantity_sold + $this->quantity_reserved)
+            'start_sale_date'    => 'date_format:"' . $format . '"',
+            'end_sale_date'      => 'date_format:"' . $format . '"|after:start_sale_date',
+            'quantity_available' => 'integer|min:' . ($this->quantity_sold + $this->quantity_reserved)
         ];
     }
 
@@ -102,7 +177,7 @@ class Ticket extends MyBaseModel
         if (!$date) {
             $this->attributes['start_sale_date'] = Carbon::now();
         } else {
-            $this->attributes['start_sale_date'] = Carbon::createFromFormat(
+            $this->attributes['start_sale_date'] = ($date instanceof Carbon) ? $date : Carbon::createFromFormat(
                 config('attendize.default_datetime_format'),
                 $date
             );
@@ -119,7 +194,7 @@ class Ticket extends MyBaseModel
         if (!$date) {
             $this->attributes['end_sale_date'] = null;
         } else {
-            $this->attributes['end_sale_date'] = Carbon::createFromFormat(
+            $this->attributes['end_sale_date'] = ($date instanceof Carbon) ? $date : Carbon::createFromFormat(
                 config('attendize.default_datetime_format'),
                 $date
             );

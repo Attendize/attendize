@@ -1,32 +1,23 @@
 <?php
 
-
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| Here you may define all of your model factories. Model factories give
-| you a convenient way to create models for testing and seeding your
-| database. Just tell the factory how a default model should look.
-|
-*/
-
 use Carbon\Carbon;
+use Faker\Generator as Faker;
 
-$factory->define(App\Models\OrderStatus::class, function (Faker\Generator $faker) {
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+$factory->define(App\Models\OrderStatus::class, function (Faker $faker) {
     return [
         'name' => $faker->text,
     ];
 });
 
-$factory->define(App\Models\TicketStatus::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\TicketStatus::class, function (Faker $faker) {
     return [
         'name' => $faker->text,
     ];
 });
 
-$factory->define(App\Models\ReservedTickets::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\ReservedTickets::class, function (Faker $faker) {
     return [
         'ticket_id'         => factory(App\Models\Ticket::class)->create()->id,
         'event_id'          => factory(App\Models\Event::class)->create()->id,
@@ -36,7 +27,7 @@ $factory->define(App\Models\ReservedTickets::class, function (Faker\Generator $f
     ];
 });
 
-$factory->define(App\Models\Timezone::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Timezone::class, function (Faker $faker) {
     return [
         'name'     => 'America/New_York',
         'location' => 'New York'
@@ -44,7 +35,7 @@ $factory->define(App\Models\Timezone::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(App\Models\DateFormat::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\DateFormat::class, function (Faker $faker) {
     return [
         'format'        => "Y-m-d",
         'picker_format' => "Y-m-d",
@@ -53,7 +44,7 @@ $factory->define(App\Models\DateFormat::class, function (Faker\Generator $faker)
 });
 
 
-$factory->define(App\Models\DateTimeFormat::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\DateTimeFormat::class, function (Faker $faker) {
     return [
         'format'        => "Y-m-d H:i:s",
         'picker_format' => "Y-m-d H:i:s",
@@ -61,7 +52,7 @@ $factory->define(App\Models\DateTimeFormat::class, function (Faker\Generator $fa
     ];
 });
 
-$factory->define(App\Models\Currency::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Currency::class, function (Faker $faker) {
     return [
         'title'          => "Dollar",
         'symbol_left'    => "$",
@@ -76,7 +67,7 @@ $factory->define(App\Models\Currency::class, function (Faker\Generator $faker) {
 });
 
 //TODO create country class so country_id can be populated
-$factory->define(App\Models\Account::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Account::class, function (Faker $faker) {
     return [
         'first_name'             => $faker->firstName,
         'last_name'              => $faker->lastName,
@@ -93,7 +84,7 @@ $factory->define(App\Models\Account::class, function (Faker\Generator $faker) {
         'city'                   => $faker->city,
         'state'                  => $faker->stateAbbr,
         'postal_code'            => $faker->postcode,
-//        'country_id'             => factory(App\Models\Country::class)->create()->id,
+        //        'country_id'             => factory(App\Models\Country::class)->create()->id,
         'email_footer'           => 'Email footer text',
         'is_active'              => false,
         'is_banned'              => false,
@@ -106,7 +97,7 @@ $factory->define(App\Models\Account::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\User::class, function (Faker $faker) {
     return [
         'account_id'        => factory(App\Models\Account::class)->create()->id,
         'first_name'        => $faker->firstName,
@@ -122,33 +113,33 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\Organiser::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Organiser::class, function (Faker $faker) {
     return [
-        'account_id'                => factory(App\Models\Account::class)->create()->id,
-        'name'                      => $faker->name,
-        'about'                     => $faker->text,
-        'email'                     => $faker->email,
-        'phone'                     => $faker->phoneNumber,
-        'facebook'                  => 'https://facebook.com/organizer-profile',
-        'twitter'                   => 'https://twitter.com/organizer-profile',
-        'logo_path'                 => 'path/to/logo',
-        'is_email_confirmed'        => 0,
-        'confirmation_key'          => str_random(15),
-        'show_twitter_widget'       => $faker->boolean,
-        'show_facebook_widget'      => $faker->boolean,
-        'page_header_bg_color'      => $faker->hexcolor,
-        'page_bg_color'             => '#ffffff',
-        'page_text_color'           => '#000000',
-        'enable_organiser_page'     => $faker->boolean,
-        'google_analytics_code'     => null,
-        'tax_name'                  => $faker->text(11) . ' tax',
-        'tax_value'                 => $faker->randomFloat(2, 0, 30),
-        'tax_id'                    => $faker->randomDigitNotNull,
-        'charge_tax'                => $faker->boolean
+        'account_id'            => factory(App\Models\Account::class)->create()->id,
+        'name'                  => $faker->name,
+        'about'                 => $faker->text,
+        'email'                 => $faker->email,
+        'phone'                 => $faker->phoneNumber,
+        'facebook'              => 'https://facebook.com/organizer-profile',
+        'twitter'               => 'https://twitter.com/organizer-profile',
+        'logo_path'             => 'path/to/logo',
+        'is_email_confirmed'    => 0,
+        'confirmation_key'      => str_random(15),
+        'show_twitter_widget'   => $faker->boolean,
+        'show_facebook_widget'  => $faker->boolean,
+        'page_header_bg_color'  => $faker->hexcolor,
+        'page_bg_color'         => '#ffffff',
+        'page_text_color'       => '#000000',
+        'enable_organiser_page' => $faker->boolean,
+        'google_analytics_code' => null,
+        'tax_name'              => $faker->text(11) . ' tax',
+        'tax_value'             => $faker->randomFloat(2, 0, 30),
+        'tax_id'                => $faker->randomDigitNotNull,
+        'charge_tax'            => $faker->boolean
     ];
 });
 
-$factory->define(App\Models\Event::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Event::class, function (Faker $faker) {
     return [
         'title'                      => $faker->name,
         'location'                   => $faker->text,
@@ -193,7 +184,7 @@ $factory->define(App\Models\Event::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\Order::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Order::class, function (Faker $faker) {
     return [
         'account_id'            => factory(App\Models\Account::class)->create()->id,
         'order_status_id'       => factory(App\Models\OrderStatus::class)->create()->id,
@@ -222,7 +213,7 @@ $factory->define(App\Models\Order::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(App\Models\Ticket::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Ticket::class, function (Faker $faker) {
     return [
         'user_id'               => factory(App\Models\User::class)->create()->id,
         'edited_by_user_id'     => factory(App\Models\User::class)->create()->id,
@@ -247,7 +238,7 @@ $factory->define(App\Models\Ticket::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\OrderItem::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\OrderItem::class, function (Faker $faker) {
     return [
         'title'            => $faker->title,
         'quantity'         => 5,
@@ -257,7 +248,7 @@ $factory->define(App\Models\OrderItem::class, function (Faker\Generator $faker) 
     ];
 });
 
-$factory->define(App\Models\EventStats::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\EventStats::class, function (Faker $faker) {
     return [
         'date'                  => Carbon::now(),
         'views'                 => 0,
@@ -270,7 +261,7 @@ $factory->define(App\Models\EventStats::class, function (Faker\Generator $faker)
 });
 
 
-$factory->define(App\Models\Attendee::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Attendee::class, function (Faker $faker) {
     return [
         'order_id'                 => factory(App\Models\Order::class)->create()->id,
         'event_id'                 => factory(App\Models\Event::class)->create()->id,
@@ -288,7 +279,7 @@ $factory->define(App\Models\Attendee::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\Message::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Message::class, function (Faker $faker) {
     return [
         'message'    => $faker->text,
         'subject'    => $faker->text,
@@ -296,7 +287,7 @@ $factory->define(App\Models\Message::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\EventImage::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\EventImage::class, function (Faker $faker) {
     return [
         'image_path' => $faker->imageUrl(),
         'event_id'   => factory(App\Models\Event::class)->create()->id,
