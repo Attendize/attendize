@@ -2,13 +2,11 @@
 
 namespace App\Mailers;
 
-use App\Generators\TicketGenerator;
 use App\Models\Attendee;
 use App\Models\Message;
 use Carbon\Carbon;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
+use Log;
+use Mail;
 
 
 class AttendeeMailer extends Mailer
@@ -24,12 +22,13 @@ class AttendeeMailer extends Mailer
         ];
 
         Mail::send('Mailers.TicketMailer.SendAttendeeTicket', $data, function ($message) use ($attendee) {
-            $pdf_file = TicketGenerator::generateFileName($attendee->reference);
-
-            /** @var MailMessage $message */
             $message->to($attendee->email);
             $message->subject(trans("Email.your_ticket_for_event", ["event" => $attendee->order->event->title]));
-            $message->attach($pdf_file['fullpath']);
+
+            $file_name = $attendee->reference;
+            $file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $file_name . '.pdf';
+
+            $message->attach($file_path);
         });
 
     }
@@ -49,11 +48,11 @@ class AttendeeMailer extends Mailer
                 $message_object->account_id)->get();
 
         foreach ($attendees as $attendee) {
-
+            
             if ($attendee->is_cancelled) {
-                continue;
+               continue;
             }
-
+            
             $data = [
                 'attendee'        => $attendee,
                 'event'           => $event,
@@ -85,12 +84,13 @@ class AttendeeMailer extends Mailer
         ];
 
         Mail::send('Mailers.TicketMailer.SendAttendeeInvite', $data, function ($message) use ($attendee) {
-            $pdf_file = TicketGenerator::generateFileName($attendee->getReferenceAttribute());
-
-            /** @var MailMessage $message */
             $message->to($attendee->email);
             $message->subject(trans("Email.your_ticket_for_event", ["event" => $attendee->order->event->title]));
-            $message->attach($pdf_file['fullpath']);
+
+            $file_name = $attendee->getReferenceAttribute();
+            $file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $file_name . '.pdf';
+
+            $message->attach($file_path);
         });
 
     }

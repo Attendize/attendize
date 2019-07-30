@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Generators\TicketGenerator;
 use App\Jobs\GenerateTicket;
 use App\Jobs\SendAttendeeInvite;
 use App\Jobs\SendAttendeeTicket;
@@ -13,18 +12,18 @@ use App\Models\EventStats;
 use App\Models\Message;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Ticket;
 use App\Services\Order as OrderService;
-use Barryvdh\DomPDF\Facade as PDF;
+use App\Models\Ticket;
+use Auth;
+use Config;
+use DB;
+use Excel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
-use Maatwebsite\Excel\Facades\Excel;
+use Log;
+use Mail;
 use Omnipay\Omnipay;
+use PDF;
+use Validator;
 
 class EventAttendeesController extends MyBaseController
 {
@@ -94,7 +93,7 @@ class EventAttendeesController extends MyBaseController
          * @todo This is a bit hackish
          */
         if ($event->tickets->count() === 0) {
-            return '<script>showMessage("' . trans("Controllers.addInviteError") . '");</script>';
+            return '<script>showMessage("'.trans("Controllers.addInviteError").'");</script>';
         }
 
         return view('ManageEvent.Modals.InviteAttendee', [
@@ -251,7 +250,7 @@ class EventAttendeesController extends MyBaseController
          * @todo This is a bit hackish
          */
         if ($event->tickets->count() === 0) {
-            return '<script>showMessage("' . trans("Controllers.addInviteError") . '");</script>';
+            return '<script>showMessage("'.trans("Controllers.addInviteError").'");</script>';
         }
 
         return view('ManageEvent.Modals.ImportAttendee', [
@@ -551,12 +550,15 @@ class EventAttendeesController extends MyBaseController
         Log::info($attendee_id);
         Log::info($attendee);
 
+
         $this->dispatch(new GenerateTicket($attendee->order->order_reference . "-" . $attendee->reference_index));
 
-        // Generate PDF filename and path
-        $pdf_file = TicketGenerator::generateFileName($attendee->order->order_reference . '-' . $attendee->reference_index);
+        $pdf_file_name = $attendee->order->order_reference . '-' . $attendee->reference_index;
+        $pdf_file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $pdf_file_name;
+        $pdf_file = $pdf_file_path . '.pdf';
 
-        return response()->download($pdf_file['fullpath']);
+
+        return response()->download($pdf_file);
     }
 
     /**
@@ -589,7 +591,7 @@ class EventAttendeesController extends MyBaseController
                         'attendees.first_name',
                         'attendees.last_name',
                         'attendees.email',
-                        'attendees.private_reference_number',
+			'attendees.private_reference_number',
                         'orders.order_reference',
                         'tickets.title',
                         'orders.created_at',
@@ -597,7 +599,7 @@ class EventAttendeesController extends MyBaseController
                         'attendees.arrival_time',
                     ])->get();
 
-                $data = array_map(function ($object) {
+                $data = array_map(function($object) {
                     return (array)$object;
                 }, $data->toArray());
 
@@ -606,7 +608,7 @@ class EventAttendeesController extends MyBaseController
                     'First Name',
                     'Last Name',
                     'Email',
-                    'Ticket ID',
+		    'Ticket ID',
                     'Order Reference',
                     'Ticket Type',
                     'Purchase Date',
@@ -676,7 +678,7 @@ class EventAttendeesController extends MyBaseController
         $attendee = Attendee::scope()->findOrFail($attendee_id);
         $attendee->update($request->all());
 
-        session()->flash('message', trans("Controllers.successfully_updated_attendee"));
+        session()->flash('message',trans("Controllers.successfully_updated_attendee"));
 
         return response()->json([
             'status'      => 'success',
@@ -732,11 +734,10 @@ class EventAttendeesController extends MyBaseController
         $attendee->is_cancelled = 1;
         $attendee->save();
 
-        $eventStats = EventStats::where('event_id', $attendee->event_id)->where('date',
-            $attendee->created_at->format('Y-m-d'))->first();
-        if ($eventStats) {
-            $eventStats->decrement('tickets_sold', 1);
-            $eventStats->decrement('sales_volume', $attendee->ticket->price);
+        $eventStats = EventStats::where('event_id', $attendee->event_id)->where('date', $attendee->created_at->format('Y-m-d'))->first();
+        if($eventStats){
+            $eventStats->decrement('tickets_sold',  1);
+            $eventStats->decrement('sales_volume',  $attendee->ticket->price);
         }
 
         $data = [
@@ -789,7 +790,7 @@ class EventAttendeesController extends MyBaseController
                         $message->to($attendee->email, $attendee->full_name)
                             ->from(config('attendize.outgoing_email_noreply'), $attendee->event->organiser->name)
                             ->replyTo($attendee->event->organiser->email, $attendee->event->organiser->name)
-                            ->subject(trans("Email.refund_from_name", ["name" => $attendee->event->organiser->name]));
+                            ->subject(trans("Email.refund_from_name", ["name"=>$attendee->event->organiser->name]));
                     });
                 } else {
                     $error_message = $response->getMessage();
@@ -873,6 +874,7 @@ class EventAttendeesController extends MyBaseController
             'event'     => $attendee->event,
             'tickets'   => $attendee->ticket,
             'attendees' => [$attendee],
+            'css'       => file_get_contents(public_path('assets/stylesheet/ticket.css')),
             'image'     => base64_encode(file_get_contents(public_path($attendee->event->organiser->full_logo_path))),
 
         ];
