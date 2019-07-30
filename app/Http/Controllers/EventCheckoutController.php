@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\OrderCompletedEvent;
-use App\Generators\TicketGenerator;
+use App\Models\Account;
 use App\Models\AccountPaymentGateway;
 use App\Models\Affiliate;
 use App\Models\Attendee;
@@ -11,23 +11,20 @@ use App\Models\Event;
 use App\Models\EventStats;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\PaymentGateway;
 use App\Models\QuestionAnswer;
 use App\Models\ReservedTickets;
 use App\Models\Ticket;
 use App\Services\Order as OrderService;
-use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
+use Cookie;
+use DB;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\View\View;
-use Omnipay\Omnipay;
+use Log;
+use Omnipay;
+use PDF;
 use PhpSpec\Exception\Exception;
+use Validator;
 
 class EventCheckoutController extends Controller
 {
@@ -40,7 +37,7 @@ class EventCheckoutController extends Controller
 
     /**
      * EventCheckoutController constructor.
-     * @param  Request  $request
+     * @param Request $request
      */
     public function __construct(Request $request)
     {
@@ -53,9 +50,9 @@ class EventCheckoutController extends Controller
     /**
      * Validate a ticket request. If successful reserve the tickets and redirect to checkout
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param $event_id
-     * @return JsonResponse|RedirectResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function postValidateTickets(Request $request, $event_id)
     {
@@ -95,7 +92,7 @@ class EventCheckoutController extends Controller
         $quantity_available_validation_rules = [];
 
         foreach ($ticket_ids as $ticket_id) {
-            $current_ticket_quantity = (int) $request->get('ticket_' . $ticket_id);
+            $current_ticket_quantity = (int)$request->get('ticket_' . $ticket_id);
 
             if ($current_ticket_quantity < 1) {
                 continue;
@@ -117,7 +114,7 @@ class EventCheckoutController extends Controller
                 'ticket_' . $ticket_id . '.min' => 'You must select at least ' . $ticket->min_per_person . ' tickets.',
             ];
 
-            $validator = Validator::make(['ticket_' . $ticket_id => (int) $request->get('ticket_' . $ticket_id)],
+            $validator = Validator::make(['ticket_' . $ticket_id => (int)$request->get('ticket_' . $ticket_id)],
                 $quantity_available_validation_rules, $quantity_available_validation_messages);
 
             if ($validator->fails()) {
@@ -183,7 +180,7 @@ class EventCheckoutController extends Controller
             ]);
         }
 
-        if (config('attendize.enable_dummy_payment_gateway') == true) {
+        if (config('attendize.enable_dummy_payment_gateway') == TRUE) {
             $activeAccountPaymentGateway = new AccountPaymentGateway();
             $activeAccountPaymentGateway->fill(['payment_gateway_id' => config('attendize.payment_gateway_dummy')]);
             $paymentGateway = $activeAccountPaymentGateway;
@@ -245,9 +242,9 @@ class EventCheckoutController extends Controller
     /**
      * Show the checkout page
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param $event_id
-     * @return RedirectResponse|View
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function showEventCheckout(Request $request, $event_id)
     {
@@ -270,7 +267,7 @@ class EventCheckoutController extends Controller
                 'secondsToExpire' => $secondsToExpire,
                 'is_embedded'     => $this->is_embedded,
                 'orderService'    => $orderService
-            ];
+                ];
 
         if ($this->is_embedded) {
             return view('Public.ViewEvent.Embedded.EventPageCheckout', $data);
@@ -282,9 +279,9 @@ class EventCheckoutController extends Controller
     /**
      * Create the order, handle payment, update stats, fire off email jobs then redirect user
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param $event_id
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postCreateOrder(Request $request, $event_id)
     {
@@ -312,19 +309,19 @@ class EventCheckoutController extends Controller
         if ($request->has('is_business') && $request->get('is_business')) {
             // Dynamic validation on the new business fields, only gets validated if business selected
             $businessRules = [
-                'business_name'          => 'required',
-                'business_tax_number'    => 'required',
+                'business_name' => 'required',
+                'business_tax_number' => 'required',
                 'business_address_line1' => 'required',
-                'business_address_city'  => 'required',
-                'business_address_code'  => 'required',
+                'business_address_city' => 'required',
+                'business_address_code' => 'required',
             ];
 
             $businessMessages = [
-                'business_name.required'          => 'Please enter a valid business name',
-                'business_tax_number.required'    => 'Please enter a valid business tax number',
+                'business_name.required' => 'Please enter a valid business name',
+                'business_tax_number.required' => 'Please enter a valid business tax number',
                 'business_address_line1.required' => 'Please enter a valid street address',
-                'business_address_city.required'  => 'Please enter a valid city',
-                'business_address_code.required'  => 'Please enter a valid code',
+                'business_address_city.required' => 'Please enter a valid city',
+                'business_address_code.required' => 'Please enter a valid code',
             ];
 
             $order->rules = $order->rules + $businessRules;
@@ -354,7 +351,7 @@ class EventCheckoutController extends Controller
         try {
             //more transation data being put in here.
             $transaction_data = [];
-            if (config('attendize.enable_dummy_payment_gateway') == true) {
+            if (config('attendize.enable_dummy_payment_gateway') == TRUE) {
                 $formData = config('attendize.fake_card_data');
                 $transaction_data = [
                     'card' => $formData
@@ -374,9 +371,9 @@ class EventCheckoutController extends Controller
             $orderService->calculateFinalCosts();
 
             $transaction_data += [
-                'amount'      => $orderService->getGrandTotal(),
-                'currency'    => $event->currency->code,
-                'description' => 'Order for customer: ' . $request->get('order_email'),
+                    'amount'      => $orderService->getGrandTotal(),
+                    'currency'    => $event->currency->code,
+                    'description' => 'Order for customer: ' . $request->get('order_email'),
             ];
 
             //TODO: class with an interface that builds the transaction data.
@@ -386,7 +383,7 @@ class EventCheckoutController extends Controller
                     $transaction_data += [
                         'token'         => $token,
                         'receipt_email' => $request->get('order_email'),
-                        'card'          => $formData
+                        'card' => $formData
                     ];
                     break;
                 case config('attendize.payment_gateway_paypal'):
@@ -442,13 +439,13 @@ class EventCheckoutController extends Controller
                 Log::info("Redirect url: " . $response->getRedirectUrl());
 
                 $return = [
-                    'status'      => 'success',
-                    'redirectUrl' => $response->getRedirectUrl(),
-                    'message'     => 'Redirecting to ' . $ticket_order['payment_gateway']->provider_name
+                    'status'       => 'success',
+                    'redirectUrl'  => $response->getRedirectUrl(),
+                    'message'      => 'Redirecting to ' . $ticket_order['payment_gateway']->provider_name
                 ];
 
                 // GET method requests should not have redirectData on the JSON return string
-                if ($response->getRedirectMethod() == 'POST') {
+                if($response->getRedirectMethod() == 'POST') {
                     $return['redirectData'] = $response->getRedirectData();
                 }
 
@@ -461,7 +458,7 @@ class EventCheckoutController extends Controller
                     'message' => $response->getMessage(),
                 ]);
             }
-        } catch (Exception $e) {
+        } catch (\Exeption $e) {
             Log::error($e);
             $error = 'Sorry, there was an error processing your payment. Please try again.';
         }
@@ -480,9 +477,9 @@ class EventCheckoutController extends Controller
      * Attempt to complete a user's payment when they return from
      * an off-site gateway
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param $event_id
-     * @return JsonResponse|RedirectResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function showEventCheckoutPaymentReturn(Request $request, $event_id)
     {
@@ -523,8 +520,8 @@ class EventCheckoutController extends Controller
      * Complete an order
      *
      * @param $event_id
-     * @param  bool|true  $return_json
-     * @return JsonResponse|RedirectResponse
+     * @param bool|true $return_json
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function completeOrder($event_id, $return_json = true)
     {
@@ -562,13 +559,13 @@ class EventCheckoutController extends Controller
             $order->is_payment_received = isset($request_data['pay_offline']) ? 0 : 1;
 
             // Business details is selected, we need to save the business details
-            if (isset($request_data['is_business']) && (bool) $request_data['is_business']) {
+            if (isset($request_data['is_business']) && (bool)$request_data['is_business']) {
                 $order->is_business = $request_data['is_business'];
                 $order->business_name = sanitise($request_data['business_name']);
                 $order->business_tax_number = sanitise($request_data['business_tax_number']);
                 $order->business_address_line_one = sanitise($request_data['business_address_line1']);
-                $order->business_address_line_two = sanitise($request_data['business_address_line2']);
-                $order->business_address_state_province = sanitise($request_data['business_address_state']);
+                $order->business_address_line_two  = sanitise($request_data['business_address_line2']);
+                $order->business_address_state_province  = sanitise($request_data['business_address_state']);
                 $order->business_address_city = sanitise($request_data['business_address_city']);
                 $order->business_address_code = sanitise($request_data['business_address_code']);
 
@@ -741,9 +738,9 @@ class EventCheckoutController extends Controller
     /**
      * Show the order details page
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param $order_reference
-     * @return View
+     * @return \Illuminate\View\View
      */
     public function showOrderDetails(Request $request, $order_reference)
     {
@@ -771,49 +768,38 @@ class EventCheckoutController extends Controller
         return view('Public.ViewEvent.EventPageViewOrder', $data);
     }
 
-
     /**
      * Shows the tickets for an order - either HTML or PDF
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param $order_reference
-     * @return Response|View
+     * @return \Illuminate\View\View
      */
     public function showOrderTickets(Request $request, $order_reference)
     {
-        // If is a demo ticket
-        if ($order_reference === 'example' && $request->get('event')) {
-            // Generate demo data
-            $order = TicketGenerator::demoData($request->get('event'));
-        } else {
-            // It's a real ticket, try to find the order in database
-            $order = Order::where('order_reference', '=', $order_reference)->first();
-        }
+        $order = Order::where('order_reference', '=', $order_reference)->first();
 
-        // If no order, exit
         if (!$order) {
             abort(404);
         }
+        $images = [];
+        $imgs = $order->event->images;
+        foreach ($imgs as $img) {
+            $images[] = base64_encode(file_get_contents(public_path($img->image_path)));
+        }
 
-        // Generate the tickets
-        $ticket_generator = new TicketGenerator($order);
-        $tickets = $ticket_generator->createTickets();
-
-        // Data for view
         $data = [
-            'tickets' => $tickets,
-            'event'   => $order->event,
+            'order'     => $order,
+            'event'     => $order->event,
+            'tickets'   => $order->event->tickets,
+            'attendees' => $order->attendees,
+            'css'       => file_get_contents(public_path('assets/stylesheet/ticket.css')),
+            'image'     => base64_encode(file_get_contents(public_path($order->event->organiser->full_logo_path))),
+            'images'    => $images,
         ];
 
-        // Generate file name
-        $pdf_file = TicketGenerator::generateFileName($order->order_reference);
-
         if ($request->get('download') == '1') {
-            return PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data)->download($pdf_file['base_name']);
-        } elseif ($request->get('view') == '1') {
-            return PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data)->stream($pdf_file['base_name']);
-        } elseif ($order_reference === 'example') {
-            return view('Public.ViewEvent.Partials.ExampleTicket', $data);
+            return PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, 'Tickets');
         }
         return view('Public.ViewEvent.Partials.PDFTicket', $data);
     }
