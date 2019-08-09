@@ -138,6 +138,16 @@ class Event extends MyBaseModel
     }
 
     /**
+     * The access codes associated with the event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function access_codes()
+    {
+        return $this->hasMany(\App\Models\EventAccessCodes::class, 'event_id', 'id');
+    }
+
+    /**
      * The account associated with the event.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -401,5 +411,14 @@ END:VCALENDAR
 ICSTemplate;
 
         return $icsTemplate;
+    }
+
+    /**
+     * @param integer $accessCodeId
+     * @return bool
+     */
+    public function hasAccessCode($accessCodeId)
+    {
+        return (is_null($this->access_codes()->where('id', $accessCodeId)->first()) === false);
     }
 }

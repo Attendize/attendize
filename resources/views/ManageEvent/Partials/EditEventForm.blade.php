@@ -22,6 +22,18 @@
                                                 ))  !!}
                 </div>
             </div>
+        <div class="form-group">
+          {!! Form::label('currency_id', trans("ManageEvent.default_currency"), array('class'=>'control-label required')) !!}
+          {!! Form::select('currency_id', $currencies, $event->currency_id, ['class' => 'form-control']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('is_live', trans("Event.event_visibility"), array('class'=>'control-label required')) !!}
+            {!!  Form::select('is_live', [
+            '1' => trans("Event.vis_public"),
+            '0' => trans("Event.vis_hide")],null,
+                                        array(
+                                        'class'=>'form-control'
+                                        ))  !!}
         </div>
         <div class="form-group">
             {!! Form::label('title', trans("Event.event_title"), array('class'=>'control-label required')) !!}
@@ -161,10 +173,21 @@
                    {!! Form::label('event_image', trans("Event.event_flyer"), array('class'=>'control-label ')) !!}
                    {!! Form::styledFile('event_image', 1) !!}
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="float-l">
-                    @if($event->images->count())
+
+                @if($event->images->count())
+                    <div class="form-group">
+                        {!! Form::label('event_image_position', trans("Event.event_image_position"), array('class'=>'control-label')) !!}
+                        {!! Form::select('event_image_position', [
+                                '' => trans("Event.event_image_position_hide"),
+                                'before' => trans("Event.event_image_position_before"),
+                                'after' => trans("Event.event_image_position_after"),
+                                'left' => trans("Event.event_image_position_left"),
+                                'right' => trans("Event.event_image_position_right"),
+                            ],
+                            Input::old('event_image_position'),
+                            ['class'=>'form-control']
+                        ) !!}
+                    </div>
                     {!! Form::label('', trans("Event.current_event_flyer"), array('class'=>'control-label ')) !!}
                     <div class="form-group">
                         <div class="well well-sm well-small">
@@ -173,10 +196,27 @@
 
                         </div>
                     </div>
+                @endif
+            </div>
+            <div class="col-md-6">
+                <div class="float-l">
+                    @if($event->images->count())
                     <div class="thumbnail">
                        {!!HTML::image('/'.$event->images->first()['image_path'])!!}
                     </div>
                     @endif
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {!! Form::label('google_tag_manager_code', trans("Organiser.google_tag_manager_code"), ['class'=>'control-label']) !!}
+                    {!!  Form::text('google_tag_manager_code', Input::old('google_tag_manager_code'), [
+                            'class'=>'form-control',
+                            'placeholder' => trans("Organiser.google_tag_manager_code_placeholder"),
+                        ])
+                    !!}
                 </div>
             </div>
         </div>

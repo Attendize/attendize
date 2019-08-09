@@ -44,7 +44,7 @@
                         <span style="float: right;"><b>{{ $orderService->getTaxAmount(true) }}</b></span>
                     </h5>
                     <h5>
-                        <strong>Grand Total:</strong>
+                        <strong>@lang("Public_ViewEvent.grand_total")</strong>
                         <span style="float: right;"><b>{{  $orderService->getGrandTotal(true) }}</b></span>
                     </h5>
                     @endif
@@ -87,7 +87,73 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="custom-checkbox">
+                                {!! Form::checkbox('is_business', 1, null, ['data-toggle' => 'toggle', 'id' => 'is_business']) !!}
+                                {!! Form::label('is_business', trans("Public_ViewEvent.is_business"), ['class' => 'control-label']) !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                <div class="row hidden" id="business_details">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        {!! Form::label("business_name", trans("Public_ViewEvent.business_name")) !!}
+                                        {!! Form::text("business_name", null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        {!! Form::label("business_tax_number", trans("Public_ViewEvent.business_tax_number")) !!}
+                                        {!! Form::text("business_tax_number", null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        {!! Form::label("business_address_line1", trans("Public_ViewEvent.business_address_line1")) !!}
+                                        {!! Form::text("business_address_line1", null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        {!! Form::label("business_address_line2", trans("Public_ViewEvent.business_address_line2")) !!}
+                                        {!! Form::text("business_address_line2", null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        {!! Form::label("business_address_state", trans("Public_ViewEvent.business_address_state_province")) !!}
+                                        {!! Form::text("business_address_state", null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        {!! Form::label("business_address_city", trans("Public_ViewEvent.business_address_city")) !!}
+                                        {!! Form::text("business_address_city", null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        {!! Form::label("business_address_code", trans("Public_ViewEvent.business_address_code")) !!}
+                                        {!! Form::text("business_address_code", null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><div class="col-md-12">&nbsp;</div></div>
                 <div class="p20 pl0">
                     <a href="javascript:void(0);" class="btn btn-primary btn-xs" id="mirror_buyer_info">
                         @lang("Public_ViewEvent.copy_buyer")
@@ -159,7 +225,13 @@
                 @if($event->enable_offline_payments)
                     <div class="offline_payment_toggle">
                         <div class="custom-checkbox">
-                            <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox" value="1">
+                            @if($payment_gateway === false)
+                                {{--  Force offline payment if no gateway  --}}
+                                <input type="hidden" name="pay_offline" value="1">
+                                <input id="pay_offline" type="checkbox" value="1" checked disabled>
+                            @else
+                                <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox" value="1">
+                            @endif
                             <label for="pay_offline">@lang("Public_ViewEvent.pay_using_offline_methods")</label>
                         </div>
                     </div>

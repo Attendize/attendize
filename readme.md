@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="https://www.attendize.com/img/logo-dark.png" alt="Attendize"/>
-  <img style='border: 1px solid #444;' src="https://attendize.com/img/screenshots/screen1.PNG" alt="Attendize"/>
+  <img src="http://attendize.website/assets/images/logo-dark.png" alt="Attendize"/>
+  <img style='border: 1px solid #444;' src="https://www.attendize.com/images/screenshots/screen1.PNG" alt="Attendize"/>
 </p>
 
 <h1>Attendize</h1>
@@ -50,6 +50,15 @@ Demo Back-end Demo: http://attendize.website/signup<br />
 ---
 Feel free to fork and contribute. If you are unsure about adding a feature create a Github issue to ask for Feedback. Read the [contribution guidelines](http://www.attendize.com/contributions.html)
 
+### Submitting an issue
+If you are creating an issue/bug report for Attendize please let us know the following.
+1. The version of Attendize you are using. e.g. master branch or release tag.
+2. Are you running Attendize in Docker or using a Virtual Machine.
+3. What version or Operating System are you using. e.g. Ubuntu 14.04
+4. The version of PHP you are using. e.g PHP 7.1
+5. Are you using Attendize with Nginx or Apache.
+6. Steps to reproduce the bug.
+
 ### Installation
 ---
 To get developing straight away use the [Pre-configured Docker Environment](http://www.attendize.com/getting_started.html#running-attendize-in-docker-for-development)<br />
@@ -66,12 +75,12 @@ Attendize is open-sourced software licensed under the Attribution Assurance Lice
 
 Contributors 
 ---
-
+* Jeremy Quinton ([Github](https://github.com/jeremyquinton))
+* Sam Bell ([Github](https://github.com/samdb))
+* Sebastian Schmidt ([Github](https://github.com/publicarray))
 * Brett B ([Github](https://github.com/bretto36))
 * G0dLik3 ([Github](https://github.com/G0dLik3))
-* Honoré Hounwanou ([Github](http://github.com/mercuryseries)) <mercuryseries@gmail.com>
+* Honoré Hounwanou ([Github](http://github.com/mercuryseries))
 * James Campbell ([Github](https://github.com/jncampbell))
 * JapSeyz ([Github](https://github.com/JapSeyz))
 * Mark Walet ([Github](https://github.com/markwalet))
-* Jeremy Quinton ([Github](https://github.com/jeremyquinton))
-* Sebastian Schmidt ([Github](https://github.com/publicarray))

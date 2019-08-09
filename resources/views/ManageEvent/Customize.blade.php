@@ -28,7 +28,7 @@
 @stop
 
 @section('head')
-    {!! HTML::script('https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&key='.env("GOOGLE_MAPS_GEOCODING_KEY")) !!}
+    {!! HTML::script('https://maps.googleapis.com/maps/api/js?libraries=places&key='.config("attendize.google_maps_geocoding_key")) !!}
     {!! HTML::script('vendor/geocomplete/jquery.geocomplete.min.js') !!}
     <script>
         $(function () {
@@ -201,7 +201,6 @@
                     class="{{$tab == 'fees' ? 'active' : ''}}"><a href="#fees" data-toggle="tab">@lang("basic.service_fees")</a></li>
                 <li data-route="{{route('showEventCustomizeTab', ['event_id' => $event->id, 'tab' => 'ticket_design'])}}"
                     class="{{$tab == 'ticket_design' ? 'active' : ''}}"><a href="#ticket_design" data-toggle="tab">@lang("basic.ticket_design")</a></li>
-
             </ul>
             <!--/ tab -->
             <!-- tab content -->
@@ -246,7 +245,7 @@
                                         <td>{{ $affiliate->visits }}</td>
                                         <td>{{ $affiliate->tickets_sold }}</td>
                                         <td>{{ money($affiliate->sales_volume, $event->currency) }}</td>
-                                        <td>{{ $affiliate->updated_at->format(env("DEFAULT_DATETIME_FORMAT")) }}</td>
+                                        <td>{{ $affiliate->updated_at->format(config("attendize.default_datetime_format")) }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -582,12 +581,8 @@
                     <div class="panel-footer mt15 text-right">
                         {!! Form::submit(trans("basic.save_changes"), ['class'=>"btn btn-success"]) !!}
                     </div>
-
                     {!! Form::close() !!}
-
                 </div>
-
-            </div>
             <!--/ tab content -->
         </div>
     </div>
