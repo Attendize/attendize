@@ -12,6 +12,9 @@ class QuestionTypesSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+        DB::table('question_types')->delete();
+        Schema::enableForeignKeyConstraints();
         DB::table('question_types')->insert([
             [
                 'id' => 1,

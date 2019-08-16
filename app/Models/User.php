@@ -64,7 +64,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function account()
     {
-        return $this->belongsTo(\App\Models\Account::class);
+        return $this->belongsTo(Account::class);
     }
 
     /**
