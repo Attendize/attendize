@@ -178,6 +178,9 @@ class TimezoneSeeder extends Seeder
             'Pacific/Fiji' => '(GMT+12:00) Fiji',
         ];
 
+        Schema::disableForeignKeyConstraints();
+        DB::table('timezones')->delete();
+        Schema::enableForeignKeyConstraints();
         foreach ($timezones as $name => $location) {
             \App\Models\Timezone::create(['name' => $name, 'location' => $location]);
         }

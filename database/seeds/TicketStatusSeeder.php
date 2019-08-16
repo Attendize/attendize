@@ -33,7 +33,9 @@ class TicketStatusSeeder extends Seeder
                 'name' => 'On Sale',
             ],
         ];
-
+        Schema::disableForeignKeyConstraints();
+        DB::table('ticket_statuses')->delete();
+        Schema::enableForeignKeyConstraints();
         DB::table('ticket_statuses')->insert($ticket_statuses);
     }
 }

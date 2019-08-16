@@ -31,7 +31,7 @@
                         <!-- tab -->
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#general_account" data-toggle="tab">@lang("ManageAccount.general")</a></li>
-                            <li><a href="#payment_account" data-toggle="tab">@lang("ManageAccount.payment")</a></li>
+                            {{--<li><a href="#payment_account" data-toggle="tab">@lang("ManageAccount.payment")</a></li>--}}
                             <li><a href="#users_account" data-toggle="tab">@lang("ManageAccount.users")</a></li>
                             <li><a href="#about" data-toggle="tab">@lang("ManageAccount.about")</a></li>
                         </ul>
@@ -93,11 +93,11 @@
 
                                 {!! Form::close() !!}
                             </div>
-                            <div class="tab-pane " id="payment_account">
+                            {{--<div class="tab-pane " id="payment_account">--}}
 
-                                @include('ManageAccount.Partials.PaymentGatewayOptions')
+                                {{--@include('ManageAccount.Partials.PaymentGatewayOptions')--}}
 
-                            </div>
+                            {{--</div>--}}
                             <div class="tab-pane" id="users_account">
                                 {!! Form::open(array('url' => route('postInviteUser'), 'class' => 'ajax ')) !!}
 

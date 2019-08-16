@@ -20,7 +20,7 @@ class EventDashboardController extends MyBaseController
     public function showDashboard($event_id = false)
     {
         $event = Event::scope()->findOrFail($event_id);
-
+        //dd($event->sales_volume);
         $num_days = 20;
 
         /*
@@ -69,7 +69,7 @@ class EventDashboardController extends MyBaseController
                 'date'         => $date->format('Y-m-d'),
                 'views'        => $views,
                 'unique_views' => $unique_views,
-                'sales_volume' => $sales_volume + $organiser_fees_volume,
+                'sales_volume' => $sales_volume, //+ $organiser_fees_volume,
                 'tickets_sold' => $tickets_sold,
             ];
         }

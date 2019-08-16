@@ -29,7 +29,9 @@ class OrderStatusSeeder extends Seeder
                 'name' => 'Cancelled',
             ],
         ];
-
+        Schema::disableForeignKeyConstraints();
+        DB::table('order_statuses')->delete();
+        Schema::enableForeignKeyConstraints();
         DB::table('order_statuses')->insert($order_statuses);
     }
 }
