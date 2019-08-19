@@ -31,7 +31,7 @@
         "vinelab/http": "~1.5",
         "laravel/framework": "~5.6",
         "mcamara/laravel-localization": "~1.2",
-        "mews/purifier": "~2.0",
+        "mews/purifier": "^2.1",
         "nitmedia/wkhtml2pdf": "dev-master",
 
         "laravel/socialite": "~3.0",
@@ -39,6 +39,7 @@
         "omnipay/dummy": "~3",
         "omnipay/paypal": "~3",
         "omnipay/stripe": "~3",
+        "laravel/tinker": "^1.0",
         "backpack/crud": "^3.5",
         "barryvdh/laravel-elfinder": "^0.4.1",
         "backpack/backupmanager": "^1.4",
@@ -56,6 +57,7 @@
       "symfony/css-selector": "~3.0",
         "backpack/generators": "^1.2",
         "laracasts/generators": "dev-master"
+
     },
     "autoload": {
         "classmap": [
