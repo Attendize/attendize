@@ -33,8 +33,19 @@ class CategoryCrudController extends CrudController
         */
 
         // TODO: remove setFromDb() and manually define Fields and Columns
-        $this->crud->setFromDb();
-
+        //$this->crud->setFromDb();
+        $this->crud->addColumns([
+            ['name'=>'id','type'=>'text','label'=>'Id'],
+            ['name'=>'title_tm','type'=>'text','label'=>'Title tm'],
+            ['name'=>'title_ru','type'=>'text','label'=>'Title ru'],
+            ['name'=>'parent_id','type'=>'text','label'=>'Parent'],
+        ]);
+        $this->crud->addFields([
+            ['name'=>'title_tm','type'=>'text','label'=>'Title tm'],
+            ['name'=>'title_ru','type'=>'text','label'=>'Title ru'],
+        ]);
+        $this->crud->enableReorder('title_tm', 2);
+        $this->crud->allowAccess('reorder');
         // add asterisk for fields that are required in CategoryRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

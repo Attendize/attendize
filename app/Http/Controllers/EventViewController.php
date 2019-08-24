@@ -66,7 +66,7 @@ class EventViewController extends Controller
             }
         }
 
-        return view('Public.ViewEvent.EventPage', $data);
+        return view('Bilettm.ViewEvent.EventPage', $data);
     }
 
     /**

@@ -38,7 +38,7 @@
         "php-http/message": "^1.6",
         "predis/predis": "~1.1",
         "vinelab/http": "~1.5",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
         "backpack/crud": "^3.5",
         "barryvdh/laravel-elfinder": "^0.4.1",
         "backpack/backupmanager": "^1.4",

@@ -5,13 +5,19 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     {!! Form::label('category',trans('Category.event_category'), array('class'=>'control-label required')) !!}
-                    {!! Form::select('category_id',$categories, $event->category_id, ['class' => 'form-control']) !!}
+                    {!! Form::select('category_id',main_categories(), $event->category_id, ['class' => 'form-control','id'=>'categories']) !!}
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="form-group">
+                    {!! Form::label('subCategory',trans('Category.event_sub_category'), array('class'=>'control-label')) !!}
+                    {!! Form::subSelect('sub_category_id',sub_categories(), $event->sub_category_id, ['class' => 'form-control','id'=>'subCategories']) !!}
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="form-group">
                     {!! Form::label('is_live', trans("Event.event_visibility"), array('class'=>'control-label required')) !!}
                     {!!  Form::select('is_live', [
@@ -22,20 +28,12 @@
                                                 ))  !!}
                 </div>
             </div>
-        <div class="form-group">
-          {!! Form::label('currency_id', trans("ManageEvent.default_currency"), array('class'=>'control-label required')) !!}
-          {!! Form::select('currency_id', $currencies, $event->currency_id, ['class' => 'form-control']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('is_live', trans("Event.event_visibility"), array('class'=>'control-label required')) !!}
-            {!!  Form::select('is_live', [
-            '1' => trans("Event.vis_public"),
-            '0' => trans("Event.vis_hide")],null,
-                                        array(
-                                        'class'=>'form-control'
-                                        ))  !!}
-        </div>
-        <div class="form-group">
+        {{--<div class="form-group">--}}
+          {{--{!! Form::label('currency_id', trans("ManageEvent.default_currency"), array('class'=>'control-label required')) !!}--}}
+          {{--{!! Form::select('currency_id', $currencies, $event->currency_id, ['class' => 'form-control']) !!}--}}
+        {{--</div>--}}
+
+        <div class="form-group col-md-12">
             {!! Form::label('title', trans("Event.event_title"), array('class'=>'control-label required')) !!}
             {!!  Form::text('title', Input::old('title'),
                                         array(
@@ -44,7 +42,7 @@
                                         ))  !!}
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md-12">
            {!! Form::label('description', trans("Event.event_description"), array('class'=>'control-label')) !!}
             {!!  Form::textarea('description', Input::old('description'),
                                         array(

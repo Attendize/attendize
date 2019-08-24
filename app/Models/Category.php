@@ -9,8 +9,7 @@
 namespace App\Models;
 
 
-class Category extends \Illuminate\Database\Eloquent\Model
-{
+class Category extends \Illuminate\Database\Eloquent\Model{
     use \Backpack\CRUD\CrudTrait;
     /**
      * Indicates whether the model should be timestamped.
@@ -30,14 +29,24 @@ class Category extends \Illuminate\Database\Eloquent\Model
      * @var bool $softDelete
      */
     protected $softDelete = false;
-
+    protected $fillable = ['title','lft','rgt','parent_id','depth'];
     /**
-     * The event associated with the currency.
+     * The events associated with the category.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function event()
-    {
-        return $this->belongsTo(\App\Models\Event::class);
+    public function events(){
+        return $this->hasMany(\App\Models\Event::class);
+    }
+
+    public function scopeMain($query){
+        return $query->where('depth',1);
+    }
+    public function scopeSub($query){
+        return $query->where('depth',2);
+    }
+
+    public function getChildren($parent_id){
+        return $this->where('parent_id',$parent_id);
     }
 }
