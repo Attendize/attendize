@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="132" viewBox="0 0 1920 132">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1" y1="0" x2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#99302c"/>
+      <stop offset="0.105" stop-color="#b0352e"/>
+      <stop offset="0.23" stop-color="#bd3831"/>
+      <stop offset="0.353" stop-color="#ee4437"/>
+      <stop offset="0.486" stop-color="#be3b36"/>
+      <stop offset="0.653" stop-color="#ce3b31"/>
+      <stop offset="0.795" stop-color="#ce3b34"/>
+      <stop offset="1" stop-color="#9a332e"/>
+    </linearGradient>
+  </defs>
+  <rect id="Menu_BG" data-name="Menu BG" width="1920" height="132" fill="url(#linear-gradient)"/>
+</svg>

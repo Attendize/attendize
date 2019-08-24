@@ -1,6 +1,6 @@
 {!! HTML::script('vendor/simplemde/dist/simplemde.min.js') !!}
 {!! HTML::style('vendor/simplemde/dist/simplemde.min.css') !!}
-{!!HTML::style('assets/out/icon-awesome/css/font-awesome.min.css')!!}
+{!!HTML::style('assets/vendor/icon-awesome/css/font-awesome.min.css')!!}
 <script>
     $(function() {
         try {
@@ -31,7 +31,20 @@
             dateTimeFormat: window.Attendize.DateTimeFormat,
             dateSeparator: window.Attendize.DateSeparator
         });
+        var parent = $("#categories"). children("option:selected"). val();
+        filterSub(parent);
 
+        $("#categories").on('change', function() {
+            // $city.not(this).get(0).selectedIndex = this.selectedIndex;
+            filterSub($(this).val());
+            //$('#subCategories option')[0].selectedIndex = 1;
+            $("select#subCategories").prop('selectedIndex', 0);
+        });
+
+        function filterSub(parent) {
+            $('#subCategories option').hide(); // and show them
+            $('#subCategories option[parent="'+parent+'"]').show()
+        }
     });
 </script>
 <style>

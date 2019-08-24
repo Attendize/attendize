@@ -26,7 +26,7 @@ class PublicController extends Controller
             ->take(10)
             ->get();
         $this->data['events'] = $events;
-        return view('Public.HomePage', $this->data);
+        return view('Bilettm.Public.HomePage', $this->data);
     }
 
     public function showCategoryEvents($category_id){

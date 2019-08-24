@@ -343,7 +343,7 @@
             xLabels: 'day',
             xLabelAngle: 30,
             yLabelFormat: function (x) {
-                return '{!! $event->currency_symbol !!} ' + x;
+                return 'mnt.' + x;
             },
             xLabelFormat: function (x) {
                 return formatDate(x);

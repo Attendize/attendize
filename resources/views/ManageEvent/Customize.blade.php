@@ -51,7 +51,7 @@
                 step: 0.01,
                 decimals: 2,
                 verticalbuttons: true,
-                postfix: '{{$event->currency->symbol_left}}',
+                postfix: 'mnt',
                 buttondown_class: "btn btn-link",
                 buttonup_class: "btn btn-link",
                 postfix_extraclass: "btn btn-link"

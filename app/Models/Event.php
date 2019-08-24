@@ -168,6 +168,30 @@ class Event extends MyBaseModel
     }
 
     /**
+     * Tags associated with the event
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tags(){
+        return $this->belongsToMany(\App\Models\Tag::class);
+    }
+
+    /**
+     * Category associated with the event
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function mainCategory(){
+        return $this->belongsTo(Category::class,'category_id');
+    }
+
+    /**
+     * Sub category associated with the event
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function subCategory(){
+        return $this->belongsTo(Category::class,'sub_category_id');
+    }
+
+    /**
      * Get the embed url.
      *
      * @return mixed

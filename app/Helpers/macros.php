@@ -81,3 +81,27 @@ HTML::macro('sortable_link',
 Blade::directive('money', function ($expression) {
     return "<?php echo number_format($expression, 2); ?>";
 });
+
+Form::macro('subSelect', function($name, $list = array(), $selected = null, $options = array())
+{
+    $selected = $this->getValueAttribute($name, $selected);
+    $options['id'] = $this->getIdAttribute($name, $options);
+
+    if ( ! isset($options['name'])) $options['name'] = $name;
+
+    $html = array('<option>Select sub category</option>');
+    //dd($list);
+    foreach ($list as $list_el)
+    {
+        $selectedAttribute = $this->getSelectedValue($list_el['id'], $selected);
+//        dd($selectedAttribute);
+        $option_attr = array('value' => e($list_el['id']), 'selected' => $selectedAttribute, 'parent' => $list_el['parent_id']);
+        $html[] = '<option'.$this->html->attributes($option_attr).'>'.e($list_el[trans('Category.category_title')]).'</option>';
+    }
+
+    $options = $this->html->attributes($options);
+
+    $list = implode('', $html);
+
+    return "<select{$options}>{$list}</select>";
+});

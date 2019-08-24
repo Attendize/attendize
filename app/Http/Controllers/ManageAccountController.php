@@ -25,14 +25,16 @@ class ManageAccountController extends MyBaseController
      * @param Request $request
      * @return mixed
      */
-    public function showEditAccount(Request $request)
+    public function showEditAccount(Request $request,$account_id = null)
     {
+        if(empty($account_id))
+            $account_id = Auth::user()->account_id;
         $data = [
-            'account'                  => Account::find(Auth::user()->account_id),
+            'account'                  => Account::find($account_id),
             'timezones'                => Timezone::pluck('location', 'id'),
             'currencies'               => Currency::pluck('title', 'id'),
             'payment_gateways'         => PaymentGateway::pluck('provider_name', 'id'),
-            'account_payment_gateways' => AccountPaymentGateway::scope()->get(),
+//            'account_payment_gateways' => AccountPaymentGateway::scope()->get(),
             'version_info'             => $this->getVersionInfo(),
         ];
 

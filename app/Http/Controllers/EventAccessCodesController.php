@@ -22,7 +22,9 @@ class EventAccessCodesController extends MyBaseController
      */
     public function show($event_id)
     {
-        $event = Event::scope()->findOrFail($event_id);
+        $event = Auth::user()->is_admin ?
+            Event::findOrFail($event_id) :
+            Event::scope()->findOrFail($event_id);
         return view('ManageEvent.AccessCodes', [
             'event' => $event,
         ]);
@@ -34,8 +36,12 @@ class EventAccessCodesController extends MyBaseController
      */
     public function showCreate($event_id)
     {
+        $event = Auth::user()->is_admin ?
+            Event::find($event_id) :
+            Event::scope()->find($event_id);
+
         return view('ManageEvent.Modals.CreateAccessCode', [
-            'event' => Event::scope()->find($event_id),
+            'event' => $event,
         ]);
     }
 
@@ -92,7 +98,9 @@ class EventAccessCodesController extends MyBaseController
     public function postDelete($event_id, $access_code_id)
     {
         /** @var Event $event */
-        $event = Event::scope()->findOrFail($event_id);
+        $event = Auth::user()->is_admin ?
+            Event::findOrFail($event_id) :
+            Event::scope()->findOrFail($event_id);
 
         if ($event->hasAccessCode($access_code_id)) {
             /** @var EventAccessCodes $accessCode */
