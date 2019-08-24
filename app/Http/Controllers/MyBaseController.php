@@ -34,7 +34,7 @@ class MyBaseController extends Controller
         /*
          * Share the organizers across all views
          */
-        $organizers = Auth::user()->is_admin ? Organiser::all():Organiser::scope()->get();
+        $organizers = Organiser::scope()->get();
         View::share('organisers', $organizers);
     }
 

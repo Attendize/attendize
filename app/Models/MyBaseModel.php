@@ -145,6 +145,9 @@ class MyBaseModel extends \Illuminate\Database\Eloquent\Model
          * //return  $query;
          */
 
+        if(Auth::user()->is_admin)
+            return $query;
+
         if (!$accountId) {
             $accountId = Auth::user()->account_id;
         }
