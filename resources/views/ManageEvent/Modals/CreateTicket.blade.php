@@ -21,7 +21,21 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    {!! Form::label('ticket_date', trans("ManageEvent.ticket_date"), array('class'=>' control-label required')) !!}
+
+                                    {!!  Form::text('ticket_date', Input::old('ticket_date'),
+                                        [
+                                            'class' => 'form-control start hasDatepicker',
+                                            'data-field' => 'datetime',
+                                            'data-startend' => 'start',
+                                            'data-startendelem' => '.end',
+                                            'readonly' => ''
+                                        ]) !!}
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('price', trans("ManageEvent.ticket_price"), array('class'=>'control-label required')) !!}
                                     {!!  Form::text('price', Input::old('price'),
@@ -34,7 +48,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('quantity_available', trans("ManageEvent.quantity_available"), array('class'=>' control-label')) !!}
                                     {!!  Form::text('quantity_available', Input::old('quantity_available'),

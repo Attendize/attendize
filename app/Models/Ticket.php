@@ -10,7 +10,7 @@ class Ticket extends MyBaseModel
 {
     use SoftDeletes;
 
-    protected $dates = ['start_sale_date', 'end_sale_date'];
+    protected $dates = ['start_sale_date', 'end_sale_date','ticket_date'];
 
     /**
      * The rules to validate the model.
@@ -24,8 +24,9 @@ class Ticket extends MyBaseModel
             'title'              => 'required',
             'price'              => 'required|numeric|min:0',
             'description'        => '',
-            'start_sale_date'    => 'date_format:"'.$format.'"',
-            'end_sale_date'      => 'date_format:"'.$format.'"|after:start_sale_date',
+            'ticket_date'        => 'required|date_format:"'.$format.'"',
+            'start_sale_date'    => 'date_format:"'.$format.'"|before:ticket_date',
+            'end_sale_date'      => 'date_format:"'.$format.'"|after:start_sale_date|before:ticket_date',
             'quantity_available' => 'integer|min:'.($this->quantity_sold + $this->quantity_reserved)
         ];
     }

@@ -37,10 +37,7 @@ class EventTicketsController extends MyBaseController
         }
 
         // Find event or return 404 error.
-        $event = Event::scope()->find($event_id);
-        if ($event === null) {
-            abort(404);
-        }
+        $event = Event::scope()->findOrFail($event_id);
 
         // Get tickets for event.
         $tickets = empty($q) === false
@@ -101,6 +98,7 @@ class EventTicketsController extends MyBaseController
         $ticket->event_id = $event_id;
         $ticket->title = strip_tags($request->get('title'));
         $ticket->quantity_available = !$request->get('quantity_available') ? null : $request->get('quantity_available');
+        $ticket->ticket_date = $request->get('ticket_date');
         $ticket->start_sale_date = $request->get('start_sale_date');
         $ticket->end_sale_date = $request->get('end_sale_date');
         $ticket->price = $request->get('price');
@@ -226,6 +224,7 @@ class EventTicketsController extends MyBaseController
         $ticket->title = $request->get('title');
         $ticket->quantity_available = !$request->get('quantity_available') ? null : $request->get('quantity_available');
         $ticket->price = $request->get('price');
+        $ticket->ticket_date = $request->get('ticket_date');
         $ticket->start_sale_date = $request->get('start_sale_date');
         $ticket->end_sale_date = $request->get('end_sale_date');
         $ticket->description = $request->get('description');

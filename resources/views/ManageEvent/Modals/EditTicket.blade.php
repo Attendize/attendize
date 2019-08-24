@@ -14,7 +14,21 @@
                     {!!  Form::text('title', null,['class'=>'form-control', 'placeholder'=>'E.g: General Admission']) !!}
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            {!! Form::label('ticket_date', trans("ManageEvent.ticket_date"), array('class'=>' control-label required')) !!}
+
+                            {!!  Form::text('ticket_date', $ticket->getFormattedDate('ticket_date'),
+                                [
+                                    'class' => 'form-control tdate hasDatepicker',
+                                    'data-field' => 'datetime',
+                                    'data-startend' => 'tdate',
+                                    'data-startendelem' => '.end',
+                                    'readonly' => ''
+                                ]) !!}
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             {!! Form::label('price', trans("ManageEvent.ticket_price"), array('class'=>'control-label required')) !!}
                             {!!  Form::text('price', null,
@@ -24,7 +38,7 @@
                                         ))  !!}
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             {!! Form::label('quantity_available', trans("ManageEvent.quantity_available"), array('class'=>' control-label')) !!}
                             {!!  Form::text('quantity_available', null,
@@ -46,6 +60,7 @@
                 </div>
 
                 <div class="row more-options">
+
                     <div class="col-sm-6">
                         <div class="form-group">
                             {!! Form::label('start_sale_date', trans("ManageEvent.start_sale_on"), array('class'=>' control-label')) !!}
@@ -55,7 +70,7 @@
                                     'class' => 'form-control start hasDatepicker',
                                     'data-field' => 'datetime',
                                     'data-startend' => 'start',
-                                    'data-startendelem' => '.end',
+                                    'data-startendelem' => '.tdate',
                                     'readonly' => ''
                                 ]) !!}
                         </div>
@@ -71,8 +86,8 @@
                                 [
                                     'class' => 'form-control end hasDatepicker',
                                     'data-field' => 'datetime',
-                                    'data-startend' => 'end',
-                                    'data-startendelem' => '.start',
+                                    'data-startend' => 'start',
+                                    'data-startendelem' => '.tdate',
                                     'readonly' => ''
                                 ])  !!}
                         </div>
