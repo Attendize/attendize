@@ -27,10 +27,17 @@
                                         'rows' => 5
                                         ))  !!}
                         </div>
-                        <div class="form-group">
-                            {!! Form::label('categor', trans("Category.event_category"), array('class'=>'control-label required')) !!}
-                            {!! Form::select('category_id',$categories, Input::old('category_id'), ['class' => 'form-control']) !!}
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                {!! Form::label('category_id', trans("Category.event_category"), array('class'=>'control-label required')) !!}
+                                {!! Form::select('category_id',main_categories(), Input::old('category_id'), ['class' => 'form-control','id'=>'categories']) !!}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {!! Form::label('subCategory',trans('Category.event_sub_category'), array('class'=>'control-label')) !!}
+                                {!! Form::subSelect('sub_category_id',sub_categories(), Input::old('sub_category_id'), ['class' => 'form-control','id'=>'subCategories']) !!}
+                            </div>
                         </div>
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">

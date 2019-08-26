@@ -39,4 +39,12 @@ if(! function_exists('sub_categories')){
             ->get();
     }
 }
+if(!function_exists('organisers')){
 
+    function organisers(){
+        if(Illuminate\Support\Facades\Auth::user()->is_admin)
+            return \App\Models\Organiser::all();
+        else
+            return \Illuminate\Support\Facades\Auth::user()->account->organisers;
+    }
+}
