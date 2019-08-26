@@ -32,11 +32,23 @@ class EventViewController extends Controller
             return view('Public.ViewEvent.EventNotLivePage');
         }
 
+        $tickets = $event->tickets()->where('is_hidden', false)
+            ->orderBy('sort_order', 'asc')->get();
+
+        $ticket_dates = array();
+
+        foreach ($tickets as $ticket){
+            $date = $ticket->ticket_date->format('d.m.Y');
+            $ticket_dates[$date][] = $ticket;
+        }
+
         $data = [
             'event' => $event,
-            'tickets' => $event->tickets()->orderBy('sort_order', 'asc')->get(),
+            'ticket_dates' =>$ticket_dates,
+//            'tickets' => $tickets,//$event->tickets()->orderBy('sort_order', 'asc')->get(),
             'is_embedded' => 0,
         ];
+//        dd($ticket_dates);
         /*
          * Don't record stats if we're previewing the event page from the backend or if we own the event.
          */

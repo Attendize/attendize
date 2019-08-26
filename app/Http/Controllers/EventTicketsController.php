@@ -229,7 +229,6 @@ class EventTicketsController extends MyBaseController
                 'messages' => $ticket->errors(),
             ]);
         }
-
         // Check if the ticket visibility changed on update
         $ticketPreviouslyHidden = (bool)$ticket->is_hidden;
 
@@ -237,6 +236,7 @@ class EventTicketsController extends MyBaseController
         $ticket->quantity_available = !$request->get('quantity_available') ? null : $request->get('quantity_available');
         $ticket->price = $request->get('price');
         $ticket->ticket_date = $request->get('ticket_date');
+//        dd($request);
         $ticket->start_sale_date = $request->get('start_sale_date');
         $ticket->end_sale_date = $request->get('end_sale_date');
         $ticket->description = $request->get('description');

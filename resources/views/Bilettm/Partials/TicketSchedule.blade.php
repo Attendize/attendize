@@ -6,12 +6,14 @@
             @lang("Public_ViewEvent.event_already", ['started' => trans('Public_ViewEvent.event_already_ended')])
         </div>
     @else
-        @if($tickets->count() > 0)
+        @if(count($ticket_dates) > 0)
         <div class="main-title-bottom-line" style="margin-left: 5px"></div>
         <h4 class="date-small-title">Дата проведения</h4>
         <div class="date-box-wrap">
-            <a href="">10.07.2019</a>
-            <a href="" class="active-date">20.07.2019</a>
+            @foreach($ticket_dates as $date =>$ticket)
+                <a href="">{{$date}}</a>
+            @endforeach
+            {{--<a href="" class="active-date">20.07.2019</a>--}}
         </div>
         <h4 class="time-small-title">Время проведения</h4>
         <div class="time-box-wrap">
