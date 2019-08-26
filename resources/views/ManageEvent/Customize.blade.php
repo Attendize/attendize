@@ -207,7 +207,7 @@
             <!-- tab content -->
             <div class="tab-content panel">
                 <div class="tab-pane {{($tab == 'general' || !$tab) ? 'active' : ''}}" id="general">
-                    @include('ManageEvent.Partials.EditEventForm', ['event'=>$event, 'organisers'=>\Auth::user()->account->organisers])
+                    @include('ManageEvent.Partials.EditEventForm', ['event'=>$event, 'organisers'=>organisers()])
                 </div>
 
                 <div class="tab-pane {{$tab == 'affiliates' ? 'active' : ''}}" id="affiliates">
@@ -334,77 +334,8 @@
                 <div class="tab-pane scale_iframe {{$tab == 'design' ? 'active' : ''}}" id="design">
 
                     <div class="row">
-                        <div class="col-sm-6">
 
-                            {!! Form::open(array('url' => route('postEditEventDesign', ['event_id' => $event->id]), 'files'=> true, 'class' => 'ajax customizeForm')) !!}
-
-                            {!! Form::hidden('bg_type', $event->bg_type) !!}
-
-                            <h4>@lang("Design.background_options")</h4>
-
-                            <div class="panel-group" id="bgOptions">
-
-                                <div class="panel panel-default" data-type="color">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#bgOptions" href="#bgColor"
-                                               class="{{($event->bg_type == 'color') ? '' : 'collapsed'}}">
-                                                <span class="arrow mr5"></span> @lang("Design.use_a_colour_for_the_background")
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="bgColor"
-                                         class="panel-collapse {{($event->bg_type == 'color') ? 'in' : 'collapse'}}">
-                                        <div class="panel-body">
-                                            {!! Form::text('bg_color', $event->bg_color, ['class' => 'colorpicker form-control']) !!}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel panel-default" data-type="image">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#bgOptions" href="#bgImage"
-                                               class="{{($event->bg_type == 'image') ? '' : 'collapsed'}}">
-                                                <span class="arrow mr5"></span> @lang("Design.select_from_available_images")
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="bgImage"
-                                         class="panel-collapse {{($event->bg_type == 'image') ? 'in' : 'collapse'}}">
-                                        <div class="panel-body">
-                                            @foreach($available_bg_images_thumbs as $bg_image)
-
-                                                <img data-3="{{str_replace('/thumbs', '', $event->bg_image_path)}}"
-                                                     class="img-thumbnail ma5 bgImage {{ ($bg_image === str_replace('/thumbs', '', $event->bg_image_path) ? 'selected' : '') }}"
-                                                     style="width: 120px;" src="{{asset($bg_image)}}"
-                                                     data-src="{{str_replace('/thumbs', '', substr($bg_image,1))}}"/>
-
-                                            @endforeach
-
-                                            {!! Form::hidden('bg_image_path_custom', ($event->bg_type == 'image') ? $event->bg_image_path : '') !!}
-                                        </div>
-                                            <a class="btn btn-link" href="https://pixabay.com?ref=attendize" title="PixaBay Free Images">
-                                                @lang("Design.images_provided_by_pixabay")
-                                            </a>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="panel-footer mt15 text-right">
-                                <span class="uploadProgress" style="display:none;"></span>
-                                {!! Form::submit(trans("basic.save_changes"), ['class'=>"btn btn-success"]) !!}
-                            </div>
-
-                            <div class="panel-footer ar hide">
-                                {!! Form::button(trans("basic.cancel"), ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}
-                                {!! Form::submit(trans("basic.save_changes"), ['class'=>"btn btn-success"]) !!}
-                            </div>
-
-                            {!! Form::close() !!}
-
-                        </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <h4>@lang("Design.event_page_preview")</h4>
 
                             <div class="iframe_wrap" style="overflow:hidden; height: 600px; border: 1px solid #ccc;">

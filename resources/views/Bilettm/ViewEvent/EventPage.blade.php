@@ -32,7 +32,7 @@
                 <div class="col-2 text-center">
 
                     @include('Bilettm.Partials.EventShareButtons')
-                    <img src="assets/assets/img/konserty/adv.png" style="width: 100%">
+                    <img src="{{asset('assets/images/advs/adv.png')}}" style="width: 100%">
                 </div>
                 <div class="col-12 p-0">
                     @include('Bilettm.Partials.EventTags')
