@@ -114,6 +114,17 @@ class Ticket extends MyBaseModel
         }
     }
 
+    public function setTicketDateAttribute($date){
+        if (!$date) {
+            $this->attributes['ticket_date'] = null;
+        } else {
+            $this->attributes['ticket_date'] = Carbon::createFromFormat(
+                config('attendize.default_datetime_format'),
+                $date
+            );
+        }
+    }
+
     /**
      * Scope a query to only include tickets that are sold out.
      *
