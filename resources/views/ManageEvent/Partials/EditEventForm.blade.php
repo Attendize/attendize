@@ -174,13 +174,13 @@
 
                 @if($event->images->count())
                     <div class="form-group">
-                        {!! Form::label('event_image_position', trans("Event.event_image_position"), array('class'=>'control-label')) !!}
+                        {!! Form::label('event_image_position', trans("Event.event_image_type"), array('class'=>'control-label')) !!}
                         {!! Form::select('event_image_position', [
-                                '' => trans("Event.event_image_position_hide"),
-                                'before' => trans("Event.event_image_position_before"),
-                                'after' => trans("Event.event_image_position_after"),
-                                'left' => trans("Event.event_image_position_left"),
-                                'right' => trans("Event.event_image_position_right"),
+                                '' => trans("Event.event_image_select"),
+                                'cinema' => trans("Event.event_image_cinema"),
+                                'theatre' => trans("Event.event_image_theatre"),
+                                'musical' => trans("Event.event_image_musical"),
+                                'other' => trans("Event.event_image_other"),
                             ],
                             Input::old('event_image_position'),
                             ['class'=>'form-control']

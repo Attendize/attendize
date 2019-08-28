@@ -40,7 +40,7 @@ class Category extends \Illuminate\Database\Eloquent\Model{
     }
 
     public function scopeMain($query){
-        return $query->where('depth',1);
+        return $query->where('depth',1)->orderBy('lft','asc');
     }
     public function scopeSub($query){
         return $query->where('depth',2);

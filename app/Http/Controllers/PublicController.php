@@ -10,23 +10,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Slider;
 use Carbon\Carbon;
 
 class PublicController extends Controller
 {
     private $data;
-    public function __construct()
-    {
-        $this->data = ['categories'=>Category::pluck(trans('Category.category_title'),'id'),
-            'category_id'=>''];
-    }
 
     public function showHomePage(){
-        $events = Event::where('end_date', '>', Carbon::now())
-            ->take(10)
-            ->get();
-        $this->data['events'] = $events;
-        return view('Bilettm.Public.HomePage', $this->data);
+        $cinema = Event::cinema()->onLive()->take(10)->get();
+        $theatre = Event::theatre()->onLive()->take(10)->get();
+        $musical = Event::musical()->onLive()->take(10)->get();
+        $sliders = Slider::where('active',1)->get();
+        return view('Bilettm.Public.HomePage')->with([
+            'cinema' => $cinema,
+            'theatre' => $theatre,
+            'musical' => $musical,
+            'sliders' => $sliders
+        ]);
     }
 
     public function showCategoryEvents($category_id){

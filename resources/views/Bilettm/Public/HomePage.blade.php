@@ -5,32 +5,37 @@
     <link rel="stylesheet" href="{{asset('vendor/owlcarousel/assets/owl.theme.default.min.css')}}">
 @endsection
 @section('content')
+@if($sliders->count()>0)
     @include('Bilettm.Partials.HomeSlider')
-
+@endif
+@if($cinema->count()>0)
     @include('Bilettm.Partials.HomeCinema')
-
+@endif
+@if($musical->count()>0)
     @include('Bilettm.Partials.HomeMusical')
-    <section id="first-add-wrapper" style="margin: 100px 0;">
-        <div class="container">
-            <div class="row" style="padding: 0 20px;">
-                <a href="" style="width: 100%">
-                    <img src="{{asset('assets/images/advs/first.png')}}" style="width: 100%">
-                </a>
-            </div>
+@endif
+<section id="first-add-wrapper" style="margin: 100px 0;">
+    <div class="container">
+        <div class="row" style="padding: 0 20px;">
+            <a href="" style="width: 100%">
+                <img src="{{asset('assets/images/advs/first.png')}}" style="width: 100%">
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 
+@if($theatre->count()>0)
     @include('Bilettm.Partials.HomeTheatre')
-
-    <section id="second-add-wrapper" style="margin: 100px 0;">
-        <div class="container">
-            <div class="row" style="padding: 0 20px;">
-                <a href="" style="width: 100%">
-                    <img src="{{asset('assets/images/advs/second.png')}}" style="width: 100%">
-                </a>
-            </div>
+@endif
+<section id="second-add-wrapper" style="margin: 100px 0;">
+    <div class="container">
+        <div class="row" style="padding: 0 20px;">
+            <a href="" style="width: 100%">
+                <img src="{{asset('assets/images/advs/second.png')}}" style="width: 100%">
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 @endsection
 @section('after_scripts')
     <script src="{{asset('vendor/jquery-migrate/jquery-migrate.min.js')}}"></script>

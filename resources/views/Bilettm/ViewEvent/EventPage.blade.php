@@ -41,3 +41,11 @@
         </div>
     </section>
 @endsection
+@section('after_scripts')
+    @include("Shared.Partials.LangScript")
+    {!!HTML::script(config('attendize.cdn_url_static_assets').'/assets/javascript/frontend.js')!!}
+
+    @if(isset($secondsToExpire))
+        <script>if($('#countdown')) {setCountdown($('#countdown'), {{$secondsToExpire}});}</script>
+    @endif
+@endsection

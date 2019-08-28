@@ -78,6 +78,15 @@ HTML::macro('sortable_link',
         return $html;
     });
 
+HTML::macro('cat_menu', function ($categories = array(), $class = '',$item_class = '',$options = array()){
+    $html = "<ul class='{$class}' {$this->html->attributes($options)}>";
+    foreach($categories as $category){
+        $html.= "<li class='{$item_class}'>{$category}</li>";
+    }
+    $html.="</ul>";
+    return $html;
+});
+
 Blade::directive('money', function ($expression) {
     return "<?php echo number_format($expression, 2); ?>";
 });

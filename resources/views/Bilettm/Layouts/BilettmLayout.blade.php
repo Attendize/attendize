@@ -34,7 +34,7 @@
     @include('Bilettm.Partials.PublicFooter')
 </main>
 <!-- JS Global Compulsory -->
-<script src="{{asset('vendor/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{asset('assets/javascript/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/popper.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap4/bootstrap.min.js')}}"></script>
 @yield('after_scripts')
