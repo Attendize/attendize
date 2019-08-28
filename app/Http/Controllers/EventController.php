@@ -29,7 +29,7 @@ class EventController extends MyBaseController
             'categories'   => Category::pluck(trans('Category.category_title'),'id'),
             'organiser_id' => $request->get('organiser_id') ? $request->get('organiser_id') : false,
         ];
-
+//        dd($data);
         return view('ManageOrganiser.Modals.CreateEvent', $data);
     }
 
@@ -54,6 +54,7 @@ class EventController extends MyBaseController
         $event->description = strip_tags($request->get('description'));
         $event->start_date = $request->get('start_date');
         $event->category_id = $request->get('category_id');
+        $event->sub_category_id = $request->get('sub_category_id');
         /*
          * Venue location info (Usually auto-filled from google maps)
          */

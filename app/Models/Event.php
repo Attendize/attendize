@@ -399,6 +399,10 @@ class Event extends MyBaseModel
         return $this->sales_volume + $this->organiser_fees_volume;
     }
 
+    public function getViewsCountAttribute(){
+        return $this->stats()->sum('views');
+    }
+
     /**
      * The attributes that should be mutated to dates.
      *
@@ -444,5 +448,22 @@ ICSTemplate;
     public function hasAccessCode($accessCodeId)
     {
         return (is_null($this->access_codes()->where('id', $accessCodeId)->first()) === false);
+    }
+
+
+    public function scopeCinema($query){
+        return $query->where('event_image_position','cinema');
+    }
+
+    public function scopeTheatre($query){
+        return $query->where('event_image_position','theatre');
+    }
+
+    public function scopeMusical($query){
+        return $query->where('event_image_position','musical');
+    }
+
+    public function scopeOnLive($query){
+        return $query->where('is_live',1);
     }
 }

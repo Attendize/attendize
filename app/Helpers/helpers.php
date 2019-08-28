@@ -11,7 +11,7 @@ if (!function_exists('money')) {
     function money($amount, \App\Models\Currency $currency = null)
     {
         if(!$currency){
-            return number_format($amount,0,'.',',');
+            return number_format($amount,0,'.',',').' manat';
         }
         return $currency->symbol_left . number_format($amount, $currency->decimal_place, $currency->decimal_point,
             $currency->thousand_point) . $currency->symbol_right;
@@ -25,6 +25,18 @@ if(!function_exists('main_categories')){
      */
     function main_categories(){
         return \App\Models\Category::main()->pluck(trans('Category.category_title'),'id');
+    }
+}
+
+if(!function_exists('category_menu')){
+    /**
+     *  make menu from categories
+     */
+    function category_menu(){
+        $categories = main_categories();
+        if(count($categories)>6){
+
+        }
     }
 }
 

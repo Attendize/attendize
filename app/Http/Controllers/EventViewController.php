@@ -38,7 +38,7 @@ class EventViewController extends Controller
         $ticket_dates = array();
 
         foreach ($tickets as $ticket){
-            $date = $ticket->ticket_date->format('d.m.Y');
+            $date = $ticket->ticket_date->format('d M');
             $ticket_dates[$date][] = $ticket;
         }
 
