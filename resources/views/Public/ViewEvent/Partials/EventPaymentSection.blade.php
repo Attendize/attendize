@@ -4,13 +4,6 @@
             @lang("Public_ViewEvent.payment_information")
         </h1>
     </div>
-    @if($payment_failed)
-    <div class="row">
-        <div class="col-md-8 alert-danger" style="text-align: left; padding: 10px">
-            @lang("Order.payment_failed")
-        </div>
-    </div>
-    @endif
     <div class="row">
         <div class="col-md-12" style="text-align: center">
             @lang("Public_ViewEvent.below_order_details_header")
@@ -66,12 +59,18 @@
         <div class="col-md-8 col-md-pull-4">
             <div class="row">
 
+                {{ $payment_gateway->name }}
+
                 @if($order_requires_payment)
                     @include('Public.ViewEvent.Partials.OfflinePayments')
                 @endif
 
-                @if(View::exists($payment_gateway['checkout_blade_template']))
-                    @include($payment_gateway['checkout_blade_template'])
+                @if($payment_gateway->name == 'Stripe')
+                    @include('Public.ViewEvent.Partials.PaymentStripe')
+                @endif
+
+                @if($payment_gateway->name == 'Stripe\PaymentIntents')
+                    @include('Public.ViewEvent.Partials.PaymentStripeSCA')
                 @endif
 
             </div>

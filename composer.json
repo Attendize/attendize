@@ -57,7 +57,6 @@
       "symfony/css-selector": "~3.0",
         "backpack/generators": "^1.2",
         "laracasts/generators": "dev-master"
-
     },
     "autoload": {
         "classmap": [
