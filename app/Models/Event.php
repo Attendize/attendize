@@ -403,6 +403,16 @@ class Event extends MyBaseModel
         return $this->stats()->sum('views');
     }
 
+    public function getStartingTicketPriceAttribute(){
+        $ticket = $this->tickets()
+            ->where('is_hidden',0)
+            ->orderBy('price','asc')
+            ->first();
+        if(!empty($ticket))
+            return $ticket->total_price;
+        return 0;
+    }
+
     /**
      * The attributes that should be mutated to dates.
      *
@@ -464,6 +474,7 @@ ICSTemplate;
     }
 
     public function scopeOnLive($query){
+        $query->whereDate('end_date','>',Carbon::now('Asia/Ashgabat'));
         return $query->where('is_live',1);
     }
 }
