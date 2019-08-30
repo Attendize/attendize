@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Event;
 use App\Models\Slider;
 use Carbon\Carbon;
@@ -18,9 +17,10 @@ class PublicController extends Controller
     private $data;
 
     public function showHomePage(){
-        $cinema = Event::cinema()->onLive()->take(10)->get();
-        $theatre = Event::theatre()->onLive()->take(10)->get();
-        $musical = Event::musical()->onLive()->take(10)->get();
+        $cinema = Event::cinema()->onLive()->take(11)->get();
+//        dd($cinema);
+        $theatre = Event::theatre()->onLive()->take(12)->get();
+        $musical = Event::musical()->onLive()->take(12)->get();
         $sliders = Slider::where('active',1)->get();
         return view('Bilettm.Public.HomePage')->with([
             'cinema' => $cinema,
