@@ -15,31 +15,23 @@
                     </div>
                     <div class="col-6">
                         <div class="row">
+                            @foreach($cinema->slice(0,4) as $cinemaEvent)
                             <div class="col-6">
-                                @include('Bilettm.Partials.CinemaItem',['event'=>$cinema->shift(1)])
+                                @include('Bilettm.Partials.CinemaItem',['event'=>$cinemaEvent])
 
                             </div>
-                            <div class="col-6">
-                                @include('Bilettm.Partials.CinemaItem',['event'=>$cinema->shift(1)])
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6" style="height: 50px;">
-                                @include('Bilettm.Partials.CinemaItem',['event'=>$cinema->shift(1)])
-                            </div>
-                            <div class="col-6" style="height: 50px;">
-                                @include('Bilettm.Partials.CinemaItem',['event'=>$cinema->shift(1)])
-                            </div>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>
             </div>
-            @if($cinema->count()>0)
+            @if($cinema->count()>4)
                 <div class="slider-slider">
                     <div class="row">
-                        @foreach($cinema as $event)
+                        @foreach($cinema->slice(4) as $cinemaEvent)
                             <div class="col-6">
-                                @include('Bilettm.Partials.CinemaItem',['event'=>$event])
+                                @include('Bilettm.Partials.CinemaItem',['event'=>$cinemaEvent])
                             </div>
                         @endforeach
                     </div>
