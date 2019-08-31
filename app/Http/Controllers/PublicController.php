@@ -19,8 +19,8 @@ class PublicController extends Controller
     public function showHomePage(){
         $cinema = Event::cinema()->onLive()->take(11)->get();
 //        dd($cinema);
-        $theatre = Event::theatre()->onLive()->take(12)->get();
-        $musical = Event::musical()->onLive()->take(12)->get();
+        $theatre = Event::theatre()->onLive()->take(6)->get();
+        $musical = Event::musical()->onLive()->take(8)->get();
         $sliders = Slider::where('active',1)->get();
         return view('Bilettm.Public.HomePage')->with([
             'cinema' => $cinema,

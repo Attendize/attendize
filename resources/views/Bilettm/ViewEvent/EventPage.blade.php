@@ -34,9 +34,9 @@
                     @include('Bilettm.Partials.EventShareButtons')
                     <img src="{{asset('assets/images/advs/adv.png')}}" style="width: 100%">
                 </div>
-                <div class="col-12 p-0">
-                    @include('Bilettm.Partials.EventTags')
-                </div>
+                {{--<div class="col-12 p-0">--}}
+                    {{--@include('Bilettm.Partials.EventTags')--}}
+                {{--</div>--}}
             </div>
         </div>
     </section>
