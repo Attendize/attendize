@@ -17,7 +17,6 @@
                         <div class="row">
                             <div class="col-6">
                                 @include('Bilettm.Partials.CinemaItem',['event'=>$cinema->shift(1)])
-
                             </div>
                             <div class="col-6">
                                 @include('Bilettm.Partials.CinemaItem',['event'=>$cinema->shift(1)])
@@ -45,7 +44,6 @@
                     </div>
                 </div>
             @endif
-
         </div>
     </div>
 </section>
