@@ -18,7 +18,7 @@ class PublicController extends Controller
 
     public function showHomePage(){
         $cinema = Event::cinema()->onLive()->take(11)->get();
-//        dd($cinema);
+//        todo join image
         $theatre = Event::theatre()->onLive()->take(6)->get();
         $musical = Event::musical()->onLive()->take(8)->get();
         $sliders = Slider::where('active',1)->get();

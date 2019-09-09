@@ -16,11 +16,15 @@
         </div>
     </li>
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="tab">Дата <i class="fa fa-caret-down"></i></a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item nav-link" data-toggle="tab" href="" role="tab">DLink 1</a>
-            <a class="dropdown-item nav-link" data-toggle="tab" href="" role="tab">DLink 2</a>
-            <a class="dropdown-item nav-link" data-toggle="tab" href="" role="tab">DLink 3</a>
+        <a class="nav-link" id="date-click">Дата <i class="fa fa-caret-down"></i></a>
+        <div class="p-3" id="date-click-content" style="background-color: #ffffff; left: -200px; border-radius: 5px; position: absolute; width: auto; z-index: 10; box-shadow: 2px 2px 5px rgba(0,0,0,.2), -2px 2px 5px rgba(0,0,0,.2), 2px -2px 5px rgba(0,0,0,.2), -2px -2px 5px rgba(0,0,0,.2);">
+            <div style="position: relative; z-index: 10">
+                <div class="col-xl-12 p-0" style="border-radius: 5px">
+                    <!-- Datepicker -->
+                    <div id="datepickerInline" class="u-datepicker-v1 u-shadow-v32 g-brd-none rounded"></div>
+                    <!-- End Datepicker -->
+                </div>
+            </div>
         </div>
     </li>
 </ul>

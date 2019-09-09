@@ -462,19 +462,20 @@ ICSTemplate;
 
 
     public function scopeCinema($query){
-        return $query->where('event_image_position','cinema');
+        return $query->where('event_image_position','cinema')->with('images');
     }
 
     public function scopeTheatre($query){
-        return $query->where('event_image_position','theatre');
+        return $query->where('event_image_position','theatre')->with('images');
     }
 
     public function scopeMusical($query){
-        return $query->where('event_image_position','musical');
+        return $query->where('event_image_position','musical')->with('images');
     }
 
     public function scopeOnLive($query){
-        $query->whereDate('end_date','>',Carbon::now('Asia/Ashgabat'));
+        $query->whereDate('end_date','>',Carbon::now(config('app.timezone','Asia/Ashgabat')));
         return $query->where('is_live',1);
     }
+
 }

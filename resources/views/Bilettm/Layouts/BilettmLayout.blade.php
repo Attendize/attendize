@@ -17,27 +17,54 @@
 
     @yield('after_styles')
     @stack('after_styles')
+    <link  rel="stylesheet" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.min.css') }}">
 <!-- CSS Unify Theme -->
     <link rel="stylesheet" href="{{asset('assets/stylesheet/styles.e-commerce.css')}}">
+
     <!--  KMB Custom css  -->
     <link rel="stylesheet" href='{{asset("assets/stylesheet/custom.css")}}'>
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 </head>
 
 <body>
 <main>
     @include('Bilettm.Partials.PublicHeader')
-    @yield('content')
+    @yield('content')2
     @include('Bilettm.Partials.PublicFooter')
 </main>
 <!-- JS Global Compulsory -->
 <script src="{{asset('assets/javascript/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/popper.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap4/bootstrap.min.js')}}"></script>
+
+<script src="{{ asset('vendor/chosen/chosen.jquery.js') }}"></script>
+<script src="{{ asset('vendor/jquery-ui/ui/widgets/datepicker.js') }}"></script>
+
 @yield('after_scripts')
 
 @stack('after_scripts')
+
+<!-- JS Unify -->
+<script src="{{ asset('assets/javascript/components/hs.select.js') }}"></script>
+<script src="{{ asset('assets/javascript/components/hs.datepicker.js') }}"></script>
+
+<!-- JS Plugins Init. -->
+<script >
+    $(document).ready(function () {
+        // initialization of custom select
+        $.HSCore.components.HSSelect.init('.js-custom-select');
+
+        // initialization of forms
+        $.HSCore.components.HSDatepicker.init('#datepickerInline');
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('#date-click').click(function () {
+            $('#date-click-content').toggleClass('show-content');
+        });
+    });
+</script>
+
 </body>
