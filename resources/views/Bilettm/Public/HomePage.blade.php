@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="{{asset('vendor/slick-carousel/slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/owlcarousel/assets/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('vendor/owlcarousel/assets/owl.theme.default.min.css')}}">
+    <link  rel="stylesheet" href="{{asset('vendor/jquery-ui/themes/base/jquery-ui.min.css')}}">
 @endsection
 @section('content')
 @if($sliders->count()>0)
@@ -46,6 +47,9 @@
     <script src="{{asset('assets/javascript/hs.core.js')}}"></script>
     <script src="{{asset('assets/javascript/components/hs.carousel.js')}}"></script>
     <script src="{{asset('vendor/owlcarousel/owl.carousel.min.js')}}"></script>
+    <!-- JS Unify -->
+    <script src="{{ asset('assets/javascript/components/hs.select.js') }}"></script>
+    <script src="{{ asset('assets/javascript/components/hs.datepicker.js') }}"></script>
     <!-- JS Plugins Init. -->
     <script>
         $(document).ready(function(){
@@ -55,9 +59,7 @@
             $("#slide-teator-next").click(function(){
                 $("#carousel-09-1 .js-next").click();
             });
-        });
-        // home page teatrda ulanan sliderim un script
-        $(document).on('ready', function () {
+            // home page teatrda ulanan sliderim un script
             // initialization of carousel
             $.HSCore.components.HSCarousel.init('[class*="js-carousel"]');
 
@@ -77,9 +79,7 @@
                     slidesToShow: 2
                 }
             }], true);
-        });
-        //owl carousel
-        $(document).ready(function(){
+            //owl carousel
             $("#main-top-slider").owlCarousel({
                 items: 1,
                 loop: true,
@@ -87,13 +87,25 @@
             });
             $("#kinoteator-tab1").owlCarousel({
                 items: 1,
-            })
+            });
             $("#konserty-tab1").owlCarousel({
                 items: 1,
             })
             $("#teator-tab1").owlCarousel({
                 items: 1,
-            })
+            });
+            // initialization of custom select
+            $.HSCore.components.HSSelect.init('.js-custom-select');
+
+            // initialization of forms
+            $.HSCore.components.HSDatepicker.init('#datepickerInline');
+
+            $('#date-click').click(function () {
+                $('#date-click-content').toggleClass('show-content');
+            });
         });
+
+
     </script>
+
 @endsection

@@ -5,7 +5,6 @@
         <a class="" href="">Посмотреть все</a>
     </div>
     <div class="tab-ozi col-12">
-        @include('Bilettm.Partials.FilterMenu')
 
         <div class="owl-carousel container row" id="kinoteator-tab1" style="padding: 0 !important; margin: 0">
             <div class="slider-slider">

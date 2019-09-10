@@ -17,7 +17,7 @@
 
     @yield('after_styles')
     @stack('after_styles')
-    <link  rel="stylesheet" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.min.css') }}">
+
 <!-- CSS Unify Theme -->
     <link rel="stylesheet" href="{{asset('assets/stylesheet/styles.e-commerce.css')}}">
 
@@ -29,7 +29,7 @@
 <body>
 <main>
     @include('Bilettm.Partials.PublicHeader')
-    @yield('content')2
+    @yield('content')
     @include('Bilettm.Partials.PublicFooter')
 </main>
 <!-- JS Global Compulsory -->
@@ -44,27 +44,6 @@
 
 @stack('after_scripts')
 
-<!-- JS Unify -->
-<script src="{{ asset('assets/javascript/components/hs.select.js') }}"></script>
-<script src="{{ asset('assets/javascript/components/hs.datepicker.js') }}"></script>
 
-<!-- JS Plugins Init. -->
-<script >
-    $(document).ready(function () {
-        // initialization of custom select
-        $.HSCore.components.HSSelect.init('.js-custom-select');
-
-        // initialization of forms
-        $.HSCore.components.HSDatepicker.init('#datepickerInline');
-    });
-</script>
-
-<script>
-    $(document).ready(function(){
-        $('#date-click').click(function () {
-            $('#date-click-content').toggleClass('show-content');
-        });
-    });
-</script>
 
 </body>
