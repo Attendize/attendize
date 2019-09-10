@@ -29,7 +29,7 @@ class Category extends \Illuminate\Database\Eloquent\Model{
      * @var bool $softDelete
      */
     protected $softDelete = false;
-    protected $fillable = ['title','lft','rgt','parent_id','depth'];
+    protected $fillable = ['title_tm','title_ru','view_type','lft','rgt','parent_id','depth'];
     /**
      * The events associated with the category.
      *
@@ -43,10 +43,10 @@ class Category extends \Illuminate\Database\Eloquent\Model{
         return $query->where('depth',1)->orderBy('lft','asc');
     }
     public function scopeSub($query){
-        return $query->where('depth',2);
+        return $query->where('depth',2)->orderBy('lft','asc');
     }
 
     public function getChildren($parent_id){
-        return $this->where('parent_id',$parent_id);
+        return $this->where('parent_id',$parent_id)->orderBy('lft','asc');
     }
 }

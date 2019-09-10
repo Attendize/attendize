@@ -28,4 +28,6 @@
         </div>
     </li>
 </ul>
+@push('after_scripts')
+@endpush
 <!-- End Nav tabs -->

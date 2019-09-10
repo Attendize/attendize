@@ -20,10 +20,10 @@
 
                             {!!  Form::text('ticket_date', $ticket->getFormattedDate('ticket_date'),
                                 [
-                                    'class' => 'form-control tdate hasDatepicker',
+                                    'class' => 'form-control ticket_date hasDatepicker',
                                     'data-field' => 'datetime',
-                                    'data-startend' => 'tdate',
-                                    'data-startendelem' => '.end',
+                                    'data-startend' => 'end',
+                                    'data-startendelem' => '.start',
                                     'readonly' => ''
                                 ]) !!}
                         </div>
@@ -70,7 +70,7 @@
                                     'class' => 'form-control start hasDatepicker',
                                     'data-field' => 'datetime',
                                     'data-startend' => 'start',
-                                    'data-startendelem' => '.tdate',
+                                    'data-startendelem' => '.end',
                                     'readonly' => ''
                                 ]) !!}
                         </div>
@@ -87,7 +87,7 @@
                                     'class' => 'form-control end hasDatepicker',
                                     'data-field' => 'datetime',
                                     'data-startend' => 'start',
-                                    'data-startendelem' => '.tdate',
+                                    'data-startendelem' => '.ticket_date',
                                     'readonly' => ''
                                 ])  !!}
                         </div>
