@@ -22,10 +22,10 @@
             <!-- Navigation -->
             <div id="navBar" style="width: 40%;" class="collapse navbar-collapse align-items-center flex-sm-row g-pt-15 g-pt-0--lg row">
                 <div class="col-12 search-panel w-100">
-                    <form action="">
+                    <form action="{{route('search')}}" method="GET">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Поиск...">
-                            <a href="" id="top-header-submit"><img src="{{asset('assets/images/icons/search.svg')}}"></a>
+                            <input type="text" class="form-control" name="q" placeholder="Мероприятия, исполнители, площадки">
+                            <button id="top-header-submit"><img src="{{asset('assets/images/icons/search.svg')}}"></button>
                         </div>
                     </form>
                 </div>
@@ -66,9 +66,9 @@
             <div class="row" style="width: 30%; margin-left: 0" id="top-header-right">
                 <div class="col-lg-12 col-md-12">
                     <ul id="top-menu-three-btn" style="float: right;">
-                        <li><a href=""><img src="{{asset('assets/images/icons/user.svg')}}">&nbsp;Вход</a></li>
-                        <li><a href=""><img src="{{asset('assets/images/icons/plus.svg')}}">&nbsp;Регистрация</a></li>
-                        <li class="dropdown">
+                        {{--<li><a href=""><img src="{{asset('assets/images/icons/user.svg')}}">&nbsp;Вход</a></li>--}}
+                        {{--<li><a href=""><img src="{{asset('assets/images/icons/plus.svg')}}">&nbsp;Регистрация</a></li>--}}
+                        <li class="dropdown pull-right">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown"><img src="{{asset('assets/images/icons/globe.svg')}}">&nbsp;Русский <i class="fa fa-caret-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="">Русский</a></li>
@@ -76,8 +76,9 @@
                                 <li><a href="">English</a></li>
                             </ul>
                         </li>
+                        <div class="clearfix"></div>
                         <li style="display: block;" id="bottom-of-three-btn">
-                            <a style="display: block; padding: 7px 0;">+(993) 12 60-60-60</a>
+                            <a style="display: block; padding: 7px 0; min-width: 200px">{{\Backpack\Settings\app\Models\Setting::get('phone')}}</a>
                         </li>
                     </ul>
                 </div>

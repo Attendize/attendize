@@ -1,6 +1,6 @@
 @extends('Bilettm.Layouts.BilettmLayout')
 @section('content')
-    @include('Bilettm.Partials.BreadCrumbs')
+    {{\DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::render('home')}}
 
     <section style="margin-top: 30px; margin-bottom: 100px">
         <div class="container">
@@ -34,9 +34,9 @@
                     @include('Bilettm.Partials.EventShareButtons')
                     <img src="{{asset('assets/images/advs/adv.png')}}" style="width: 100%">
                 </div>
-                <div class="col-12 p-0">
-                    @include('Bilettm.Partials.EventTags')
-                </div>
+                {{--<div class="col-12 p-0">--}}
+                    {{--@include('Bilettm.Partials.EventTags')--}}
+                {{--</div>--}}
             </div>
         </div>
     </section>

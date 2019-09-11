@@ -17,14 +17,13 @@
 
     @yield('after_styles')
     @stack('after_styles')
+
 <!-- CSS Unify Theme -->
     <link rel="stylesheet" href="{{asset('assets/stylesheet/styles.e-commerce.css')}}">
+
     <!--  KMB Custom css  -->
     <link rel="stylesheet" href='{{asset("assets/stylesheet/custom.css")}}'>
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 </head>
 
 <body>
@@ -37,7 +36,14 @@
 <script src="{{asset('assets/javascript/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/popper.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap4/bootstrap.min.js')}}"></script>
+
+<script src="{{ asset('vendor/chosen/chosen.jquery.js') }}"></script>
+<script src="{{ asset('vendor/jquery-ui/ui/widgets/datepicker.js') }}"></script>
+
 @yield('after_scripts')
 
 @stack('after_scripts')
+
+
+
 </body>
