@@ -712,12 +712,21 @@ Route::group(
             ]);
         });
     });
-    Route::get('/','PublicController@showHomePage');
+
+    Route::get('/',[
+        'as' => 'home',
+        'uses' => 'PublicController@showHomePage'
+    ]);
 //    Route::get('/', function () {
 //        return Redirect::route('showSelectOrganiser');
 //        // I prefer it that way:
 //        // return Redirect::route('showOrganiserHome', ["organiser_id"=>1]);
 //    });
+
+    Route::get('/search',[
+        'as' => 'search',
+        'uses' => 'PublicController@search'
+    ]);
 
     Route::get('/terms_and_conditions', [
         'as' => 'termsAndConditions',

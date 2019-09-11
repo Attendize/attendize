@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Request;
+use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Event;
 use App\Models\Slider;
@@ -60,8 +60,7 @@ class PublicController extends Controller
                 $nav_query->where('parent_id',$category->parent_id);
                 $active_id = $category->id;
             }
-            else
-            {
+            else{
                 $e_query->where('category_id',$category->id);
                 $nav_query->where('parent_id',$category->id);
             }
@@ -78,9 +77,14 @@ class PublicController extends Controller
         $navigation = $nav_query->get();
 
         return view('Bilettm.Public.EventsPage')->with([
-            'events'=>$events,
-            'active_id'=>$active_id,
-            'navigation'=>$navigation
+            'events' => $events,
+            'active_id' => $active_id,
+            'navigation' => $navigation
         ]);
+    }
+
+    public function search(Request $request){
+        $query = $request->get('q');
+        return view('Bilettm.Public.SearchResult');
     }
 }
