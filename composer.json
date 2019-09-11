@@ -44,7 +44,10 @@
         "backpack/backupmanager": "^1.4",
         "backpack/settings": "^2.1",
         "backpack/pagemanager": "^1.1",
-        "backpack/permissionmanager": "^4.0"
+        "backpack/permissionmanager": "^4.0",
+        "davejamesmiller/laravel-breadcrumbs": "5.3",
+        "teamtnt/tntsearch": "^2.1",
+        "teamtnt/laravel-scout-tntsearch-driver": "^7.2"
 
 
     },

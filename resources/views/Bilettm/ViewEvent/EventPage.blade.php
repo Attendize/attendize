@@ -1,6 +1,6 @@
 @extends('Bilettm.Layouts.BilettmLayout')
 @section('content')
-    @include('Bilettm.Partials.BreadCrumbs')
+    {{\DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::render('home')}}
 
     <section style="margin-top: 30px; margin-bottom: 100px">
         <div class="container">
