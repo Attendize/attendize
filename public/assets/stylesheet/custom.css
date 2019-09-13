@@ -148,8 +148,7 @@ article > .u-block-hover__additional--partially-slide-up {
   margin-top: 20px; }
   #kinoteator .tab-header h2 {
     font-size: 35px;
-    font-weight: bold;
-    padding-left: 5px; }
+    font-weight: bold; }
     @media only screen and (max-width: 1440px) {
       #kinoteator .tab-header h2 {
         font-size: 30px; } }
@@ -158,9 +157,9 @@ article > .u-block-hover__additional--partially-slide-up {
     background-color: #d33d33;
     height: fit-content;
     font-size: 20px;
-    padding: 15px 60px;
+    padding: 12px 60px;
     border-radius: 5px;
-    margin-right: 5px;
+    margin-right: 0;
     transition-property: background-color;
     transition-duration: .2s; }
   #kinoteator .tab-header a.top-social-icons {
@@ -193,7 +192,7 @@ article > .u-block-hover__additional--partially-slide-up {
   #kinoteator .tab-ozi a.nav-link.active {
     background-color: unset; }
   #kinoteator .tab-ozi {
-    margin-top: 10px; }
+    margin-top: 70px; }
     #kinoteator .tab-ozi .nav.u-nav-v1-1 {
       padding: 0 5px; }
   #kinoteator .owl-nav.disabled {
@@ -1630,4 +1629,17 @@ input.reserved-seats ~ label svg {
 
 .ui-datepicker-next.ui-corner-all:hover, .ui-datepicker-prev.ui-corner-all:hover{
   border: 1px solid #000000;
+}
+
+#top-header-submit:hover{
+  cursor: pointer;
+}
+
+.slider-slider .row{
+  width: 100%;
+  margin: auto;
+}
+
+.slider-slider .col-6{
+  padding: 10px;
 }

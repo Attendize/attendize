@@ -10,7 +10,7 @@
 <!-- End Top Bar -->
 
 <div class="u-header__section u-header__section--light g-bg-white g-transition-0_3 g-py-10">
-    <nav class="js-mega-menu navbar navbar-expand-lg">
+    <nav class="js-mega-menu navbar navbar-expand-lg px-0">
         <div class="container">
             <!-- Logo -->
             <div class="navbar-brand bilettm" style="width: 30%; margin-right: 0">
@@ -22,10 +22,10 @@
             <!-- Navigation -->
             <div id="navBar" style="width: 40%;" class="collapse navbar-collapse align-items-center flex-sm-row g-pt-15 g-pt-0--lg row">
                 <div class="col-12 search-panel w-100">
-                    <form action="{{route('search')}}" method="GET">
+                    <form action="{{route('search')}}" method="GET" id="main-header-search-form">
                         <div class="form-group">
                             <input type="text" class="form-control" name="q" placeholder="Мероприятия, исполнители, площадки">
-                            <button id="top-header-submit"><img src="{{asset('assets/images/icons/search.svg')}}"></button>
+                            <a id="top-header-submit"><img src="{{asset('assets/images/icons/search.svg')}}"></a>
                         </div>
                     </form>
                 </div>
@@ -78,7 +78,7 @@
                         </li>
                         <div class="clearfix"></div>
                         <li style="display: block;" id="bottom-of-three-btn">
-                            <a style="display: block; padding: 7px 0; min-width: 200px">{{\Backpack\Settings\app\Models\Setting::get('phone')}}</a>
+                            <a style="display: block; padding: 7px 0; min-width: 200px">{{\Backpack\Settings\app\Models\Setting::get('phone')??'+(993) 12 60-60-60'}}</a>
                         </li>
                     </ul>
                 </div>

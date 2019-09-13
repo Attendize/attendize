@@ -44,6 +44,12 @@
 
 @stack('after_scripts')
 
-
+<script>
+    $('document').ready(function(){
+        $('#top-header-submit').click(function(){
+            $('#main-header-search-form').submit();
+        })
+    });
+</script>
 
 </body>
