@@ -33,10 +33,12 @@ if(!function_exists('category_menu')){
      *  make menu from categories
      */
     function category_menu(){
-        $categories = main_categories();
-        if(count($categories)>6){
 
-        }
+        return \App\Models\Category::main()->select('id','title_tm','title_ru')->get();
+//        $categories = main_categories();
+//        if(count($categories)>6){
+//            //todo implement top category menu
+//        }
     }
 }
 

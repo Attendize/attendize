@@ -9,6 +9,9 @@
 namespace App\Models;
 
 
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
+
 class Category extends \Illuminate\Database\Eloquent\Model{
     use \Backpack\CRUD\CrudTrait;
     /**
@@ -30,6 +33,22 @@ class Category extends \Illuminate\Database\Eloquent\Model{
      */
     protected $softDelete = false;
     protected $fillable = ['title_tm','title_ru','view_type','lft','rgt','parent_id','depth'];
+
+    /**
+     * Get the url of the event.
+     *
+     * @return string
+     */
+    public function getUrlAttribute()
+    {
+        return route("showCategoryEventsPage", ["cat_id"=>$this->id, "cat_slug"=>Str::slug($this->title)]);
+        //return URL::to('/') . '/e/' . $this->id . '/' . Str::slug($this->title);
+    }
+
+    public function getTitleAttribute(){
+
+        return $this->{'title_'.Config::get('app.locale')};
+    }
     /**
      * The events associated with the category.
      *

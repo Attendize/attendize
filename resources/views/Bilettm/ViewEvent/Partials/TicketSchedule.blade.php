@@ -12,6 +12,7 @@
         <h4 class="date-small-title">Дата проведения</h4>
         <div class="date-box-wrap">
             <ul class="nav nav-pills">
+
                 @foreach($ticket_dates as $date =>$ticket)
                     <li><a class="active" href="#{{$date}}">{{$date}}</a></li>
                 @endforeach
@@ -36,9 +37,9 @@
                                         <tr class="ticket" property="offers" typeof="Offer">
                                             <td>{{$ticket->ticket_date->format('H:i')}}</td>
                                             <td>
-                                <span class="ticket-title semibold" property="name">
-                                    {{$ticket->title}}
-                                </span>
+                                                <span class="ticket-title semibold" property="name">
+                                                    {{$ticket->title}}
+                                                </span>
                                                 <p class="ticket-descripton mb0 text-muted" property="description">
                                                     {{$ticket->description}}
                                                 </p>
@@ -64,25 +65,16 @@
                                             <td style="width:85px;">
                                                 @if($ticket->is_paused)
 
-                                                    <span class="text-danger">
-                                    @lang("Public_ViewEvent.currently_not_on_sale")
-                                </span>
-
+                                                    <span class="text-danger">@lang("Public_ViewEvent.currently_not_on_sale")</span>
                                                 @else
 
                                                     @if($ticket->sale_status === config('attendize.ticket_status_sold_out'))
                                                         <span class="text-danger" property="availability"
-                                                              content="http://schema.org/SoldOut">
-                                    @lang("Public_ViewEvent.sold_out")
-                                </span>
+                                                              content="http://schema.org/SoldOut">@lang("Public_ViewEvent.sold_out")</span>
                                                     @elseif($ticket->sale_status === config('attendize.ticket_status_before_sale_date'))
-                                                        <span class="text-danger">
-                                    @lang("Public_ViewEvent.sales_have_not_started")
-                                </span>
+                                                        <span class="text-danger">@lang("Public_ViewEvent.sales_have_not_started")</span>
                                                     @elseif($ticket->sale_status === config('attendize.ticket_status_after_sale_date'))
-                                                        <span class="text-danger">
-                                    @lang("Public_ViewEvent.sales_have_ended")
-                                </span>
+                                                        <span class="text-danger">@lang("Public_ViewEvent.sales_have_ended")</span>
                                                     @else
                                                         {!! Form::hidden('tickets[]', $ticket->id) !!}
                                                         <meta property="availability" content="http://schema.org/InStock">

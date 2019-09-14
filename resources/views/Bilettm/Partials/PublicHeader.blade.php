@@ -30,9 +30,9 @@
                     </form>
                 </div>
                 <ul class="navbar-nav ml-auto col-12 justify-content-between" id="bilet-menu-id">
-                    @foreach(main_categories() as $id => $category)
+                    @foreach(category_menu() as $category)
                         <li class="nav-item g-ml-10--lg">
-                            <a class="nav-link text-uppercase g-pl-5 g-pr-0 g-py-20" href="{{route('showCategoryEventsPage',$id)}}">{{$category}}</a>
+                            <a class="nav-link text-uppercase g-pl-5 g-pr-0 g-py-20" href="{{$category->url}}">{{$category->title}}</a>
                         </li>
                         <li class="diam-sim nav-item g-ml-10--lg"><a class="nav-link text-uppercase g-pl-5 g-pr-0 g-py-20"><svg class="Polygon_3" fill="#ffffff" width="7px" viewBox="0 0 8 8">
                                     <path id="Polygon_3" d="M 3.292892932891846 0.7071067690849304 C 3.683417320251465 0.3165824711322784 4.316582202911377 0.3165824711322784 4.707106590270996 0.7071067690849304 L 7.292893409729004 3.292893171310425 C 7.683417320251465 3.683417320251465 7.683417320251465 4.316582679748535 7.292893409729004 4.707107067108154 L 4.707106590270996 7.292893409729004 C 4.316582202911377 7.683417320251465 3.683417081832886 7.683417320251465 3.292892932891846 7.292893409729004 L 0.7071067094802856 4.707106590270996 C 0.3165824413299561 4.316582202911377 0.3165824711322784 3.683417320251465 0.7071067690849304 3.292892932891846 Z">

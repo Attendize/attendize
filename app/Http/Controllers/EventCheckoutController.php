@@ -277,10 +277,11 @@ class EventCheckoutController extends Controller
                 ];
 
         if ($this->is_embedded) {
-            return view('Public.ViewEvent.Embedded.EventPageCheckout', $data);
+            return view('Public.ViewEvent.Embedded.EventPageCheckout', $data); // <--- todo check this out
         }
 
-        return view('Public.ViewEvent.EventPageCheckout', $data);
+//        return view('Public.ViewEvent.EventPageCheckout', $data);
+        return view('Bilettm.ViewEvent.EventPageCheckout', $data);
     }
 
     /**

@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale' => 'tk',
+    'locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -172,8 +172,6 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
-        Laravel\Scout\ScoutServiceProvider::class,
-        TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
     ],
 
     /*

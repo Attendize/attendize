@@ -9,3 +9,13 @@
 Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('home'));
 });
+
+Breadcrumbs::for('category', function ($trail,$category){
+    $trail->parent('home');
+    $trail->push($category->name, route('category', $category->id));
+});
+
+Breadcrumbs::for('event',function($trail, $event){
+    $trail->parent('category', $event->category);
+    $trail->push($event->title,$event->event_url);
+});
