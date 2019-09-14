@@ -110,11 +110,11 @@ Route::group(
     /*
      * Public event page routes
      */
-    Route::group(['prefix' => 'category'], function () {
+    Route::group(['prefix' => 'c'], function () {
         /**
          * Events by category
          */
-        Route::get('/{category_id}', [
+        Route::get('/{cat_id}/{cat_slug?}', [
             'as'   => 'showCategoryEventsPage',
             'uses' => 'PublicController@showCategoryEvents',
         ]);
