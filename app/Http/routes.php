@@ -735,5 +735,9 @@ Route::group(
         }
     ]);
 
+    Route::get('/itemlist', function (){
+        return view('Bilettm.Partials.ItemsList');
+    });
+
 });
 

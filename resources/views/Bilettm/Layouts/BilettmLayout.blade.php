@@ -23,6 +23,7 @@
 
     <!--  KMB Custom css  -->
     <link rel="stylesheet" href='{{asset("assets/stylesheet/custom.css")}}'>
+    <link rel="stylesheet" href='{{asset("assets/stylesheet/custom_new.css")}}'>
 
 </head>
 
