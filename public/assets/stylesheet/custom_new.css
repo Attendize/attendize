@@ -1,0 +1,166 @@
+/* New Design */
+
+section#cat_and_buttons{
+  margin-top: 15px;
+  padding-bottom: 30px;
+  border-bottom:1px solid  #DDDDDD
+}
+#vybor_select{
+  border:1px solid #DDDDDD;
+  min-width: 60%;
+  text-align: center;
+  height: 40px;
+  font-size: 16px;
+  padding-left: 20px; 
+  border-radius: 5px;
+  cursor:pointer;
+  margin-left: 10px;
+}
+.cat_op{
+ /* padding:5px 10px !important;*/ 
+}
+/* Buttons Block*/
+div#cat_buts{
+  width: 100%;
+  margin-left: -10px;
+}
+button.cat_but{
+  border:1px solid #DDDDDD;
+  background-color: #fff;
+  padding: 2px 7px;
+  margin:5px;
+  font-size: 17px;
+  border-radius: 5px; 
+  color: #333;
+  cursor:pointer;
+}
+button.cat_but:hover{
+  border:1px solid #CE3B31;
+  color:#CE3B31;
+}
+button.active_cat_but{
+  border:1px solid #CE3B31;
+  color:#CE3B31; 
+}
+
+img.film_img{
+  width: 100%;
+  min-height: 300px;
+}
+
+
+/*Film Opisanie styles*/
+div.film_op{
+  height: 100%;
+}
+div.film_op > h2.film_name, span, p.op_text{
+  width: 75%;
+}
+div.film_op >span {
+  margin-left: 10px;
+  margin-top: -10px !important;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+.buy_and_salary {
+  margin-top:75px;
+}
+.buy_and_salary >span{
+  font-weight: bold;
+  font-size: 16px;
+}
+a.buy_button{
+  background-image: url('../img/icons/buy.svg');
+  background-repeat: no-repeat;
+  background-size:100px;
+  background-position: center;
+  padding:7px 25px 7px 20px;
+  color:#fff;
+  font-weight: bolder;
+  font-size: 16px;
+}
+a.buy_button:hover{
+  background-image: url('../img/icons/buy_hover.svg');
+
+}
+div.date{
+  width: 25%;
+  float: right;
+  margin-top: 10px;
+}
+div.date img{
+  float: right;
+  padding-left: 100%;
+}
+div.date h4, h6{
+  float: right;
+  width: 100%;
+  text-align: right;
+}
+div.date h4 {
+}
+div.date h6{
+  margin-top: -10px;
+}
+.film{
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+/* Calendar Style*/
+/*Calendar style nachalo*/
+#calendar_block{
+  min-width: 300px;
+  min-height: 350px;
+}
+#calendar {
+  width: 100%;
+  font: monospace;
+  line-height: 1.2em;
+  font-size: 25px;
+  text-align: center;
+}
+#calendar thead tr:last-child {
+  font-size: small;
+  color: rgb(85, 85, 85);
+}
+#calendar thead tr:nth-child(1) td:nth-child(2) {
+  color: rgb(50, 50, 50);
+}
+#calendar thead tr:nth-child(1) td:nth-child(1):hover, #calendar thead tr:nth-child(1) td:nth-child(3):hover {
+  cursor: pointer;
+}
+#calendar tbody td {
+  color: rgb(44, 86, 122);
+  cursor: pointer;
+}
+#calendar tbody td tr{
+}
+#calendar tbody td:nth-child(n+6), #calendar .holiday {
+  color: rgb(231, 140, 92);
+}
+#calendar tbody td.today {
+  background: rgb(220, 0, 0);
+  color: #fff;
+}
+/*calendar Style End*/
+
+/* Pagination style */
+div.pagination_blk{
+}
+div.pagination_blk img{
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+}
+div.pagination_blk img:hover{
+  opacity: .5;
+}
+div.arrows_block{
+  width: 65px;
+  float: right;
+}
+div.pagination_blk >span{
+  font-weight: bold;
+}
+
