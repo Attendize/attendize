@@ -42,13 +42,13 @@ class PublicController extends Controller
         ]);
     }
 
-    public function events(Request $request){
+    public function showEvents($cat_id = null,Request $request){
         $date = $request->get('date');
-        $cat_id = $request->get('category');
+        //$cat_id = $request->get('cat_id');
 
         $e_query = Event::onLive();
         $nav_query = Category::select('id','title_tm','title_ru','parent_id')
-            ->orderBy();
+            ->orderBy('lft','asc');
 
         $active_id = -1;
 

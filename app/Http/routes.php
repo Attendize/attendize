@@ -114,9 +114,14 @@ Route::group(
         /**
          * Events by category
          */
-        Route::get('/{cat_id}/{cat_slug?}', [
+        Route::get('/{cat_id?}/{cat_slug?}', [
             'as'   => 'showCategoryEventsPage',
-            'uses' => 'PublicController@showCategoryEvents',
+            'uses' => 'PublicController@showEvents',
+        ]);
+
+        Route::post('/{cat_id?}/{cat_slug?}', [
+            'as'   => 'postEventsPage',
+            'uses' => 'PublicController@showEvents',
         ]);
     });
     Route::group(['prefix' => 'e'], function () {

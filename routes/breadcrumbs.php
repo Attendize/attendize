@@ -12,7 +12,7 @@ Breadcrumbs::for('home', function ($trail) {
 
 Breadcrumbs::for('category', function ($trail,$category){
     $trail->parent('home');
-    $trail->push($category->name, route('category', $category->id));
+    $trail->push($category->name ?? "Events", $category->url ?? '#');
 });
 
 Breadcrumbs::for('event',function($trail, $event){

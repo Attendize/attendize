@@ -1,7 +1,7 @@
 @if(!empty($event))
 <article class="u-block-hover">
     <div class="g-bg-cover">
-        <img class="d-flex align-items-end" src="{{$event->images->first()->image_path ?? '#'}}">
+        <img class="d-flex align-items-end" src="{{asset($event->images->first()->image_path ?? '#')}}">
     </div>
     <div class="u-block-hover__additional--partially-slide-up h-100 text-center g-z-index-1 mt-auto" style="background-image: url({{asset('assets/images/overlay/1.svg')}})">
         <div class="overlay-details">

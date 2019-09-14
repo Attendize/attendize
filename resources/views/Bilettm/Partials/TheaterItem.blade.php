@@ -1,6 +1,6 @@
 <div class="js-slide">
     <a class="d-block" href="{{$event->event_url}}">
-        <img class="img-fluid w-100" src="{{$event->images->first()->image_path ?? '#'}}">
+        <img class="img-fluid w-100" src="{{asset($event->images->first()->image_path ?? '#')}}">
         <div class="teator-overlay">
             <div class="texts-wrapper" style="color: #ffffff">
                 <span class="">{{$event->start_date->format('H:s, d.m.Y')}}</span>
