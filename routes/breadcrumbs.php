@@ -10,9 +10,14 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('home'));
 });
 
-Breadcrumbs::for('category', function ($trail,$category){
+Breadcrumbs::for('category', function ($trail, $category){
     $trail->parent('home');
-    $trail->push($category->name ?? "Events", $category->url ?? '#');
+
+    if(!empty($category) && $category->parent_id){
+        $parent = $category->parent;
+        $trail->push($parent->title,$parent->url);
+    }
+    $trail->push($category->title ?? 'Events', $category->url ?? '#');
 });
 
 Breadcrumbs::for('event',function($trail, $event){
