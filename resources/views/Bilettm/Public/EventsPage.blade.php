@@ -1,6 +1,6 @@
 @extends('Bilettm.Layouts.BilettmLayout')
 @section('content')
-    {{\DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::render('category',$category??null)}}
+    {{\DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::render('category',$category)}}
     <!-- Films Opisanie Buttons section -->
     <section id='cat_and_buttons'>
         <div class="container">

@@ -54,16 +54,13 @@ class PublicController extends Controller
         $e_query = Event::onLive();
         $nav_query = Category::select('id','title_tm','title_ru','parent_id')
             ->orderBy('lft','asc');
-
-        $active_id = -1;
-
+        $category = null;
         if(!empty($cat_id)){
             $category = Category::findOrFail($cat_id);
 
             if($category->parent_id > 0){
                 $e_query->where('sub_category_id',$category->id);
                 $nav_query->where('parent_id',$category->parent_id);
-                $active_id = $category->id;
             }
             else{
                 $e_query->where('category_id',$category->id);
@@ -78,12 +75,12 @@ class PublicController extends Controller
             $e_query->whereDate('start_date','>=',Carbon::parse($date));
         }
 
-        $events = $e_query->paginate(20);
+        $events = $e_query->paginate(10);
         $navigation = $nav_query->get();
-
+        dd($events);
         return view('Bilettm.Public.EventsPage')->with([
             'events' => $events,
-            'active_id' => $active_id,
+            'category' => $category,
             'navigation' => $navigation
         ]);
     }

@@ -68,4 +68,8 @@ class Category extends \Illuminate\Database\Eloquent\Model{
     public function getChildren($parent_id){
         return $this->where('parent_id',$parent_id)->orderBy('lft','asc');
     }
+
+    public function parent(){
+        return $this->belongsTo(Category::class,'parent_id');
+    }
 }
