@@ -7,7 +7,6 @@ use DB;
 
 class EventStats extends \Illuminate\Database\Eloquent\Model
 {
-    use \Backpack\CRUD\CrudTrait;
     /**
      * Indicates if the model should be timestamped.
      *
@@ -71,7 +70,7 @@ class EventStats extends \Illuminate\Database\Eloquent\Model
      * Updates the sales volume earned by an event.
      *
      */
-    public function updateSalesVolume($event_id)
+    public function updateSalesVolume($event_id, $amount = null)
     {
         $stats = $this->updateOrCreate([
             'event_id' => $event_id,

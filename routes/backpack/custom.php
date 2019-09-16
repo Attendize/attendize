@@ -16,4 +16,6 @@ Route::group([
     CRUD::resource('event', 'EventCrudController');
     CRUD::resource('slider', 'SliderCrudController');
     CRUD::resource('tag', 'TagCrudController');
+    CRUD::resource('subscriber', 'SubscriberCrudController');
+    CRUD::resource('event_request', 'EventRequestCrudController');
 }); // this should be the absolute last line of this file

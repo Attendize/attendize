@@ -95,38 +95,12 @@
                         </div>
 
                         <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.date")</b><br> {{$order->created_at->format(config('attendize.default_datetime_format'))}}
+                            <b>@lang("Public_ViewEvent.date")</b><br> {{$order->created_at->toDateTimeString()}}
                         </div>
 
                         <div class="col-sm-4 col-xs-6">
                             <b>@lang("Public_ViewEvent.email")</b><br> {{$order->email}}
                         </div>
-                        @if ($order->is_business)
-                        <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.business_name")</b><br> {{$order->business_name}}
-                        </div>
-                        <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.business_tax_number")</b><br> {{$order->business_tax_number}}
-                        </div>
-                        <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.business_address")</b><br />
-                            @if ($order->business_address_line_one)
-                            {{$order->business_address_line_one}},
-                            @endif
-                            @if ($order->business_address_line_two)
-                            {{$order->business_address_line_two}},
-                            @endif
-                            @if ($order->business_address_state_province)
-                            {{$order->business_address_state_province}},
-                            @endif
-                            @if ($order->business_address_city)
-                            {{$order->business_address_city}},
-                            @endif
-                            @if ($order->business_address_code)
-                            {{$order->business_address_code}}
-                            @endif
-                        </div>
-                        @endif
                     </div>
                 </div>
 
@@ -184,17 +158,15 @@
                                         @else
                                        {{money($order_item->unit_price, $order->event->currency)}}
                                         @endif
+
                                     </td>
                                     <td>
-                                        @if ((int)ceil($order_item->unit_booking_fee) > 0)
-                                            @if((int)ceil($order_item->unit_price) == 0)
-                                            -
-                                            @else
-                                            {{money($order_item->unit_booking_fee, $order->event->currency)}}
-                                            @endif
+                                        @if((int)ceil($order_item->unit_price) == 0)
+                                        -
                                         @else
-                                            -
+                                        {{money($order_item->unit_booking_fee, $order->event->currency)}}
                                         @endif
+
                                     </td>
                                     <td>
                                         @if((int)ceil($order_item->unit_price) == 0)
@@ -229,7 +201,7 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <strong>{{$event->organiser->tax_name}}</strong><em>({{$order->event->organiser->tax_value}}%)</em>
+                                    {{$event->organiser->tax_name}}
                                 </td>
                                 <td colspan="2">
                                     {{ $orderService->getTaxAmount(true) }}

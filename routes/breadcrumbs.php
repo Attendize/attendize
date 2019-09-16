@@ -10,12 +10,27 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('home'));
 });
 
-Breadcrumbs::for('category', function ($trail,$category){
+Breadcrumbs::for('category', function ($trail, $category){
     $trail->parent('home');
-    $trail->push($category->name ?? "Events", $category->url ?? '#');
+
+    if(!empty($category) && $category->parent_id){
+        $parent = $category->parent;
+        $trail->push($parent->title,$parent->url);
+    }
+    $trail->push($category->title ?? 'Events', $category->url ?? '#');
 });
 
 Breadcrumbs::for('event',function($trail, $event){
     $trail->parent('category', $event->category);
     $trail->push($event->title,$event->event_url);
+});
+
+Breadcrumbs::for('search',function($trail){
+    $trail->parent('home');
+    $trail->push('Результат поиска');
+});
+
+Breadcrumbs::for('add_event',function($trail){
+    $trail->parent('home');
+    $trail->push('+ ДОБАВИТЬ СОБЫТИЕ');
 });

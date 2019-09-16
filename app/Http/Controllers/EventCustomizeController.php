@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\Event;
 use File;
 use Illuminate\Http\Request;
-use App\Models\Currency;
 use Image;
 use Validator;
 
@@ -22,7 +21,6 @@ class EventCustomizeController extends MyBaseController
     public function showCustomize($event_id = '', $tab = '')
     {
         $data = $this->getEventViewData($event_id, [
-            'currencies'               	 => Currency::pluck('title', 'id'),
             'available_bg_images'        => $this->getAvailableBackgroundImages(),
             'available_bg_images_thumbs' => $this->getAvailableBackgroundImagesThumbs(),
             'tab'                        => $tab,

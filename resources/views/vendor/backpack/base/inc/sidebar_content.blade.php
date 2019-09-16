@@ -23,3 +23,6 @@
 <li><a href='{{ backpack_url('page') }}'><i class='fa fa-file-o'></i> <span>Pages</span></a></li>
 <li><a href='{{ backpack_url('setting') }}'><i class='fa fa-cog'></i> <span>Settings</span></a></li>
 <li><a href='{{ backpack_url('backup') }}'><i class='fa fa-hdd-o'></i> <span>Backups</span></a></li>
+
+<li><a href='{{ backpack_url('subscriber') }}'><i class='fa fa-tag'></i> <span>Subscribers</span></a></li>
+<li><a href='{{ backpack_url('event_request') }}'><i class='fa fa-tag'></i> <span>Event Requests</span></a></li>
