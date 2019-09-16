@@ -733,6 +733,21 @@ Route::group(
         'uses' => 'PublicController@search'
     ]);
 
+    Route::get('/add_event',[
+        'as' => 'add_event',
+        'uses' => 'PublicController@showAddEventForm'
+    ]);
+
+    Route::post('/add_event',[
+        'as' => 'add_event',
+        'uses' => 'PublicController@postAddEvent'
+    ]);
+
+    Route::post('/subscribe',[
+        'as'=>'subscription',
+        'uses' =>'PublicController@subscribe'
+    ]);
+
     Route::get('/terms_and_conditions', [
         'as' => 'termsAndConditions',
         function () {

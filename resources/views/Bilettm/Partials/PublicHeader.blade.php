@@ -15,7 +15,7 @@
             <!-- Logo -->
             <div class="navbar-brand bilettm" style="width: 30%; margin-right: 0">
                 <a href="/"><img src="{{asset('assets/images/logo/bilet-logo.svg')}}"></a>
-                <a href="" class="add-event">+ добавить событие</a>
+                <a href="{{route('add_event')}}" class="add-event">+ добавить событие</a>
             </div>
             <!-- End Logo -->
 

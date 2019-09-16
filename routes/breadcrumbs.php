@@ -19,3 +19,13 @@ Breadcrumbs::for('event',function($trail, $event){
     $trail->parent('category', $event->category);
     $trail->push($event->title,$event->event_url);
 });
+
+Breadcrumbs::for('search',function($trail){
+    $trail->parent('home');
+    $trail->push('Результат поиска');
+});
+
+Breadcrumbs::for('add_event',function($trail){
+    $trail->parent('home');
+    $trail->push('+ ДОБАВИТЬ СОБЫТИЕ');
+});
