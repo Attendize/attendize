@@ -8,6 +8,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddEventRequest;
+use App\Http\Requests\SearchRequest;
+use App\Http\Requests\SubscribeRequest;
+use App\Models\EventRequest;
+use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Event;
@@ -42,7 +47,7 @@ class PublicController extends Controller
         ]);
     }
 
-    public function showEvents($cat_id = null,Request $request){
+    public function showEvents($cat_id = null, Request $request){
         $date = $request->get('date');
         //$cat_id = $request->get('cat_id');
 
@@ -83,8 +88,41 @@ class PublicController extends Controller
         ]);
     }
 
-    public function search(Request $request){
+    public function search(SearchRequest $request){
+        //todo implement with elastick search and scout
         $query = $request->get('q');
-        return view('Bilettm.Public.SearchResult');
+        $events = Event::where('title','like',"%{$query}%")->get();
+
+        return view('Bilettm.Public.SearchResults')
+            ->with([
+                'events' => $events,
+                'query' => $query
+            ]);
+    }
+
+    public function showAddEventForm(){
+        return view('Bilettm.Public.AddEventForm');
+    }
+
+    public function postAddEvent(AddEventRequest $request){
+
+        $addEvent = EventRequest::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'phone' => $request->get('phone'),
+            'detail' => $request->get('detail')
+        ]);
+        return view('Bilettm.Public.AddEventResult',compact('addEvent'));
+    }
+
+    public function subscribe(SubscribeRequest $request){
+        $email = $request->get('email');
+        $subscribe = Subscriber::updateOrCreate(['email'=>$email,'active'=>1]);
+
+        if($subscribe){
+            session()->flash('success','Subscription successfully');
+        }
+
+        return redirect()->back();
     }
 }
