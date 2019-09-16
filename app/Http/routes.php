@@ -41,6 +41,16 @@ Route::group(
         'as'   => 'logout',
     ]);
 
+
+    Route::get('/terms_and_conditions', [
+        'as' => 'termsAndConditions',
+        function () {
+            return 'TODO: add terms and cond';
+        }
+    ]);
+
+
+
     Route::group(['middleware' => ['installed']], function () {
 
         /*
@@ -147,11 +157,6 @@ Route::group(
         Route::post('/{event_id}/contact_organiser', [
             'as'   => 'postContactOrganiser',
             'uses' => 'EventViewController@postContactOrganiser',
-        ]);
-
-        Route::post('/{event_id}/show_hidden', [
-            'as'   => 'postShowHiddenTickets',
-            'uses' => 'EventViewController@postShowHiddenTickets',
         ]);
 
         /*
@@ -330,17 +335,28 @@ Route::group(
                 ]
             );
 
-            Route::get('{event_id}/', [
-                    'uses' => 'EventDashboardController@redirectToDashboard',
-                ]
-            );
+            Route::get('{event_id}', function ($event_id) {
+                return Redirect::route('showEventDashboard', [
+                    'event_id' => $event_id,
+                ]);
+            });
 
             /*
              * @todo Move to a controller
              */
-             Route::get('{event_id}/go_live', [
-                'as'   => 'MakeEventLive',
-                'uses' => 'EventController@makeEventLive',
+            Route::get('{event_id}/go_live', [
+                'as' => 'MakeEventLive',
+                function ($event_id) {
+                    $event = \App\Models\Event::scope()->findOrFail($event_id);
+                    $event->is_live = 1;
+                    $event->save();
+                    \Session::flash('message',
+                        'Event Successfully Made Live! You can undo this action in event settings page.');
+
+                    return Redirect::route('showEventDashboard', [
+                        'event_id' => $event_id,
+                    ]);
+                }
             ]);
 
             /*
@@ -557,10 +573,12 @@ Route::group(
                 'as'   => 'showEventCustomize',
                 'uses' => 'EventCustomizeController@showCustomize',
             ]);
+
             Route::get('{event_id}/customize/{tab?}', [
                 'as'   => 'showEventCustomizeTab',
                 'uses' => 'EventCustomizeController@showCustomize',
             ]);
+
             Route::post('{event_id}/customize/order_page', [
                 'as'   => 'postEditEventOrderPage',
                 'uses' => 'EventCustomizeController@postEditEventOrderPage',
@@ -577,10 +595,12 @@ Route::group(
                 'as'   => 'postEditEventSocial',
                 'uses' => 'EventCustomizeController@postEditEventSocial',
             ]);
+
             Route::post('{event_id}/customize/fees', [
                 'as'   => 'postEditEventFees',
                 'uses' => 'EventCustomizeController@postEditEventFees',
             ]);
+
 
             /*
              * -------
@@ -590,31 +610,6 @@ Route::group(
             Route::get('{event_id}/widgets', [
                 'as'   => 'showEventWidgets',
                 'uses' => 'EventWidgetsController@showEventWidgets',
-            ]);
-
-            /*
-             * -------
-             * Event Access Codes page
-             * -------
-             */
-            Route::get('{event_id}/access_codes', [
-                'as'   => 'showEventAccessCodes',
-                'uses' => 'EventAccessCodesController@show',
-            ]);
-
-            Route::get('{event_id}/access_codes/create', [
-                'as' => 'showCreateEventAccessCode',
-                'uses' => 'EventAccessCodesController@showCreate',
-            ]);
-
-            Route::post('{event_id}/access_codes/create', [
-                'as' => 'postCreateEventAccessCode',
-                'uses' => 'EventAccessCodesController@postCreate',
-            ]);
-
-            Route::post('{event_id}/access_codes/{access_code_id}/delete', [
-                'as' => 'postDeleteEventAccessCode',
-                'uses' => 'EventAccessCodesController@postDelete',
             ]);
 
             /*

@@ -350,9 +350,10 @@ class EventOrdersController extends MyBaseController
 
             $excel->sheet('orders_sheet_1', function ($sheet) use ($event) {
 
+                \DB::connection()->setFetchMode(\PDO::FETCH_ASSOC);
                 $yes = strtoupper(trans("basic.yes"));
                 $no = strtoupper(trans("basic.no"));
-                $orderRows = DB::table('orders')
+                $data = DB::table('orders')
                     ->where('orders.event_id', '=', $event->id)
                     ->where('orders.event_id', '=', $event->id)
                     ->select([
@@ -366,14 +367,9 @@ class EventOrdersController extends MyBaseController
                         'orders.amount_refunded',
                         'orders.created_at',
                     ])->get();
+                //DB::raw("(CASE WHEN UNIX_TIMESTAMP(`attendees.arrival_time`) = 0 THEN '---' ELSE 'd' END) AS `attendees.arrival_time`"))
 
-                $exportedOrders = $orderRows->toArray();
-
-                array_walk($exportedOrders, function(&$value) {
-                    $value = (array)$value;
-                });
-
-                $sheet->fromArray($exportedOrders);
+                $sheet->fromArray($data);
 
                 // Add headings to first row
                 $sheet->row(1, [

@@ -7,7 +7,6 @@ module.exports = function (grunt) {
             development: {
                 options: {
                     compress: true,
-                    javascriptEnabled: true,
                 },
                 files: {
                     "./public/assets/stylesheet/application.css": "./public/assets/stylesheet/application.less",
@@ -71,22 +70,17 @@ module.exports = function (grunt) {
                 }
             },
         },
-        watch: {
-            scripts: {
-                files: ['./public/assets/**/*.js'],
-                tasks: ['default'],
-                options: {
-                    spawn: false,
-                },
-            },
-        }
+        phpunit: {
+            classes: {},
+            options: {}
+        },
     });
 
     // Plugin loading
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    //grunt.loadNpmTasks('grunt-phpunit');
     // Task definition
     grunt.registerTask('default', ['less', 'concat']);
     grunt.registerTask('deploy', ['less', 'concat', 'uglify']);

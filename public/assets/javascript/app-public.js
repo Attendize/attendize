@@ -176,45 +176,7 @@ $(function() {
 
     }).change();
 
-    // Apply access code here to unlock hidden tickets
-    $('#apply_access_code').click(function(e) {
-        var $clicked = $(this);
-        // Hide any previous errors
-        $clicked.closest('.form-group')
-            .removeClass('has-error');
 
-        var url = $clicked.closest('.has-access-codes').data('url');
-        var data = {
-            'access_code': $('#unlock_code').val(),
-            '_token': $('input:hidden[name=_token]').val()
-        };
-
-        $.post(url, data, function(response) {
-            if (response.status === 'error') {
-                // Show any access code errors
-                $clicked.closest('.form-group').addClass('has-error');
-                showMessage(response.message);
-                return;
-            }
-
-            $clicked.closest('.has-access-codes').before(response);
-            $('#unlock_code').val('');
-            $clicked.closest('.has-access-codes').remove();
-        });
-    });
-
-    $('#is_business').click(function(e) {
-        var $isBusiness = $(this);
-        var isChecked = $isBusiness.hasClass('checked');
-
-        if (isChecked == undefined || isChecked === false) {
-            $isBusiness.addClass('checked');
-            $('#business_details').removeClass('hidden').show();
-        } else {
-            $isBusiness.removeClass('checked');
-            $('#business_details').addClass('hidden').hide();
-        }
-    });
 });
 
 function processFormErrors($form, errors)

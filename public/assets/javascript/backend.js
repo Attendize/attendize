@@ -6694,7 +6694,6 @@ $.cf = {
 			oDTP._setTimeFormatArray(); // Set TimeFormatArray
 			oDTP._setDateTimeFormatArray(); // Set DateTimeFormatArray
 
-			console.log($(oDTP.element).data('parentelement') + " " + $(oDTP.element).attr('data-parentelement'));
 			if($(oDTP.element).data('parentelement') !== undefined)
 	        {
 	           	oDTP.settings.parentElement = $(oDTP.element).data('parentelement');
@@ -7912,8 +7911,7 @@ $.cf = {
 			{
 				$(document).on("click.DateTimePicker", function(e)
 				{
-					if (oDTP.oData.bElemFocused)
-						oDTP._hidePicker("");
+					oDTP._hidePicker("");
 				});
 			}
 		
@@ -9628,10 +9626,6 @@ $.cf = {
 
                 if (typeof data.message !== 'undefined') {
                     showMessage(data.message);
-                }
-
-                if (typeof data.redirectUrl !== 'undefined') {
-                    window.location.href = data.redirectUrl;
                 }
 
                 switch (data.status) {
