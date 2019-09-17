@@ -44,7 +44,7 @@
 @yield('after_scripts')
 
 @stack('after_scripts')
-
+{!!HTML::script(config('attendize.cdn_url_static_assets').'/assets/javascript/frontend.js')!!}
 <script>
     $('document').ready(function(){
         $('#top-header-submit').click(function(){
@@ -52,5 +52,7 @@
         })
     });
 </script>
-
+@if(session()->get('message'))
+    <script>showMessage('{{\Session::get('message')}}');</script>
+@endif
 </body>

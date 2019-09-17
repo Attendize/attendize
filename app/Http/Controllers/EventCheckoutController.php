@@ -241,7 +241,7 @@ class EventCheckoutController extends Controller
         }
 
         /*
-         * Maybe display something prettier than this?
+         * todo Maybe display something prettier than this?
          */
         exit('Please enable Javascript in your browser.');
     }
@@ -280,8 +280,8 @@ class EventCheckoutController extends Controller
             return view('Public.ViewEvent.Embedded.EventPageCheckout', $data); // <--- todo check this out
         }
 
-//        return view('Public.ViewEvent.EventPageCheckout', $data);
-        return view('Bilettm.ViewEvent.EventPageCheckout', $data);
+        return view('Public.ViewEvent.EventPageCheckout', $data);
+//        return view('Bilettm.ViewEvent.EventPageCheckout', $data);
     }
 
     /**
@@ -294,7 +294,8 @@ class EventCheckoutController extends Controller
     public function postCreateOrder(Request $request, $event_id)
     {
         //If there's no session kill the request and redirect back to the event homepage.
-        if (!session()->get('ticket_order_' . $event_id)) {
+        $order_session = session()->get('ticket_order_' . $event_id);
+        if (!$order_session) {
             return response()->json([
                 'status'      => 'error',
                 'message'     => 'Your session has expired.',
@@ -314,27 +315,27 @@ class EventCheckoutController extends Controller
         $order->rules = $order->rules + $validation_rules;
         $order->messages = $order->messages + $validation_messages;
 
-        if ($request->has('is_business') && $request->get('is_business')) {
-            // Dynamic validation on the new business fields, only gets validated if business selected
-            $businessRules = [
-                'business_name' => 'required',
-                'business_tax_number' => 'required',
-                'business_address_line1' => 'required',
-                'business_address_city' => 'required',
-                'business_address_code' => 'required',
-            ];
-
-            $businessMessages = [
-                'business_name.required' => 'Please enter a valid business name',
-                'business_tax_number.required' => 'Please enter a valid business tax number',
-                'business_address_line1.required' => 'Please enter a valid street address',
-                'business_address_city.required' => 'Please enter a valid city',
-                'business_address_code.required' => 'Please enter a valid code',
-            ];
-
-            $order->rules = $order->rules + $businessRules;
-            $order->messages = $order->messages + $businessMessages;
-        }
+//        if ($request->has('is_business') && $request->get('is_business')) {
+//            // Dynamic validation on the new business fields, only gets validated if business selected
+//            $businessRules = [
+//                'business_name' => 'required',
+//                'business_tax_number' => 'required',
+//                'business_address_line1' => 'required',
+//                'business_address_city' => 'required',
+//                'business_address_code' => 'required',
+//            ];
+//
+//            $businessMessages = [
+//                'business_name.required' => 'Please enter a valid business name',
+//                'business_tax_number.required' => 'Please enter a valid business tax number',
+//                'business_address_line1.required' => 'Please enter a valid street address',
+//                'business_address_city.required' => 'Please enter a valid city',
+//                'business_address_code.required' => 'Please enter a valid code',
+//            ];
+//
+//            $order->rules = $order->rules + $businessRules;
+//            $order->messages = $order->messages + $businessMessages;
+//        }
 
         if (!$order->validate($request->all())) {
             return response()->json([
@@ -378,10 +379,11 @@ class EventCheckoutController extends Controller
 //            }
             $orderService = new OrderService($ticket_order['order_total'], $ticket_order['total_booking_fee'], $event);
             $orderService->calculateFinalCosts();
-
+            $secondsToExpire = Carbon::now()->diffInSeconds($order_session['expires']);
             $transaction_data += [
-                'amount'      => $orderService->getGrandTotal()*10,//todo multiply by 10
+                'amount'      => $orderService->getGrandTotal()*100,//todo multiply by 100
                 'currency' => 934,
+                'sessionTimeoutSecs' => $secondsToExpire,
                 'description' => 'Order for customer: ' . $request->get('order_email'),
                 'orderNumber'     => uniqid(),
                 'failUrl'     => route('showEventCheckoutPaymentReturn', [

@@ -77,7 +77,7 @@ class PublicController extends Controller
 
         $events = $e_query->paginate(10);
         $navigation = $nav_query->get();
-        dd($events);
+//        dd($events);
         return view('Bilettm.Public.EventsPage')->with([
             'events' => $events,
             'category' => $category,

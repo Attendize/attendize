@@ -2,7 +2,7 @@
     <div class="tab-header d-flex justify-content-between col-12">
         <h2 class="">Концерты</h2>
         <div style="height: 5px; margin-left: 5px; position: absolute; bottom: 10px; width: 100px; background-color: #ffffff"></div>
-        <a class="" href="">Посмотреть все</a>
+        <a class="" href="{{route('showCategoryEventsPage')}}">Посмотреть все</a>
     </div>
     <div class="tab-ozi col-12">
        <!-- End Nav tabs -->
