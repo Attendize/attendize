@@ -18,6 +18,7 @@ return [
   'booking_fees' => 'Booking Fees',
   'card_number' => 'Card number',
   'checkout_submit' => 'Checkout',
+  'checkout_order' => 'Contine to Payment',
   'confirmation_email' => 'and a confirmation email have been sent to you.',
   'copy_buyer' => 'Copy buyer details to all ticket holders',
   'currently_not_on_sale' => 'Currently Not On Sale',
