@@ -9,10 +9,10 @@
         <div class="owl-carousel container row" id="kinoteator-tab1" style="padding: 0 !important; margin: 0">
             <div class="slider-slider">
                 <div class="row w-100 m-auto">
-                    <div class="col-6 single-item-6">
+                    <div class="col-6 single-item-6 big-cinema-item-col6">
                         @include('Bilettm.Partials.CinemaItem',['event'=>$cinema->shift(1),'size'=>'big'])
                     </div>
-                    <div class="col-6">
+                    <div class="col-6" style="padding: 0">
                         <div class="row">
                             @foreach($cinema->slice(0,4) as $cinemaEvent)
                             <div class="col-6 single-item-6">

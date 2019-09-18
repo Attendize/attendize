@@ -186,9 +186,15 @@ article > .u-block-hover__additional--partially-slide-up {
     #kinoteator .tab-header a.top-social-icons:focus svg path {
       fill: #ff4159; }
   #kinoteator .tab-ozi a {
-    font-size: 20px;
-    margin-right: 40px;
+    font-size: 15px;
+    margin-right: 15px;
     padding: 0; }
+.big-cinema-item-col6 svg{
+  width: 35px;
+}
+.big-cinema-item-col6 .share, .big-cinema-item-col6 .like{
+  font-size: 20px !important;
+}
   #kinoteator .tab-ozi a.nav-link.active {
     background-color: unset; }
   #kinoteator .tab-ozi {
@@ -244,6 +250,7 @@ article.u-block-hover img {
       font-size: 30px; }
 
 #konserty {
+  padding: 100px 7.2% !important;
   margin-top: 100px; }
   #konserty .tab-header h2 {
     font-size: 35px;
@@ -275,7 +282,7 @@ article.u-block-hover img {
     background-color: unset;
     border-bottom: 2px solid #ffffff; }
   #konserty .tab-ozi {
-    margin-top: 10px; }
+    margin-top: 70px; }
     #konserty .tab-ozi .nav.u-nav-v1-1 {
       padding: 0 5px; }
       #konserty .tab-ozi .nav.u-nav-v1-1 .dropdown-menu a {
@@ -291,7 +298,8 @@ article.u-block-hover img {
     padding: 0; }
 #kinoteator-tab1 .overlay-details, .movie-items-group .overlay-details {
   position: absolute;
-  bottom: 0; }
+  bottom: 0;
+  width: 100%;}
 #kinoteator-tab1 .owl-nav, .movie-items-group .owl-nav {
   position: absolute;
   top: -50px;
@@ -332,6 +340,7 @@ article.u-block-hover img {
   margin-left: 7px; }
 #kinoteator-tab1 .owl-dots, .movie-items-group .owl-dots {
   text-align: center;
+  display: block;
   margin-top: 10px; }
   #kinoteator-tab1 .owl-dots .owl-dot, .movie-items-group .owl-dots .owl-dot {
     margin: 0 5px; }
@@ -391,6 +400,7 @@ article.u-block-hover img {
   margin-left: 7px; }
 #konserty-tab1 .owl-dots {
   text-align: center;
+  display: block;
   margin-top: 10px; }
   #konserty-tab1 .owl-dots .owl-dot {
     margin: 0 5px; }
@@ -476,7 +486,7 @@ img.d2-img {
   left: 10px; }
 
 .overlay-details {
-  padding: 30px 80px; }
+  padding: 30px 30px; }
   @media only screen and (max-width: 1600px) {
     .overlay-details {
       padding: 20px 30px; } }
@@ -484,28 +494,55 @@ img.d2-img {
     color: #ffffff;
     text-align: center; }
   .overlay-details h2.title {
+    font-size: 40px;
+    line-height: 40px;
+  margin-bottom: 20px;}
+  .big-cinema-item-col6 .overlay-details h2.title {
     font-size: 60px;
-    line-height: 80px; }
+    line-height: 60px;
+    margin-bottom: 20px;}
     @media only screen and (max-width: 1600px) {
       .overlay-details h2.title {
-        font-size: 50px;
-        line-height: 60px; } }
+        font-size: 30px;
+        line-height: 30px; } }
+@media only screen and (max-width: 1600px) {
+  .big-cinema-item-col6 .overlay-details h2.title {
+    font-size: 40px;
+    line-height: 40px; } }
   .overlay-details h4.date {
+    font-size: 20px;
+    margin-top: -10px;
+  margin-bottom: 20px;}
+  .big-cinema-item-col6 .overlay-details h4.date{
     font-size: 30px;
-    margin-top: -10px; }
+  }
+  .big-cinema-item-col6 .description{
+    display: block !important;
+  }
     @media only screen and (max-width: 1600px) {
       .overlay-details h4.date {
-        font-size: 25px;
-        margin-top: -5px; } }
+        font-size: 18px;
+        margin-top: -15px;
+      margin-bottom: 10px;} }
+@media only screen and (max-width: 1600px) {
+  .big-cinema-item-col6 .overlay-details h4.date {
+    font-size: 24px;
+    margin-top: -15px;
+    margin-bottom: 10px;} }
   .overlay-details p.description {
     font-size: 30px;
     margin-top: 30px;
-    line-height: 40px;
+    line-height: 32px;
     margin-bottom: 40px; }
     @media only screen and (max-width: 1600px) {
       .overlay-details p.description {
         font-size: 25px;
         line-height: 35px; } }
+@media only screen and (max-width: 1600px) {
+  .overlay-details p.description {
+    font-size: 22px;
+    line-height: 26px;
+  margin: 10px 0} }
   .overlay-details .overlay-details-bottom-part a:hover, .overlay-details .overlay-details-bottom-part a:focus {
     color: #ffffff;
     text-decoration: none; }
@@ -516,7 +553,7 @@ img.d2-img {
         font-size: 16px; } }
     @media only screen and (max-width: 1600px) {
       .overlay-details .overlay-details-bottom-part a.share svg {
-        width: 30px !important; } }
+        width: 20px !important; } }
   .overlay-details .overlay-details-bottom-part a.like {
     margin-right: 0 !important;
     font-size: 20px; }
@@ -525,27 +562,31 @@ img.d2-img {
         font-size: 16px; } }
     @media only screen and (max-width: 1600px) {
       .overlay-details .overlay-details-bottom-part a.like svg {
-        width: 30px !important; } }
+        width: 20px !important; } }
   .overlay-details .overlay-details-bottom-part div.buy-btn-wrap {
     text-align: -webkit-center; }
   .overlay-details .overlay-details-bottom-part a.buy-btn {
-    font-size: 30px !important;
+    font-size: 20px !important;
     border-radius: 5px;
     display: block;
     margin-right: 0 !important;
     width: fit-content;
     border: 2px solid #ffffff;
-    padding: 5px 50px !important;
+    padding: 7px 50px !important;
     margin-top: 15px;
     margin-bottom: 10px; }
+  .big-cinema-item-col6 .overlay-details .overlay-details-bottom-part a.buy-btn{
+    font-size: 24px !important;
+  }
     @media only screen and (max-width: 1600px) {
       .overlay-details .overlay-details-bottom-part a.buy-btn {
-        font-size: 25px !important; } }
+        font-size: 18px !important;
+        padding: 5px 30px !important; } }
   .overlay-details .overlay-details-bottom-part span.cost {
-    font-size: 30px; }
+    font-size: 20px; }
     @media only screen and (max-width: 1600px) {
       .overlay-details .overlay-details-bottom-part span.cost {
-        font-size: 25px; } }
+        font-size: 18px; } }
 
 .overlay-details.smalll {
   width: 100%;
@@ -1642,4 +1683,16 @@ input.reserved-seats ~ label svg {
 
 .single-item-6{
   padding: 10px;
+}
+
+.teatr-show-more{
+  color: #ffffff;
+  background-color: #d33d33;
+  height: fit-content;
+  font-size: 20px;
+  padding: 15px 60px;
+  border-radius: 5px;
+  margin-right: 5px;
+  transition-property: background-color;
+  transition-duration: .2s;
 }

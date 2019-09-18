@@ -18674,7 +18674,9 @@ pre[class*="language-"] {
   Covers
 ------------------------------------*/
 .g-bg-cover {
-  position: relative; }
+  position: relative;
+    height: 100%;
+}
   .g-bg-cover::after {
     content: "";
     position: absolute;
