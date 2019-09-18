@@ -109,6 +109,15 @@ class EventTicketsController extends MyBaseController
 
         $ticket->save();
 
+        // Attach the access codes to the ticket if it's hidden and the code ids have come from the front
+        if ($ticket->is_hidden) {
+            $ticketAccessCodes = $request->get('ticket_access_codes', []);
+            if (empty($ticketAccessCodes) === false) {
+                // Sync the access codes on the ticket
+                $ticket->event_access_codes()->attach($ticketAccessCodes);
+            }
+        }
+
         session()->flash('message', 'Successfully Created Ticket');
 
         return response()->json([
@@ -220,11 +229,14 @@ class EventTicketsController extends MyBaseController
                 'messages' => $ticket->errors(),
             ]);
         }
+        // Check if the ticket visibility changed on update
+        $ticketPreviouslyHidden = (bool)$ticket->is_hidden;
 
         $ticket->title = $request->get('title');
         $ticket->quantity_available = !$request->get('quantity_available') ? null : $request->get('quantity_available');
         $ticket->price = $request->get('price');
         $ticket->ticket_date = $request->get('ticket_date');
+//        dd($request);
         $ticket->start_sale_date = $request->get('start_sale_date');
         $ticket->end_sale_date = $request->get('end_sale_date');
         $ticket->description = $request->get('description');
@@ -233,6 +245,19 @@ class EventTicketsController extends MyBaseController
         $ticket->is_hidden = $request->get('is_hidden') ? 1 : 0;
 
         $ticket->save();
+
+        // Attach the access codes to the ticket if it's hidden and the code ids have come from the front
+        if ($ticket->is_hidden) {
+            $ticketAccessCodes = $request->get('ticket_access_codes', []);
+            if (empty($ticketAccessCodes) === false) {
+                // Sync the access codes on the ticket
+                $ticket->event_access_codes()->detach();
+                $ticket->event_access_codes()->attach($ticketAccessCodes);
+            }
+        } else if ($ticketPreviouslyHidden) {
+            // Delete access codes on ticket if the visibility changed to visible
+            $ticket->event_access_codes()->detach();
+        }
 
         return response()->json([
             'status'      => 'success',

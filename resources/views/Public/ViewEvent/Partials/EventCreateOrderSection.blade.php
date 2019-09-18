@@ -34,21 +34,21 @@
                     </table>
                 </div>
                 @if($order_total > 0)
-                    <div class="panel-footer">
-                        <h5>
-                            @lang("Public_ViewEvent.total"): <span style="float: right;"><b>{{ $orderService->getOrderTotalWithBookingFee(true) }}</b></span>
-                        </h5>
-                        @if($event->organiser->charge_tax)
-                            <h5>
-                                {{ $event->organiser->tax_name }} ({{ $event->organiser->tax_value }}%):
-                                <span style="float: right;"><b>{{ $orderService->getTaxAmount(true) }}</b></span>
-                            </h5>
-                            <h5>
-                                <strong>@lang("Public_ViewEvent.grand_total")</strong>
-                                <span style="float: right;"><b>{{  $orderService->getGrandTotal(true) }}</b></span>
-                            </h5>
-                        @endif
-                    </div>
+                <div class="panel-footer">
+                    <h5>
+                        @lang("Public_ViewEvent.total"): <span style="float: right;"><b>{{ $orderService->getOrderTotalWithBookingFee(true) }}</b></span>
+                    </h5>
+                    @if($event->organiser->charge_tax)
+                    <h5>
+                        {{ $event->organiser->tax_name }} ({{ $event->organiser->tax_value }}%):
+                        <span style="float: right;"><b>{{ $orderService->getTaxAmount(true) }}</b></span>
+                    </h5>
+                    <h5>
+                        <strong>@lang("Public_ViewEvent.grand_total")</strong>
+                        <span style="float: right;"><b>{{  $orderService->getGrandTotal(true) }}</b></span>
+                    </h5>
+                    @endif
+                </div>
                 @endif
 
             </div>
@@ -89,14 +89,14 @@
                 </div>
                 {{--<div class="row"><div class="col-md-12">&nbsp;</div></div>--}}
                 {{--<div class="row">--}}
-                {{--<div class="col-md-12">--}}
-                {{--<div class="form-group">--}}
-                {{--<div class="custom-checkbox">--}}
-                {{--{!! Form::checkbox('is_business', 1, null, ['data-toggle' => 'toggle', 'id' => 'is_business']) !!}--}}
-                {{--{!! Form::label('is_business', trans("Public_ViewEvent.is_business"), ['class' => 'control-label']) !!}--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--</div>--}}
+                    {{--<div class="col-md-12">--}}
+                        {{--<div class="form-group">--}}
+                            {{--<div class="custom-checkbox">--}}
+                                {{--{!! Form::checkbox('is_business', 1, null, ['data-toggle' => 'toggle', 'id' => 'is_business']) !!}--}}
+                                {{--{!! Form::label('is_business', trans("Public_ViewEvent.is_business"), ['class' => 'control-label']) !!}--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                 {{--</div>--}}
                 {{--<div class="row"><div class="col-md-12">&nbsp;</div></div>--}}
                 <div class="row hidden" id="business_details">

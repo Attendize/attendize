@@ -48,6 +48,7 @@ class EventViewController extends Controller
 //            'tickets' => $tickets,//$event->tickets()->orderBy('sort_order', 'asc')->get(),
             'is_embedded' => 0,
         ];
+//        dd($ticket_dates);
         /*
          * Don't record stats if we're previewing the event page from the backend or if we own the event.
          */
