@@ -17569,7 +17569,7 @@ pre[class*="language-"] {
   transition-timing-function: ease-in; }
 
 .js-carousel {
-  background: url(../../assets/img/preloaders/preloader-black.svg) no-repeat 50% 50%; }
+  background: url(../../assets/images/preloaders/preloader-black.svg) no-repeat 50% 50%; }
   .js-carousel .js-next,
   .js-carousel .js-prev {
     opacity: 0; }

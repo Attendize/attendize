@@ -52,6 +52,44 @@
     <script src="{{ asset('assets/javascript/components/hs.datepicker.js') }}"></script>
     <!-- JS Plugins Init. -->
     <script>
+        $.HSCore.components.HSCarousel.init('[class*="js-carousel"]');
+        // initialization of custom select
+        $.HSCore.components.HSSelect.init('.js-custom-select');
+
+        // initialization of forms
+        $.HSCore.components.HSDatepicker.init('#datepickerInline');
+        $('#carouselCus1').slick('setOption', 'responsive', [{
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 4
+            }
+        }, {
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 3
+            }
+        }, {
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 2
+            }
+        }], true);
+        //owl carousel
+        $("#main-top-slider").owlCarousel({
+            items: 1,
+            loop: true,
+            autoplay: true,
+        });
+        $("#kinoteator-tab1").owlCarousel({
+            items: 1,
+        });
+        $("#konserty-tab1").owlCarousel({
+            items: 1,
+        })
+        $("#teator-tab1").owlCarousel({
+            items: 1,
+        });
+
         $(document).ready(function(){
             $("#slide-teator-prev").click(function(){
                 $("#carousel-09-1 .js-prev").click();
@@ -61,44 +99,12 @@
             });
             // home page teatrda ulanan sliderim un script
             // initialization of carousel
-            $.HSCore.components.HSCarousel.init('[class*="js-carousel"]');
 
-            $('#carouselCus1').slick('setOption', 'responsive', [{
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 4
-                }
-            }, {
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 3
-                }
-            }, {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2
-                }
-            }], true);
-            //owl carousel
-            $("#main-top-slider").owlCarousel({
-                items: 1,
-                loop: true,
-                autoplay: true,
-            });
-            $("#kinoteator-tab1").owlCarousel({
-                items: 1,
-            });
-            $("#konserty-tab1").owlCarousel({
-                items: 1,
-            })
-            $("#teator-tab1").owlCarousel({
-                items: 1,
-            });
-            // initialization of custom select
-            $.HSCore.components.HSSelect.init('.js-custom-select');
 
-            // initialization of forms
-            $.HSCore.components.HSDatepicker.init('#datepickerInline');
+
+
+
+
 
             $('#date-click').click(function () {
                 $('#date-click-content').toggleClass('show-content');
