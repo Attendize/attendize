@@ -288,7 +288,7 @@ class Event extends MyBaseModel
      */
     public function getCurrencySymbolAttribute()
     {
-        return $this->currency->symbol_left;
+        return $this->currency->symbol_left ?? '';
     }
 
     /**
@@ -451,6 +451,9 @@ ICSTemplate;
         return $icsTemplate;
     }
 
+    public function getSeansCount(){
+        return $this->tickets()->distinct()->orderBy('ticket_date')->count();
+    }
     /**
      * @param integer $accessCodeId
      * @return bool
@@ -475,6 +478,6 @@ ICSTemplate;
 
     public function scopeOnLive($query){
         $query->whereDate('end_date','>',Carbon::now('Asia/Ashgabat'));
-        return $query->where('is_live',1);
+        return $query->where('is_live',1)->with('images');
     }
 }

@@ -44,13 +44,19 @@
 @yield('after_scripts')
 
 @stack('after_scripts')
-{!!HTML::script(config('attendize.cdn_url_static_assets').'/assets/javascript/frontend.js')!!}
 <script>
     $('document').ready(function(){
         $('#top-header-submit').click(function(){
             $('#main-header-search-form').submit();
         })
     });
+
+    function showMessage(message) {
+        humane.log(message, {
+            timeoutAfterMove: 3000,
+            waitForMove: true
+        });
+    }
 </script>
 @if(session()->get('message'))
     <script>showMessage('{{\Session::get('message')}}');</script>

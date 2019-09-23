@@ -280,8 +280,8 @@ class EventCheckoutController extends Controller
             return view('Public.ViewEvent.Embedded.EventPageCheckout', $data); // <--- todo check this out
         }
 
-        return view('Public.ViewEvent.EventPageCheckout', $data);
-//        return view('Bilettm.ViewEvent.EventPageCheckout', $data);
+//        return view('Public.ViewEvent.EventPageCheckout', $data);
+        return view('Bilettm.ViewEvent.CheckoutPage', $data);
     }
 
     /**
@@ -381,7 +381,7 @@ class EventCheckoutController extends Controller
             $orderService->calculateFinalCosts();
             $secondsToExpire = Carbon::now()->diffInSeconds($order_session['expires']);
             $transaction_data += [
-                'amount'      => $orderService->getGrandTotal()*100,//todo multiply by 100
+                'amount'      => $orderService->getGrandTotal()*1,//todo multiply by 100
                 'currency' => 934,
                 'sessionTimeoutSecs' => $secondsToExpire,
                 'description' => 'Order for customer: ' . $request->get('order_email'),
@@ -584,17 +584,17 @@ class EventCheckoutController extends Controller
             $order->is_payment_received = isset($request_data['pay_offline']) ? 0 : 1;
 
             // Business details is selected, we need to save the business details
-            if (isset($request_data['is_business']) && (bool)$request_data['is_business']) {
-                $order->is_business = $request_data['is_business'];
-                $order->business_name = sanitise($request_data['business_name']);
-                $order->business_tax_number = sanitise($request_data['business_tax_number']);
-                $order->business_address_line_one = sanitise($request_data['business_address_line1']);
-                $order->business_address_line_two  = sanitise($request_data['business_address_line2']);
-                $order->business_address_state_province  = sanitise($request_data['business_address_state']);
-                $order->business_address_city = sanitise($request_data['business_address_city']);
-                $order->business_address_code = sanitise($request_data['business_address_code']);
-
-            }
+//            if (isset($request_data['is_business']) && (bool)$request_data['is_business']) {
+//                $order->is_business = $request_data['is_business'];
+//                $order->business_name = sanitise($request_data['business_name']);
+//                $order->business_tax_number = sanitise($request_data['business_tax_number']);
+//                $order->business_address_line_one = sanitise($request_data['business_address_line1']);
+//                $order->business_address_line_two  = sanitise($request_data['business_address_line2']);
+//                $order->business_address_state_province  = sanitise($request_data['business_address_state']);
+//                $order->business_address_city = sanitise($request_data['business_address_city']);
+//                $order->business_address_code = sanitise($request_data['business_address_code']);
+//
+//            }
 
             // Calculating grand total including tax
             $orderService = new OrderService($ticket_order['order_total'], $ticket_order['total_booking_fee'], $event);
@@ -790,7 +790,7 @@ class EventCheckoutController extends Controller
             return view('Public.ViewEvent.Embedded.EventPageViewOrder', $data);
         }
 
-        return view('Public.ViewEvent.EventPageViewOrder', $data);
+        return view('Bilettm.ViewEvent.ViewOrderPage', $data);
     }
 
     /**

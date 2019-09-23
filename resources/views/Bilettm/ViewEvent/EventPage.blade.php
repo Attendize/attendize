@@ -1,6 +1,6 @@
 @extends('Bilettm.Layouts.BilettmLayout')
 @section('content')
-    {{\DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::render('home')}}
+    {{\DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::render('event',$event)}}
     <section style="margin-top: 30px; margin-bottom: 100px">
         <div class="container">
             <div class="row m-0">
@@ -56,8 +56,4 @@
 @section('after_scripts')
     @include("Shared.Partials.LangScript")
     {!!HTML::script(config('attendize.cdn_url_static_assets').'/assets/javascript/frontend.js')!!}
-
-    @if(isset($secondsToExpire))
-        <script>if($('#countdown')) {setCountdown($('#countdown'), {{$secondsToExpire}});}</script>
-    @endif
 @endsection

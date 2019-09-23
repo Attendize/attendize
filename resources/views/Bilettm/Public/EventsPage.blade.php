@@ -31,13 +31,7 @@
         <div class="container film">
             <div class="row">
                 <div class="col-md-9 col-lg-9 col-sm-9 col-9">
-                    <div class="pagination_blk">
-                        <span>Видно на странице - 5/48</span>
-                        <div class="arrows_block">
-                            <a  class='arrows' id='left_arrow' href="#"><img src="{{asset('assets/images/icons/left.png')}}"></a>
-                            <a class='arrows' id='right_arrow' href="#"><img src="{{asset('assets/images/icons/right.png')}}"></a>
-                        </div>
-                    </div>
+                    {{$events->links('vendor.pagination.simple-bootstrap-4')}}
                 </div>
             </div>
         </div>

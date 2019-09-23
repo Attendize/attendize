@@ -6,10 +6,9 @@
         <div class="col-md-6 col-lg-6 col-6">
             <div class="film_op">
                 <div class="date">
-                    <img src="{{asset('assets/images/icons/eticket.svg')}}">
                     <div class="day">
                         <h4>{{$event->start_date->format('d.m.Y')}}</h4>
-                        <h6>{{$event->end_date->format('d.m.Y')}}</h6>
+                        <h6>{{$event->getSeansCount()}} seansa</h6>
                     </div>
                 </div>
                 <h2 class="film_name"><a href="{{$event->event_url}}">{{$event->title}}</a></h2>

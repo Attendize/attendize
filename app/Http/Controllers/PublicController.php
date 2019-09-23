@@ -75,7 +75,7 @@ class PublicController extends Controller
             $e_query->whereDate('start_date','>=',Carbon::parse($date));
         }
 
-        $events = $e_query->paginate(10);
+        $events = $e_query->with('images')->paginate(1);
         $navigation = $nav_query->get();
 //        dd($events);
         return view('Bilettm.Public.EventsPage')->with([
@@ -88,7 +88,7 @@ class PublicController extends Controller
     public function search(SearchRequest $request){
         //todo implement with elastick search and scout
         $query = $request->get('q');
-        $events = Event::where('title','like',"%{$query}%")->get();
+        $events = Event::where('title','like',"%{$query}%")->paginate(10);
 
         return view('Bilettm.Public.SearchResults')
             ->with([

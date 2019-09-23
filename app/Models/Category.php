@@ -65,8 +65,8 @@ class Category extends \Illuminate\Database\Eloquent\Model{
         return $query->where('depth',2)->orderBy('lft','asc');
     }
 
-    public function getChildren($parent_id){
-        return $this->where('parent_id',$parent_id)->orderBy('lft','asc');
+    public function scopeChildren($query,$parent_id){
+        return $query->where('parent_id',$parent_id)->orderBy('lft','asc');
     }
 
     public function parent(){

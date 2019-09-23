@@ -41,16 +41,6 @@ Route::group(
         'as'   => 'logout',
     ]);
 
-
-    Route::get('/terms_and_conditions', [
-        'as' => 'termsAndConditions',
-        function () {
-            return 'TODO: add terms and cond';
-        }
-    ]);
-
-
-
     Route::group(['middleware' => ['installed']], function () {
 
         /*
@@ -344,28 +334,11 @@ Route::group(
                 ]
             );
 
-            Route::get('{event_id}', function ($event_id) {
-                return Redirect::route('showEventDashboard', [
-                    'event_id' => $event_id,
-                ]);
-            });
+            Route::get('{event_id}', 'EventDashboardController@showDashboard');
 
-            /*
-             * @todo Move to a controller
-             */
             Route::get('{event_id}/go_live', [
                 'as' => 'MakeEventLive',
-                function ($event_id) {
-                    $event = \App\Models\Event::scope()->findOrFail($event_id);
-                    $event->is_live = 1;
-                    $event->save();
-                    \Session::flash('message',
-                        'Event Successfully Made Live! You can undo this action in event settings page.');
-
-                    return Redirect::route('showEventDashboard', [
-                        'event_id' => $event_id,
-                    ]);
-                }
+                'uses'=>'EventController@makeEventLive'
             ]);
 
             /*
@@ -748,16 +721,13 @@ Route::group(
         'uses' =>'PublicController@subscribe'
     ]);
 
-    Route::get('/terms_and_conditions', [
-        'as' => 'termsAndConditions',
-        function () {
-            return 'TODO: add terms and cond';
-        }
-    ]);
+//    Route::get('/terms_and_conditions', [
+//        'as' => 'termsAndConditions',
+//        function () {
+//            return 'TODO: add terms and cond';
+//        }
+//    ]);
 
-    Route::get('/itemlist', function (){
-        return view('Bilettm.Partials.ItemsList');
-    });
 
 });
 
