@@ -75,7 +75,7 @@ class PublicController extends Controller
             $e_query->whereDate('start_date','>=',Carbon::parse($date));
         }
 
-        $events = $e_query->with('images')->paginate(1);
+        $events = $e_query->with('images')->paginate(5);
         $navigation = $nav_query->get();
 //        dd($events);
         return view('Bilettm.Public.EventsPage')->with([

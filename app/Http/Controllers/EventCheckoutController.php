@@ -381,7 +381,7 @@ class EventCheckoutController extends Controller
             $orderService->calculateFinalCosts();
             $secondsToExpire = Carbon::now()->diffInSeconds($order_session['expires']);
             $transaction_data += [
-                'amount'      => $orderService->getGrandTotal()*1,//todo multiply by 100
+                'amount'      => $orderService->getGrandTotal()*100,//multiply by 100 to obtain tenge
                 'currency' => 934,
                 'sessionTimeoutSecs' => $secondsToExpire,
                 'description' => 'Order for customer: ' . $request->get('order_email'),

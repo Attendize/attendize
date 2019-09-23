@@ -452,7 +452,8 @@ ICSTemplate;
     }
 
     public function getSeansCount(){
-        return $this->tickets()->distinct()->orderBy('ticket_date')->count();
+        $seans = $this->tickets()->distinct()->orderBy('ticket_date')->count();
+        return $seans != 0 ? $seans. ' seansa' : ''; //todo get from translate
     }
     /**
      * @param integer $accessCodeId

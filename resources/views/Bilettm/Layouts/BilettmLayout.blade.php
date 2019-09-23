@@ -51,12 +51,7 @@
         })
     });
 
-    function showMessage(message) {
-        humane.log(message, {
-            timeoutAfterMove: 3000,
-            waitForMove: true
-        });
-    }
+
 </script>
 @if(session()->get('message'))
     <script>showMessage('{{\Session::get('message')}}');</script>

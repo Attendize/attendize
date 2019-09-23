@@ -8,17 +8,19 @@
                 <div class="date">
                     <div class="day">
                         <h4>{{$event->start_date->format('d.m.Y')}}</h4>
-                        <h6>{{$event->getSeansCount()}} seansa</h6>
+                        <h6>{{$event->getSeansCount()}}</h6>
                     </div>
                 </div>
                 <h2 class="film_name"><a href="{{$event->event_url}}">{{$event->title}}</a></h2>
                 <div id="desc">
                     {!! Markdown::parse($event->description) !!}
                 </div>
+                @if($event->starting_ticket_price)
                 <div class="buy_and_salary">
                     <span class="cost">Цена ot: {{$event->starting_ticket_price}} TMT</span>
                     <a class="btn btn-danger buy_button" href="{{$event->event_url}}">Купить</a>
                 </div>
+                @endif
             </div>
         </div>
     </div>

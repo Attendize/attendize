@@ -38,25 +38,25 @@
                 </div>
                 <div class="col-3 col-3-with-text">
                     <ul>
-                        <li><a href="">ЛИЧНЫЙ КАБИНЕТ</a></li>
-                        <li><a href="">ЗНАКОМСТВО С BILETTM.COM</a></li>
-                        <li><a href="">ВОПРОСЫ И ОТВЕТЫ</a></li>
-                        <li><a href="">БИЛЕТНЫЕ ОФИСЫ</a></li>
+                        <li><a href="#">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                        <li><a href="#">ЗНАКОМСТВО С BILETTM.COM</a></li>
+                        <li><a href="#">ВОПРОСЫ И ОТВЕТЫ</a></li>
+                        <li><a href="#">БИЛЕТНЫЕ ОФИСЫ</a></li>
                     </ul>
                 </div>
                 <div class="col-3 col-3-with-text">
                     <ul>
-                        <li><a href="">РАССЫЛКА</a></li>
-                        <li><a href="">КОЛЛЕКТИВНЫЕ ЗАКАЗЫ</a></li>
-                        <li><a href="">ОРГАНИЗАТОРАМ</a></li>
-                        <li><a href="">КОНЦЕРТНЫМ ПЛОЩАДКАМ</a></li>
+                        <li><a href="#">РАССЫЛКА</a></li>
+                        <li><a href="#">КОЛЛЕКТИВНЫЕ ЗАКАЗЫ</a></li>
+                        <li><a href="#">ОРГАНИЗАТОРАМ</a></li>
+                        <li><a href="#">КОНЦЕРТНЫМ ПЛОЩАДКАМ</a></li>
                     </ul>
                 </div>
                 <div class="col-3 col-3-with-text">
                     <ul>
-                        <li><a href="">ПАРТНЁРАМ</a></li>
-                        <li><a href="">ЛОГОТИП ДЛЯ АФИШ И СМИ</a></li>
-                        <li><a href="">Добавить событие</a></li>
+                        <li><a href="#">ПАРТНЁРАМ</a></li>
+                        <li><a href="#">ЛОГОТИП ДЛЯ АФИШ И СМИ</a></li>
+                        <li><a href="#">Добавить событие</a></li>
                     </ul>
                 </div>
             </div>
