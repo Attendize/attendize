@@ -22,23 +22,20 @@ use Carbon\Carbon;
 class PublicController extends Controller
 {
     public function showHomePage(){
-        $cinema = Event::cinema()
-            ->onLive()
-            ->take(11)
-            ->get();
+        $cinema = Category::where('view_type','cinema')
+            ->categoryLiveEvents(21)
+            ->first();
 
-        $theatre = Event::theatre()
-            ->onLive()
-            ->take(6)
-            ->get();
+        $theatre = Category::where('view_type','theatre')
+            ->categoryLiveEvents(6)
+            ->first();
 
-        $musical = Event::musical()
-            ->onLive()
-            ->take(8)
-            ->get();
+        $musical =Category::where('view_type','concert')
+            ->categoryLiveEvents(12)
+            ->first();
 
         $sliders = Slider::where('active',1)->get();
-
+//dd($cinema->events->first());
         return view('Bilettm.Public.HomePage')->with([
             'cinema' => $cinema,
             'theatre' => $theatre,
@@ -85,6 +82,37 @@ class PublicController extends Controller
         ]);
     }
 
+    public function showCategoryEvents($cat_id, Request $request){
+        $date = $request->get('date');
+        $popular = $request->get('popular');
+
+        $category = Category::select('id','title_tm','title_ru','view_type','events_limit','parent_id')
+            ->findOrFail($cat_id);
+
+        if($category->parent_id>0){
+            $events = $category->cat_events()
+                ->onLive()
+                ->orderBy($popular ? 'start_date' : 'views')
+                ->get();
+            return view("Bilettm.EventsList.subCategoryList")->with([
+                'category' => $category,
+                'events' => $events
+            ]);
+        }
+        else{
+            $subCats = $category->children()
+                ->withLiveEvents($date,$category->events_limit,$popular)
+                ->get();
+
+//        $events = $e_query->with('images')->paginate(5);
+//        dd($subCats->first()->cat_events);
+            return view("Bilettm.EventsList.".$category->view_type)->with([
+                'sub_cats' => $subCats,
+                'category' => $category,
+            ]);
+        }
+    }
+
     public function search(SearchRequest $request){
         //todo implement with elastick search and scout
         $query = $request->get('q');
@@ -114,12 +142,16 @@ class PublicController extends Controller
 
     public function subscribe(SubscribeRequest $request){
         $email = $request->get('email');
+        //todo validate email
         $subscribe = Subscriber::updateOrCreate(['email'=>$email,'active'=>1]);
 
         if($subscribe){
-            session()->flash('success','Subscription successfully');
+            session()->flash('message','Subscription successfully');
         }
 
-        return redirect()->back();
+        return response()->json([
+            'status'   => 'success',
+            'message' => 'Subscription successfully',
+        ]);
     }
 }

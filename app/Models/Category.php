@@ -9,7 +9,9 @@
 namespace App\Models;
 
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Category extends \Illuminate\Database\Eloquent\Model{
@@ -58,9 +60,41 @@ class Category extends \Illuminate\Database\Eloquent\Model{
         return $this->hasMany(\App\Models\Event::class);
     }
 
+    public function cat_events(){
+        return $this->hasMany(\App\Models\Event::class,'sub_category_id')
+            ->withCount(['stats as views' => function($q){
+                $q->select(DB::raw("SUM(views) as v"));
+            }]);
+    }
+
+    public function scopeCategoryLiveEvents($query,$limit){
+//        dd($this->view_type);
+        return $query->select('id','title_tm','title_ru','lft')
+            ->orderBy('lft')
+            ->with(['events' => function($q) use($limit){
+            $q->select('id','title','description','category_id','sub_category_id','start_date')
+                ->limit($limit)
+                ->with('starting_ticket')
+                ->withCount(['stats as views' => function($q){
+                    $q->select(DB::raw("SUM(views) as v"));
+                }])
+                ->onLive();
+        }]);
+    }
+
+    public function parent(){
+        return $this->belongsTo(Category::class,'parent_id');
+    }
+
+    public function children(){
+        return $this->hasMany(Category::class,'parent_id')
+            ->select('id','title_ru','title_tm','parent_id','lft')
+            ->orderBy('lft');
+    }
     public function scopeMain($query){
         return $query->where('depth',1)->orderBy('lft','asc');
     }
+
     public function scopeSub($query){
         return $query->where('depth',2)->orderBy('lft','asc');
     }
@@ -69,7 +103,24 @@ class Category extends \Illuminate\Database\Eloquent\Model{
         return $query->where('parent_id',$parent_id)->orderBy('lft','asc');
     }
 
-    public function parent(){
-        return $this->belongsTo(Category::class,'parent_id');
+    public function scopeWithLiveEvents($query, $date = false, $popular = true){
+        $limit = 8;
+        return $query->with(['cat_events' => function($query) use ($date, $limit, $popular) {
+            $query->select('id','title','description','category_id','sub_category_id','start_date')
+               ->limit($limit)
+               ->with('starting_ticket')
+               ->withCount(['stats as views' => function($q){
+                   $q->select(DB::raw("SUM(views) as v"));}])
+               ->onLive();//event scope onLive get only live events
+            if($date)
+                $query->whereDate('end_date','>=',Carbon::parse($date));
+
+            if($popular)
+                $query->orderBy('views','desc');
+            else
+                $query->orderBy('start_date');
+        }]);
+
     }
+
 }

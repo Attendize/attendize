@@ -35,7 +35,7 @@
 
         <div class="form-group col-md-12">
             {!! Form::label('title', trans("Event.event_title"), array('class'=>'control-label required')) !!}
-            {!!  Form::text('title', Input::old('title'),
+            {!! Form::text('title', Input::old('title'),
                                         array(
                                         'class'=>'form-control',
                                         'placeholder'=>trans("Event.event_title_placeholder", ["name"=>Auth::user()->first_name])
@@ -43,8 +43,8 @@
         </div>
 
         <div class="form-group col-md-12">
-           {!! Form::label('description', trans("Event.event_description"), array('class'=>'control-label')) !!}
-            {!!  Form::textarea('description', Input::old('description'),
+            {!! Form::label('description', trans("Event.event_description"), array('class'=>'control-label')) !!}
+            {!! Form::textarea('description', Input::old('description'),
                                         array(
                                         'class'=>'form-control editable',
                                         'rows' => 5
@@ -83,21 +83,21 @@
         <div class="address-manual" style="display:{{$event->location_is_manual ? 'block' : 'none'}};">
             <div class="form-group">
                 {!! Form::label('location_venue_name', trans("Event.venue_name"), array('class'=>'control-label required ')) !!}
-                {!!  Form::text('location_venue_name', $event->venue_name, [
+                {!! Form::text('location_venue_name', $event->venue_name, [
                                         'class'=>'form-control location_field',
                                         'placeholder'=>trans("Event.venue_name_placeholder") // same as above
                             ])  !!}
             </div>
             <div class="form-group">
                 {!! Form::label('location_address_line_1', trans("Event.address_line_1"), array('class'=>'control-label')) !!}
-                {!!  Form::text('location_address_line_1', $event->location_address_line_1, [
+                {!! Form::text('location_address_line_1', $event->location_address_line_1, [
                                         'class'=>'form-control location_field',
                                         'placeholder'=>trans("Event.address_line_1_placeholder")//'E.g: 45 Grafton St.'
                             ])  !!}
             </div>
             <div class="form-group">
                 {!! Form::label('location_address_line_2', trans("Event.address_line_2"), array('class'=>'control-label')) !!}
-                {!!  Form::text('location_address_line_2', $event->location_address_line_2, [
+                {!! Form::text('location_address_line_2', $event->location_address_line_2, [
                                         'class'=>'form-control location_field',
                                         'placeholder'=>trans("Event.address_line_2_placeholder")//'E.g: Dublin.'
                             ])  !!}
@@ -107,7 +107,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         {!! Form::label('location_state', trans("Event.city"), array('class'=>'control-label')) !!}
-                        {!!  Form::text('location_state', $event->location_state, [
+                        {!! Form::text('location_state', $event->location_state, [
                                         'class'=>'form-control location_field',
                                         'placeholder'=>trans("Event.city_placeholder")//'E.g: Dublin.'
                             ])  !!}
@@ -116,7 +116,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         {!! Form::label('location_post_code', trans("Event.post_code"), array('class'=>'control-label')) !!}
-                        {!!  Form::text('location_post_code', $event->location_post_code, [
+                        {!! Form::text('location_post_code', $event->location_post_code, [
                                         'class'=>'form-control location_field',
                                         'placeholder'=>trans("Event.post_code_placeholder")// 'E.g: 94568.'
                             ])  !!}
@@ -135,7 +135,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     {!! Form::label('start_date', trans("Event.event_start_date"), array('class'=>'required control-label')) !!}
-                    {!!  Form::text('start_date', $event->getFormattedDate('start_date'),
+                    {!! Form::text('start_date', $event->getFormattedDate('start_date'),
                                                         [
                                                     'class'=>'form-control start hasDatepicker ',
                                                     'data-field'=>'datetime',
@@ -173,19 +173,7 @@
                 </div>
 
                 @if($event->images->count())
-                    <div class="form-group">
-                        {!! Form::label('event_image_position', trans("Event.event_image_type"), array('class'=>'control-label')) !!}
-                        {!! Form::select('event_image_position', [
-                                '' => trans("Event.event_image_select"),
-                                'cinema' => trans("Event.event_image_cinema"),
-                                'theatre' => trans("Event.event_image_theatre"),
-                                'musical' => trans("Event.event_image_musical"),
-                                'other' => trans("Event.event_image_other"),
-                            ],
-                            Input::old('event_image_position'),
-                            ['class'=>'form-control']
-                        ) !!}
-                    </div>
+
                     {!! Form::label('', trans("Event.current_event_flyer"), array('class'=>'control-label ')) !!}
                     <div class="form-group">
                         <div class="well well-sm well-small">

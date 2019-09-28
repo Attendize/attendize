@@ -178,7 +178,7 @@
 
                 {!! Form::hidden('is_embedded', $is_embedded) !!}
                 {!! Form::submit(trans("Public_ViewEvent.checkout_submit"), ['class' => 'btn btn-lg btn-danger card-submit']) !!}
-
+                {!! Form::close() !!}
             </div>
         </div>
         <div class="col-md-4">

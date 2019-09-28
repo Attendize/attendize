@@ -6,7 +6,8 @@
             <div class="row justify-content-start g-mb-30 g-mb-0--md">
                 <div class="col-12 footer-header mb-5" style="padding: 0 20%;">
                     <h2>Хотите всегда быть в курсе актуальных событий?</h2>
-                    <form action="{{route('subscription')}}" method="POST" class="row">
+                    <form action="{{route('subscription')}}" method="POST" class="row ajax">
+                        @csrf
                         <div class="col-9 form-group">
                             <input type="email" class="form-control" name='email' placeholder="Введите ваш e-mail">
                         </div>

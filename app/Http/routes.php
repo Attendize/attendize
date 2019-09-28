@@ -114,12 +114,12 @@ Route::group(
         /**
          * Events by category
          */
-        Route::get('/{cat_id?}/{cat_slug?}', [
+        Route::get('/{cat_id}/{cat_slug?}', [
             'as'   => 'showCategoryEventsPage',
-            'uses' => 'PublicController@showEvents',
+            'uses' => 'PublicController@showCategoryEvents',
         ]);
 
-        Route::post('/{cat_id?}/{cat_slug?}', [
+        Route::post('/{cat_id}/{cat_slug?}', [
             'as'   => 'postEventsPage',
             'uses' => 'PublicController@showEvents',
         ]);

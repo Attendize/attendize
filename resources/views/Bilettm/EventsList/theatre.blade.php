@@ -1,7 +1,5 @@
-@extends('Bilettm.Layouts.BilettmLayout')
-@section('content')
-    {{\DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::render('category',$category)}}
-    <!-- Films Opisanie Buttons section -->
+@extends('Bilettm.Layouts.EventsPage')
+@push('inner_content')
     <section id='cat_and_buttons'>
         <div class="container">
             <div class="row">
@@ -25,9 +23,9 @@
         </div>
     </section>
     <section id='opisanie_section'>
-    @foreach($events as $event)
-        @include('Bilettm.Partials.EventItem')
-    @endforeach
+        @foreach($events as $event)
+            @include('Bilettm.Partials.EventItem')
+        @endforeach
         <div class="container film">
             <div class="row">
                 <div class="col-md-9 col-lg-9 col-sm-9 col-9">
@@ -36,4 +34,4 @@
             </div>
         </div>
     </section>
-@endsection
+@endpush
