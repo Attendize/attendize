@@ -4,11 +4,11 @@
         <div style="height: 5px; margin-left: 5px; position: absolute; bottom: 10px; width: 100px; background-color: rgba(211,61,51,1)"></div>
         <a class="teatr-show-more m-0" href="{{route('showCategoryEventsPage')}}">Посмотреть все</a>
     </div>
-    <div class="tab-ozi col-12">
+    <div class="tab-ozi col-12" style="margin-top: 20px">
         <div class="kinoteator-tab1-wrapper">
 
-            <div class="row">
-                <div class="col-md-10">
+            <div class="row" style="width: 100%; margin: auto">
+                <div class="col-md-10" style="padding: 0 7px">
                     <div id="carousel-09-1" class="js-carousel text-center g-font-size-0 g-mb-20 g-mb-0--sm" data-infinite="true" data-vertical="true" data-arrows-classes="u-arrow-v1 g-absolute-centered--x g-width-35 g-height-35 g-font-size-18 g-color-gray g-bg-white" data-arrow-left-classes="fa fa-angle-up g-top-0" data-arrow-right-classes="fa fa-angle-down g-bottom-0" data-nav-for="#carousel-09-2">
                         @foreach($theatre as $event)
                             @include('Bilettm.Partials.TheaterItem',['event'=>$event])

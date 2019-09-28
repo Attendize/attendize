@@ -530,6 +530,7 @@ img.d2-img {
     margin-top: -15px;
     margin-bottom: 10px;} }
   .overlay-details p.description {
+    display: none;
     font-size: 30px;
     margin-top: 30px;
     line-height: 32px;
@@ -1695,4 +1696,34 @@ input.reserved-seats ~ label svg {
   margin-right: 5px;
   transition-property: background-color;
   transition-duration: .2s;
+}
+
+.film_name a{
+  color: #000000;
+  transition-property: color;
+  transition-duration: .2s;
+  font-size: 24px;
+}
+
+.film_name a:hover{
+  color: #D33D33;
+}
+
+.cat_but, .buy_button{
+  background-color: #D33D33 !important;
+  transition-property: opacity;
+  transition-duration: .2s;
+}
+
+.cat_but:hover, .buy_button:hover{
+  opacity: .8;
+}
+
+.film_op{
+  position: relative;
+}
+
+.buy_and_salary{
+  position: absolute;
+  bottom: 5px;
 }

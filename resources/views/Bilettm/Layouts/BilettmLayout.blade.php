@@ -39,7 +39,7 @@
 <script src="{{asset('vendor/bootstrap4/bootstrap.min.js')}}"></script>
 
 <script src="{{ asset('vendor/chosen/chosen.jquery.js') }}"></script>
-<script src="{{ asset('vendor/jquery-ui/ui/widgets/datepicker.js') }}"></script>
+{{--<script src="{{ asset('vendor/jquery-ui/ui/widgets/datepicker.js') }}"></script>--}}
 
 @yield('after_scripts')
 

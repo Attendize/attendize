@@ -1,12 +1,11 @@
-<div class="container film">
+<div class="film">
     <div class="row">
-        <div class="col-md-3 col-3 col-lg-3">
+        <div class="col-md-4 col-4 col-lg-4">
             <img class="film_img" src="{{asset($event->images->first()->image_path ?? '#')}}"/>
         </div>
-        <div class="col-md-6 col-lg-6 col-6">
+        <div class="col-md-8 col-lg-8 col-8">
             <div class="film_op">
                 <div class="date">
-                    <img src="{{asset('assets/images/icons/eticket.svg')}}">
                     <div class="day">
                         <h4>{{$event->start_date->format('d.m.Y')}}</h4>
                         <h6>{{$event->end_date->format('d.m.Y')}}</h6>

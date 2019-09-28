@@ -2,9 +2,13 @@
 
 section#cat_and_buttons{
   margin-top: 15px;
-  padding-bottom: 30px;
-  border-bottom:1px solid  #DDDDDD
 }
+
+section#cat_and_buttons > .container > .row{
+  border-bottom: 1px solid #DDDDDD;
+  padding-bottom: 30px;
+}
+
 #vybor_select{
   border:1px solid #DDDDDD;
   min-width: 60%;
@@ -79,6 +83,7 @@ a.buy_button{
   color:#fff;
   font-weight: bolder;
   font-size: 16px;
+  margin-left: 15px;
 }
 a.buy_button:hover{
   background-image: url('../img/icons/buy_hover.svg');

@@ -74,7 +74,6 @@
                 <div class="col-md-6 col-lg-6 col-6">
                     <div class="film_op">
                         <div class="date">
-                            <img src="assets/assets/img/icons/eticket.svg">
                             <div class="day">
                                 <h4>13 сентября</h4>
                                 <h6>19:00, пятница</h6>
@@ -115,7 +114,6 @@
                 <div class="col-md-6 col-lg-6 col-6">
                     <div class="film_op">
                         <div class="date">
-                            <img src="assets/assets/img/icons/eticket.svg">
                             <div class="day">
                                 <h4>13 сентября</h4>
                                 <h6>19:00, пятница</h6>
@@ -142,7 +140,6 @@
                 <div class="col-md-6 col-lg-6 col-6">
                     <div class="film_op">
                         <div class="date">
-                            <img src="assets/assets/img/icons/eticket.svg">
                             <div class="day">
                                 <h4>13 сентября</h4>
                                 <h6>19:00, пятница</h6>
@@ -169,7 +166,6 @@
                 <div class="col-md-6 col-lg-6 col-6">
                     <div class="film_op">
                         <div class="date">
-                            <img src="assets/assets/img/icons/eticket.svg">
                             <div class="day">
                                 <h4>13 сентября</h4>
                                 <h6>19:00, пятница</h6>
@@ -196,7 +192,6 @@
                 <div class="col-md-6 col-lg-6 col-6">
                     <div class="film_op">
                         <div class="date">
-                            <img src="assets/assets/img/icons/eticket.svg">
                             <div class="day">
                                 <h4>13 сентября</h4>
                                 <h6>19:00, пятница</h6>
