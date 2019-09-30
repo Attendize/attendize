@@ -32,5 +32,5 @@
         @stack('inner_content')
     <!-- End Nav tabs -->
         </div>
-    </se ction>
+    </section>
 @endsection
