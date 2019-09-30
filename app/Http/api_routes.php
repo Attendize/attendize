@@ -1,19 +1,23 @@
 <?php
 
-Route::group(['prefix' => 'api', 'middleware' => 'auth:api'], function () {
+Route::group(['prefix' => 'api'], function () {
 
-    /*
-     * ---------------
-     * Organisers
-     * ---------------
-     */
+    Route::get('category/{parent_id?}','API\PublicController@getCategories');
+    Route::get('events/{cat_id?}','API\PublicController@getEvents');
+
+    Route::group(['prefix' =>'admin', 'middleware' => 'auth:api'], function (){
+        /*
+         * ---------------
+         * Organisers
+         * ---------------
+         */
 
 
-    /*
-     * ---------------
-     * Events
-     * ---------------
-     */
+        /*
+         * ---------------
+         * Events
+         * ---------------
+         */
     Route::resource('events', 'API\EventsApiController');
 
 
@@ -44,11 +48,11 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth:api'], function () {
      */
 
 
-    Route::get('/', function () {
-        return response()->json([
-            'Hello' => Auth::guard('api')->user()->full_name . '!'
-        ]);
+    //    Route::get('/', function () {
+    //        return response()->json([
+    //            'Hello' => Auth::guard('api')->user()->full_name . '!'
+    //        ]);
+    //    });
     });
-
 
 });

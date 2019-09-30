@@ -1,13 +1,12 @@
-@if(!empty($event))
 <article class="u-block-hover">
     <div class="g-bg-cover">
-        <img class="d-flex align-items-end" src="{{asset($event->images->first()->image_path ?? '#')}}">
+        <img class="d-flex align-items-end" src="{{asset($event->image_url ?? '#')}}">
     </div>
     <div class="u-block-hover__additional--partially-slide-up h-100 text-center g-z-index-1 mt-auto" style="background-image: url({{asset('assets/images/overlay/1.svg')}})">
         <div class="overlay-details">
-            <h2 class="title">{{$event->title}}</h2>
+            <h2 class="title" style="text-transform: capitalize !important;">{{$event->title}}</h2>
             <h4 class="date">В кино с {{$event->start_date->format('d M')}} </h4>
-            <p class="description">{{$event->description}}</p>
+            <p class="description">{!! Markdown::parse($event->description) !!}</p>
             <div class="overlay-details-bottom-part">
                 <a href="" class="share">
                     <svg class="Shape" viewBox="0 0 30.504 33.893" fill="#ffffff" width="35px">
@@ -20,13 +19,14 @@
                         <path id="Shape_A26_Path_4" d="M 17 5.624999523162842 C 15.7344446182251 2.377499580383301 12.18900012969971 0 8.5 0 C 3.696555614471436 0 0 3.622499465942383 0 8.437499046325684 C 0 15.05437183380127 7.164555549621582 20.1712474822998 17 30 C 26.8354434967041 20.1712474822998 34 15.05437183380127 34 8.437499046325684 C 34 3.622499465942383 30.30344581604004 0 25.5 0 C 21.80722236633301 0 18.26555633544922 2.377499580383301 17 5.624999523162842 Z">
                         </path>
                     </svg>
-                    {{$event->views_count}} Views</a>
+                    {{$event->views}} Views</a>
                 <div class="buy-btn-wrap">
                     <a href="{{$event->event_url}}" class="buy-btn">Купить билет</a>
                 </div>
-                <span class="cost">Цена ot: {{$event->starting_ticket_price}} TMT</span>
+                @if(!empty($event->starting_ticket))
+                <span class="cost">Цена ot: {{$event->starting_ticket->first()->price ?? 'n/a'}} TMT</span>
+                @endif
             </div>
         </div>
     </div>
 </article>
-@endif

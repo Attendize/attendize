@@ -6,15 +6,13 @@
     <link  rel="stylesheet" href="{{asset('vendor/jquery-ui/themes/base/jquery-ui.min.css')}}">
 @endsection
 @section('content')
-@if($sliders->count()>0)
+
     @include('Bilettm.Partials.HomeSlider')
-@endif
-@if($cinema->count()>0)
+
     @include('Bilettm.Partials.HomeCinema')
-@endif
-@if($musical->count()>0)
+
     @include('Bilettm.Partials.HomeMusical')
-@endif
+
 <section id="first-add-wrapper" style="margin: 100px 0;">
     <div class="container">
         <div class="row" style="padding: 0 20px;">

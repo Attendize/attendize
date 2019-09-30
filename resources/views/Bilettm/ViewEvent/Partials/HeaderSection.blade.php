@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div onclick="window.location='{{$event->event_url}}#organiser'" class="event_organizer">
+                <div onclick="window.location='{{$event->event_url}}#organiser'" class="event_organizer text-center p-3">
                     <b>{{$event->organiser->name}}</b> @lang("Public_ViewEvent.presents")
                 </div>
             </div>
@@ -11,7 +11,7 @@
 </section>
 <section id="intro" class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 text-center">
             <h1 property="name">{{$event->title}}</h1>
             <div class="event_venue">
                 <span property="startDate" content="{{ $event->start_date->toIso8601String() }}">

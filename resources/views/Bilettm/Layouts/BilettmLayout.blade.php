@@ -18,7 +18,7 @@
     @yield('after_styles')
     @stack('after_styles')
 
-<!-- CSS Unify Theme -->
+    <!-- CSS Unify Theme -->
     <link rel="stylesheet" href="{{asset('assets/stylesheet/styles.e-commerce.css')}}">
 
     <!--  KMB Custom css  -->
@@ -28,6 +28,14 @@
 </head>
 
 <body>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="padding: 50px 70px">
+            @include('Bilettm.Public.AddEventForm')
+        </div>
+    </div>
+</div>
 <main>
     @include('Bilettm.Partials.PublicHeader')
     @yield('content')
@@ -44,7 +52,6 @@
 @yield('after_scripts')
 
 @stack('after_scripts')
-{!!HTML::script(config('attendize.cdn_url_static_assets').'/assets/javascript/frontend.js')!!}
 <script>
     $('document').ready(function(){
         $('#top-header-submit').click(function(){

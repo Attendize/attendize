@@ -11,7 +11,7 @@ if (!function_exists('money')) {
     function money($amount, \App\Models\Currency $currency = null)
     {
         if(!$currency){
-            return number_format($amount,0,'.',',').' manat';
+            return number_format($amount,2,'.',',').' manat';
         }
         return $currency->symbol_left . number_format($amount, $currency->decimal_place, $currency->decimal_point,
             $currency->thousand_point) . $currency->symbol_right;
@@ -60,5 +60,32 @@ if(!function_exists('organisers')){
             return \App\Models\Organiser::all();
         else
             return \Illuminate\Support\Facades\Auth::user()->account->organisers;
+    }
+}
+if ( ! function_exists('sanitise')) {
+    /**
+     * @param string $input
+     * @return string
+     */
+    function sanitise($input)
+    {
+        $clear = clean($input); // Package to remove code "mews/purifier"
+        $clear = strip_tags($clear);
+        $clear = html_entity_decode($clear);
+        $clear = urldecode($clear);
+        $clear = preg_replace('~[\r\n\t]+~', ' ', trim($clear));
+        $clear = preg_replace('/ +/', ' ', $clear);
+        return $clear;
+    }
+
+    /**
+     * @param string $input
+     * @return string
+     */
+    function clean_whitespace($input)
+    {
+        $clear = preg_replace('~[\r\n\t]+~', ' ', trim($input));
+        $clear = preg_replace('/ +/', ' ', $clear);
+        return $clear;
     }
 }

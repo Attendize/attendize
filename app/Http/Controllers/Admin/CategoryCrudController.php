@@ -38,13 +38,15 @@ class CategoryCrudController extends CrudController
             ['name'=>'id','type'=>'text','label'=>'Id'],
             ['name'=>'title_tm','type'=>'text','label'=>'Title tm'],
             ['name'=>'title_ru','type'=>'text','label'=>'Title ru'],
-            ['name'=>'view_type','type'=>'text','label'=>'Type'],
+            ['name'=>'view_type','type'=>'text','label'=>'View Type'],
+            ['name'=>'events_limit','type'=>'text','label'=>'Event limit'],
             ['name'=>'parent_id','type'=>'text','label'=>'Parent'],
         ]);
         $this->crud->addFields([
             ['name'=>'title_tm','type'=>'text','label'=>'Title tm'],
             ['name'=>'title_ru','type'=>'text','label'=>'Title ru'],
-            ['name'=>'view_type','type' =>'enum', 'label'=>'Type']
+            ['name'=>'view_type','type' =>'enum', 'label'=>'View Type'],
+            ['name'=>'events_limit','type'=>'number','label'=>'Event limit'],
         ]);
         $this->crud->enableReorder('title_tm', 2);
         $this->crud->allowAccess('reorder');

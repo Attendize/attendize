@@ -6,7 +6,8 @@
             <div class="row justify-content-start g-mb-30 g-mb-0--md">
                 <div class="col-12 footer-header mb-5" style="padding: 0 20%;">
                     <h2>Хотите всегда быть в курсе актуальных событий?</h2>
-                    <form action="{{route('subscription')}}" method="POST" class="row">
+                    <form action="{{route('subscription')}}" method="POST" class="row ajax">
+                        @csrf
                         <div class="col-9 form-group">
                             <input type="email" class="form-control" name='email' placeholder="Введите ваш e-mail">
                         </div>
@@ -38,25 +39,25 @@
                 </div>
                 <div class="col-3 col-3-with-text">
                     <ul>
-                        <li><a href="">ЛИЧНЫЙ КАБИНЕТ</a></li>
-                        <li><a href="">ЗНАКОМСТВО С BILETTM.COM</a></li>
-                        <li><a href="">ВОПРОСЫ И ОТВЕТЫ</a></li>
-                        <li><a href="">БИЛЕТНЫЕ ОФИСЫ</a></li>
+                        <li><a href="#">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                        <li><a href="#">ЗНАКОМСТВО С BILETTM.COM</a></li>
+                        <li><a href="#">ВОПРОСЫ И ОТВЕТЫ</a></li>
+                        <li><a href="#">БИЛЕТНЫЕ ОФИСЫ</a></li>
                     </ul>
                 </div>
                 <div class="col-3 col-3-with-text">
                     <ul>
-                        <li><a href="">РАССЫЛКА</a></li>
-                        <li><a href="">КОЛЛЕКТИВНЫЕ ЗАКАЗЫ</a></li>
-                        <li><a href="">ОРГАНИЗАТОРАМ</a></li>
-                        <li><a href="">КОНЦЕРТНЫМ ПЛОЩАДКАМ</a></li>
+                        <li><a href="#">РАССЫЛКА</a></li>
+                        <li><a href="#">КОЛЛЕКТИВНЫЕ ЗАКАЗЫ</a></li>
+                        <li><a href="#">ОРГАНИЗАТОРАМ</a></li>
+                        <li><a href="#">КОНЦЕРТНЫМ ПЛОЩАДКАМ</a></li>
                     </ul>
                 </div>
                 <div class="col-3 col-3-with-text">
                     <ul>
-                        <li><a href="">ПАРТНЁРАМ</a></li>
-                        <li><a href="">ЛОГОТИП ДЛЯ АФИШ И СМИ</a></li>
-                        <li><a href="">Добавить событие</a></li>
+                        <li><a href="#">ПАРТНЁРАМ</a></li>
+                        <li><a href="#">ЛОГОТИП ДЛЯ АФИШ И СМИ</a></li>
+                        <li><a style="color: #ffffff; cursor: pointer" data-toggle="modal" data-target="#exampleModalCenter">Добавить событие</a></li>
                     </ul>
                 </div>
             </div>

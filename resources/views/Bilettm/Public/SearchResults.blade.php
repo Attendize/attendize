@@ -12,7 +12,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav u-nav-v1-1 g-mb-20" role="tablist" data-target="nav-1-1-default-hor-left" data-tabs-mobile-type="slide-up-down" data-btn-classes="btn btn-md btn-block rounded-0 u-btn-outline-lightgray g-mb-20">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" role="tab">Результатов поиска: {{$events->count()}}</a>
+                            <a class="nav-link active" data-toggle="tab" role="tab">Результатов поиска: {{$events->count()}}/{{$events->total()}}</a>
                         </li>
                     </ul>
                     <!-- End Nav tabs -->
@@ -25,7 +25,7 @@
                                     @foreach($events as $event)
                                         @include('Bilettm.Partials.EventItem')
                                     @endforeach
-                                    <div class="col-12 no-more-results">Больше результатов нет</div>
+                                        {{$events->links('vendor.pagination.simple-bootstrap-4')}}
                                 </div>
                             </div>
                         </div>

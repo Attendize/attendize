@@ -1,8 +1,9 @@
+@if(!empty($cinema))
 <section id="kinoteator" class="kinoteator-section container">
     <div class="tab-header d-flex justify-content-between col-12 px-0">
-        <h2 class="">Кинотеатры</h2>
+        <h2 class="">{{$cinema->title}}</h2>
         <div style="height: 5px; position: absolute; bottom: 0; width: 100px; background-color: rgba(211,61,51,1)"></div>
-        <a class="" href="{{route('showCategoryEventsPage')}}">Посмотреть все</a>
+        <a class="" href="{{$cinema->url}}">Посмотреть все</a>
     </div>
     <div class="tab-ozi col-12 px-0">
 
@@ -10,11 +11,11 @@
             <div class="slider-slider">
                 <div class="row w-100 m-auto">
                     <div class="col-6 single-item-6 big-cinema-item-col6">
-                        @include('Bilettm.Partials.CinemaItem',['event'=>$cinema->shift(1),'size'=>'big'])
+                        @include('Bilettm.Partials.CinemaItem',['event'=>$cinema->events->first(),'size'=>'big'])
                     </div>
                     <div class="col-6" style="padding: 0">
                         <div class="row">
-                            @foreach($cinema->slice(0,4) as $cinemaEvent)
+                            @foreach($cinema->events->slice(1,4) as $cinemaEvent)
                             <div class="col-6 single-item-6">
                                 @include('Bilettm.Partials.CinemaItem',['event'=>$cinemaEvent])
 
@@ -28,7 +29,7 @@
             @if($cinema->count()>4)
                 <div class="slider-slider">
                     <div class="row">
-                        @foreach($cinema->slice(4) as $cinemaEvent)
+                        @foreach($cinema->events->slice(5) as $cinemaEvent)
                             <div class="col-6 single-item-6">
                                 @include('Bilettm.Partials.CinemaItem',['event'=>$cinemaEvent])
                             </div>
@@ -40,3 +41,4 @@
         </div>
     </div>
 </section>
+@endif

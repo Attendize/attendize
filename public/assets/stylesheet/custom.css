@@ -1,3 +1,11 @@
+a:hover{
+  color: rgba(255, 255, 255, .8);
+}
+
+a:focus{
+  color: rgba(255, 255, 255, .8);
+}
+
 .container {
   max-width: unset;
   padding: 0 7.2% !important; }
@@ -198,11 +206,12 @@ article > .u-block-hover__additional--partially-slide-up {
   #kinoteator .tab-ozi a.nav-link.active {
     background-color: unset; }
   #kinoteator .tab-ozi {
-    margin-top: 70px; }
+    margin-top: 7px; }
     #kinoteator .tab-ozi .nav.u-nav-v1-1 {
       padding: 0 5px; }
   #kinoteator .owl-nav.disabled {
-    display: block; }
+    display: block;
+  font-size: 35px;}
     #kinoteator .owl-nav.disabled .owl-prev span, #kinoteator .owl-nav.disabled .owl-next span {
       font-size: 30px; }
 
@@ -262,7 +271,7 @@ article.u-block-hover img {
     background-color: #d33d33;
     height: fit-content;
     font-size: 20px;
-    padding: 15px 60px;
+    padding: 12px 60px;
     border-radius: 5px;
     margin-right: 5px;
     transition-property: background-color;
@@ -282,13 +291,14 @@ article.u-block-hover img {
     background-color: unset;
     border-bottom: 2px solid #ffffff; }
   #konserty .tab-ozi {
-    margin-top: 70px; }
+    margin-top: 20px; }
     #konserty .tab-ozi .nav.u-nav-v1-1 {
       padding: 0 5px; }
       #konserty .tab-ozi .nav.u-nav-v1-1 .dropdown-menu a {
         color: #000000; }
   #konserty .owl-nav.disabled {
-    display: block; }
+    display: block;
+  font-size: 35px;}
     #konserty .owl-nav.disabled .owl-prev span, #konserty .owl-nav.disabled .owl-next span {
       font-size: 30px; }
 
@@ -302,8 +312,8 @@ article.u-block-hover img {
   width: 100%;}
 #kinoteator-tab1 .owl-nav, .movie-items-group .owl-nav {
   position: absolute;
-  top: -50px;
-  right: 5px; }
+  top: -63px;
+  right: 275px; }
 #kinoteator-tab1 .owl-prev, #kinoteator-tab1 .owl-next, .movie-items-group .owl-prev, .movie-items-group .owl-next {
   border: 1px solid #000000;
   border-radius: 5px;
@@ -319,11 +329,13 @@ article.u-block-hover img {
     transition-duration: .2s; }
 #kinoteator-tab1 .owl-next, .movie-items-group .owl-next {
   background-image: url(../images/icons/right.png);
-  background-size: 32px !important;
+  background-size: 56px !important;
+  width: 56px;
   border: none !important; }
 #kinoteator-tab1 .owl-prev, .movie-items-group .owl-prev {
   background-image: url(../images/icons/left.png);
-  background-size: 32px !important;
+  background-size: 56px !important;
+  width: 56px;
   border: none !important; }
 #kinoteator-tab1 .owl-prev:hover, #kinoteator-tab1 .owl-next:hover, .movie-items-group .owl-prev:hover, .movie-items-group .owl-next:hover {
   border: 1px solid #7e7e7e; }
@@ -362,8 +374,8 @@ article.u-block-hover img {
   bottom: 0; }
 #konserty-tab1 .owl-nav {
   position: absolute;
-  top: -50px;
-  right: 5px; }
+  top: -76px;
+  right: 280px;}
 #konserty-tab1 .owl-prev, #konserty-tab1 .owl-next {
   border: 1px solid #ffffff;
   border-radius: 5px;
@@ -379,11 +391,13 @@ article.u-block-hover img {
     opacity: 0; }
 #konserty-tab1 .owl-next {
   background-image: url(../images/icons/w-right.png);
-  background-size: 32px !important;
+  background-size: 56px !important;
+  width: 56px;
   border: none !important; }
 #konserty-tab1 .owl-prev {
   background-image: url(../images/icons/w-left.png);
-  background-size: 32px !important;
+  background-size: 56px !important;
+  width: 56px;
   border: none !important; }
 #konserty-tab1 .owl-prev:hover, #konserty-tab1 .owl-next:hover {
   border: 1px solid rgba(255, 255, 255, 0.5); }
@@ -682,7 +696,7 @@ img.d2-img {
     padding-left: 0; }
 
 #carousel-09-1 .js-prev {
-  left: 10px !important;
+  left: 30px !important;
   top: 50% !important;
   transform: translateY(-50%);
   background-image: url(../images/icons/t-left.png) !important;
@@ -1691,7 +1705,7 @@ input.reserved-seats ~ label svg {
   background-color: #d33d33;
   height: fit-content;
   font-size: 20px;
-  padding: 15px 60px;
+  padding: 12px 60px;
   border-radius: 5px;
   margin-right: 5px;
   transition-property: background-color;
@@ -1726,4 +1740,33 @@ input.reserved-seats ~ label svg {
 .buy_and_salary{
   position: absolute;
   bottom: 5px;
+}
+
+.modal-send{
+  color: #ffffff;
+  background-color: #d33d33;
+  height: fit-content;
+  font-size: 14px;
+  padding: 5px 40px;
+  border-radius: 5px;
+  margin-right: 0;
+  transition-property: background-color;
+  transition-duration: .2s;
+}
+
+.modal-dialog-centered{
+  width: 60%;
+  max-width: unset;
+}
+
+.title-and-btn input, .title-and-btn textarea{
+  border: 1px solid #000000;
+}
+
+.modal-send:hover{
+  color: rgba(255, 255, 255, .7);
+}
+
+.u-carousel-v3 .slick-center{
+  opacity: 1;
 }

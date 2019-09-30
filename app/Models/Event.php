@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Str;
 use URL;
 
@@ -107,6 +108,14 @@ class Event extends MyBaseModel
         return $this->hasMany(\App\Models\Ticket::class);
     }
 
+    public function starting_ticket(){
+        return $this->tickets()
+            ->select('id','ticket_date','event_id','price')
+            ->whereDate('ticket_date','>=',Carbon::now(\config('app.timezone')))
+            ->orderBy('ticket_date')
+            ->orderBy('price')
+            ->limit(2); // limit 1 returns null ???
+    }
     /**
      * The stats associated with the event.
      *
@@ -117,6 +126,9 @@ class Event extends MyBaseModel
         return $this->hasMany(\App\Models\EventStats::class);
     }
 
+    public function views(){
+        return $this->stats()->sum('views');
+    }
     /**
      * The affiliates associated with the event.
      *
@@ -288,7 +300,7 @@ class Event extends MyBaseModel
      */
     public function getCurrencySymbolAttribute()
     {
-        return $this->currency->symbol_left;
+        return $this->currency->symbol_left ?? '';
     }
 
     /**
@@ -451,6 +463,10 @@ ICSTemplate;
         return $icsTemplate;
     }
 
+    public function getSeansCount(){
+        $seans = $this->tickets()->distinct()->orderBy('ticket_date')->count();
+        return $seans != 0 ? $seans. ' seansa' : ''; //todo get from translate
+    }
     /**
      * @param integer $accessCodeId
      * @return bool
@@ -460,21 +476,14 @@ ICSTemplate;
         return (is_null($this->access_codes()->where('id', $accessCodeId)->first()) === false);
     }
 
-
-    public function scopeCinema($query){
-        return $query->where('event_image_position','cinema');
-    }
-
-    public function scopeTheatre($query){
-        return $query->where('event_image_position','theatre');
-    }
-
-    public function scopeMusical($query){
-        return $query->where('event_image_position','musical');
-    }
-
     public function scopeOnLive($query){
-        $query->whereDate('end_date','>',Carbon::now('Asia/Ashgabat'));
-        return $query->where('is_live',1);
+        return$query->whereDate('end_date','>=',Carbon::now(\config('app.timezone')))
+            ->where('is_live',1)
+            ->withCount(['images as image_url' => function($q){
+                $q->select(DB::raw("image_path as imgurl"))
+                    ->orderBy('created_at','desc')
+                    ->limit(1);
+            }] );
     }
+
 }
