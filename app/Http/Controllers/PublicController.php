@@ -125,10 +125,6 @@ class PublicController extends Controller
             ]);
     }
 
-    public function showAddEventForm(){
-        return view('Bilettm.Public.AddEventForm');
-    }
-
     public function postAddEvent(AddEventRequest $request){
 
         $addEvent = EventRequest::create([
