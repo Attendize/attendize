@@ -3,10 +3,12 @@
         <img class="d-flex align-items-end" src="{{asset($event->image_url ?? '#')}}">
     </div>
     <div class="u-block-hover__additional--partially-slide-up h-100 text-center g-z-index-1 mt-auto" style="background-image: url({{asset('assets/images/overlay/1.svg')}})">
-        <div class="overlay-details">
-            <h2 class="title" style="text-transform: capitalize !important;">{{$event->title}}</h2>
-            <h4 class="date">В кино с {{$event->start_date->format('d M')}} </h4>
+        <div class="overlay-details smalll">
+            <h2 class="title">{{$event->title}}</h2>
+            <h4 class="date">В кино с {{$event->start_date->formatLocalized('%d %B')}} </h4>
+            @if(isset($size))
             <p class="description">{!! Markdown::parse($event->description) !!}</p>
+            @endif
             <div class="overlay-details-bottom-part">
                 <a href="" class="share">
                     <svg class="Shape" viewBox="0 0 30.504 33.893" fill="#ffffff" width="35px">

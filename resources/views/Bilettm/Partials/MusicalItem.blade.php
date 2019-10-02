@@ -1,4 +1,3 @@
-<div class="col-3">
     <article class="u-block-hover">
         <div class="g-bg-cover">
             <img class="d-flex align-items-end" src="{{asset($event->image_url ?? '#')}}" style="border-radius: 5px">
@@ -30,4 +29,3 @@
             </div>
         </div>
     </article>
-</div>

@@ -34,7 +34,7 @@ if(!function_exists('category_menu')){
      */
     function category_menu(){
 
-        return \App\Models\Category::main()->select('id','title_tm','title_ru')->get();
+        return \App\Models\Category::main()->select('id','title_tk','title_ru')->get();
 //        $categories = main_categories();
 //        if(count($categories)>6){
 //            //todo implement top category menu
@@ -60,32 +60,5 @@ if(!function_exists('organisers')){
             return \App\Models\Organiser::all();
         else
             return \Illuminate\Support\Facades\Auth::user()->account->organisers;
-    }
-}
-if ( ! function_exists('sanitise')) {
-    /**
-     * @param string $input
-     * @return string
-     */
-    function sanitise($input)
-    {
-        $clear = clean($input); // Package to remove code "mews/purifier"
-        $clear = strip_tags($clear);
-        $clear = html_entity_decode($clear);
-        $clear = urldecode($clear);
-        $clear = preg_replace('~[\r\n\t]+~', ' ', trim($clear));
-        $clear = preg_replace('/ +/', ' ', $clear);
-        return $clear;
-    }
-
-    /**
-     * @param string $input
-     * @return string
-     */
-    function clean_whitespace($input)
-    {
-        $clear = preg_replace('~[\r\n\t]+~', ' ', trim($input));
-        $clear = preg_replace('/ +/', ' ', $clear);
-        return $clear;
     }
 }

@@ -64,7 +64,7 @@ return [
     'default_currency'           => 2, #Euro
     'default_date_picker_format' => env('DEFAULT_DATEPICKER_FORMAT', 'yyyy-MM-dd HH:mm'),
     'default_date_picker_seperator' => env('DEFAULT_DATEPICKER_SEPERATOR', '-'),
-    'default_datetime_format'    => env('DEFAULT_DATETIME_FORMAT', 'Y-m-d H:i'),
+    'default_datetime_format'    => env('DEFAULT_DATETIME_FORMAT', 'd-m-Y H:i'),
     'default_query_cache'        => 120, #Minutes
     'default_locale'             => 'en',
     'default_payment_gateway'    => 1, #Stripe=1 Paypal=2 BitPay=3 MIGS=4

@@ -118,10 +118,14 @@ Route::group(
             'as'   => 'showCategoryEventsPage',
             'uses' => 'PublicController@showCategoryEvents',
         ]);
+        Route::get('/sub/{cat_id}/{cat_slug?}', [
+            'as'   => 'showSubCategoryEventsPage',
+            'uses' => 'PublicController@showEvents',
+        ]);
 
         Route::post('/{cat_id}/{cat_slug?}', [
             'as'   => 'postEventsPage',
-            'uses' => 'PublicController@showEvents',
+            'uses' => 'PublicController@showCategoryEvents',
         ]);
     });
     Route::group(['prefix' => 'e'], function () {

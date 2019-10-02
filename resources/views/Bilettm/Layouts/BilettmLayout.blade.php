@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{asset('vendor/icon-awesome/css/font-awesome.min.css')}}">
 
     @yield('after_styles')
-    @stack('after_styles')
+
 
     <!-- CSS Unify Theme -->
     <link rel="stylesheet" href="{{asset('assets/stylesheet/styles.e-commerce.css')}}">
@@ -24,6 +24,7 @@
     <!--  KMB Custom css  -->
     <link rel="stylesheet" href='{{asset("assets/stylesheet/custom.css")}}'>
     <link rel="stylesheet" href='{{asset("assets/stylesheet/custom_new.css")}}'>
+    @stack('after_styles')
 
 </head>
 
@@ -39,6 +40,7 @@
 <main>
     @include('Bilettm.Partials.PublicHeader')
     @yield('content')
+    @stack('after_content')
     @include('Bilettm.Partials.PublicFooter')
 </main>
 <!-- JS Global Compulsory -->

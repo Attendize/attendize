@@ -34,7 +34,7 @@ class Category extends \Illuminate\Database\Eloquent\Model{
      * @var bool $softDelete
      */
     protected $softDelete = false;
-    protected $fillable = ['title_tm','title_ru','view_type','lft','rgt','parent_id','depth'];
+    protected $fillable = ['title_tk','title_ru','view_type','lft','rgt','parent_id','depth'];
 
     /**
      * Get the url of the event.
@@ -43,7 +43,14 @@ class Category extends \Illuminate\Database\Eloquent\Model{
      */
     public function getUrlAttribute()
     {
-        return route("showCategoryEventsPage", ["cat_id"=>$this->id, "cat_slug"=>Str::slug($this->title)]);
+//        switch ($this->view_type){
+//            case 'concert' : $rout_name = "showSubCategoryEventsPage";
+//                break;
+//            default : $rout_name = "showCategoryEventsPage";
+//                break;
+//        }
+        $rout_name = "showCategoryEventsPage";
+        return route($rout_name, ["cat_id"=>$this->id, "cat_slug"=>Str::slug($this->title)]);
         //return URL::to('/') . '/e/' . $this->id . '/' . Str::slug($this->title);
     }
 
@@ -69,7 +76,7 @@ class Category extends \Illuminate\Database\Eloquent\Model{
 
     public function scopeCategoryLiveEvents($query,$limit){
 //        dd($this->view_type);
-        return $query->select('id','title_tm','title_ru','lft')
+        return $query->select('id','title_tk','title_ru','lft')
             ->orderBy('lft')
             ->with(['events' => function($q) use($limit){
             $q->select('id','title','description','category_id','sub_category_id','start_date')
@@ -88,7 +95,7 @@ class Category extends \Illuminate\Database\Eloquent\Model{
 
     public function children(){
         return $this->hasMany(Category::class,'parent_id')
-            ->select('id','title_ru','title_tm','parent_id','lft')
+            ->select('id','title_ru','title_tk','parent_id','lft')
             ->orderBy('lft');
     }
     public function scopeMain($query){
@@ -111,9 +118,8 @@ class Category extends \Illuminate\Database\Eloquent\Model{
                ->with('starting_ticket')
                ->withCount(['stats as views' => function($q){
                    $q->select(DB::raw("SUM(views) as v"));}])
-               ->onLive();//event scope onLive get only live events
-            if($date)
-                $query->whereDate('end_date','>=',Carbon::parse($date));
+               ->onLive($date);//event scope onLive get only live events
+
 
             if($popular)
                 $query->orderBy('views','desc');

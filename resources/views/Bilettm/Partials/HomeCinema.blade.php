@@ -15,9 +15,9 @@
                     </div>
                     <div class="col-6" style="padding: 0">
                         <div class="row">
-                            @foreach($cinema->events->slice(1,4) as $cinemaEvent)
+                            @foreach($cinema->events->slice(1,4) as $event)
                             <div class="col-6 single-item-6">
-                                @include('Bilettm.Partials.CinemaItem',['event'=>$cinemaEvent])
+                                @include('Bilettm.Partials.CinemaItem',['event'=>$event])
 
                             </div>
                             @endforeach
@@ -29,9 +29,9 @@
             @if($cinema->count()>4)
                 <div class="slider-slider">
                     <div class="row">
-                        @foreach($cinema->events->slice(5) as $cinemaEvent)
+                        @foreach($cinema->events->slice(5) as $event)
                             <div class="col-6 single-item-6">
-                                @include('Bilettm.Partials.CinemaItem',['event'=>$cinemaEvent])
+                                @include('Bilettm.Partials.CinemaItem',['event'=>$event])
                             </div>
                         @endforeach
                     </div>

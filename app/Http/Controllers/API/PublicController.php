@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class PublicController extends Controller
 {
     public function getCategories($parent_id = false){
-        $categories = Category::select('title_tm','title_ru','id','parent_id');
+        $categories = Category::select('title_tk','title_ru','id','parent_id');
 
         if($parent_id)
             $categories->children($parent_id);

@@ -49,7 +49,7 @@ class PublicController extends Controller
         //$cat_id = $request->get('cat_id');
 
         $e_query = Event::onLive();
-        $nav_query = Category::select('id','title_tm','title_ru','parent_id')
+        $nav_query = Category::select('id','title_tk','title_ru','parent_id')
             ->orderBy('lft','asc');
         $category = null;
         if(!empty($cat_id)){
@@ -85,13 +85,16 @@ class PublicController extends Controller
     public function showCategoryEvents($cat_id, Request $request){
         $date = $request->get('date');
         $popular = $request->get('popular');
-
-        $category = Category::select('id','title_tm','title_ru','view_type','events_limit','parent_id')
+//        setlocale(LC_TIME, 'tk');
+//        Carbon::setLocale('tk');
+//        dd(Carbon::parse('2019-01-01',config('app.timezone')) ->formatLocalized('%d %B'));
+//        Carbon::
+        $category = Category::select('id','title_tk','title_ru','view_type','events_limit','parent_id')
             ->findOrFail($cat_id);
 
-        if($category->parent_id>0){
+        if($category->parent_id >0 || $category->view_type === 'concert'){
             $events = $category->cat_events()
-                ->onLive()
+                ->onLive($date)
                 ->orderBy($popular ? 'start_date' : 'views')
                 ->get();
             return view("Bilettm.EventsList.subCategoryList")->with([
@@ -102,11 +105,11 @@ class PublicController extends Controller
         else{
             $subCats = $category->children()
                 ->withLiveEvents($date,$category->events_limit,$popular)
-                ->get();
-
-//        $events = $e_query->with('images')->paginate(5);
-//        dd($subCats->first()->cat_events);
-            return view("Bilettm.EventsList.".$category->view_type)->with([
+                ->whereHas('cat_events',function ($query) use($date){
+                    $query->onLive($date);
+                })->get();
+//dd($subCats);
+            return view("Bilettm.Layouts.EventsPage")->with([
                 'sub_cats' => $subCats,
                 'category' => $category,
             ]);
