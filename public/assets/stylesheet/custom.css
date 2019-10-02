@@ -929,7 +929,7 @@ a.add-event:hover {
     color: #7f7f7f; }
 
 .movie-items-group {
-  margin-top: 50px; }
+  margin-top: 0px; }
   .movie-items-group .tab-content .container {
     padding: 0 !important; }
     .movie-items-group .tab-content .container .row {
@@ -1769,4 +1769,55 @@ input.reserved-seats ~ label svg {
 
 .u-carousel-v3 .slick-center{
   opacity: 1;
+}
+
+.category-filter li a{
+  padding-left: 0;
+  padding-right: 30px;
+}
+
+.category-filter li a.active{
+  background-color: #ffffff !important;
+}
+
+.calendar-form{
+    padding-top: 6px;
+}
+
+.calendar-form .wrapper{
+    margin-left: 0;
+}
+
+.calendar-form .gj-datepicker{
+  width: 200px;
+  margin: 0 10px;
+}
+
+.calendar-form #datepicker{
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.calendar-form .input-group-append > button{
+    border: none;
+    width: auto;
+    color: #000000;
+    background-color: unset;
+    cursor: pointer;
+}
+
+.calendar-form .input-group-append > button:hover{
+    color: #000000;
+}
+
+.calendar-form .input-group-append > button:focus{
+    color: #000000;
+    background-color: unset;
+    border: none;
+    outline: none;
+}
+
+.calendar-form td.selected{
+    background-color: red;
 }

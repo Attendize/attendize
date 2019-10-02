@@ -2,7 +2,7 @@
 <section class="page-breadcrumbs">
     <div class="container">
         <div class="row">
-            <ul>
+            <ul style="padding-left: 15px">
                 @foreach ($breadcrumbs as $breadcrumb)
                     @if ($breadcrumb->url && !$loop->last)
                         <li>
