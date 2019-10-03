@@ -110,21 +110,15 @@ class Category extends \Illuminate\Database\Eloquent\Model{
         return $query->where('parent_id',$parent_id)->orderBy('lft','asc');
     }
 
-    public function scopeWithLiveEvents($query, $date = false, $popular = true){
-        $limit = 8;
-        return $query->with(['cat_events' => function($query) use ($date, $limit, $popular) {
+    public function scopeWithLiveEvents($query, $orderBy, $start_date = null,$end_date = null, $limit = 8 ){
+        return $query->with(['cat_events' => function($query) use ($start_date, $end_date, $limit, $orderBy) {
             $query->select('id','title','description','category_id','sub_category_id','start_date')
                ->limit($limit)
                ->with('starting_ticket')
                ->withCount(['stats as views' => function($q){
                    $q->select(DB::raw("SUM(views) as v"));}])
-               ->onLive($date);//event scope onLive get only live events
-
-
-            if($popular)
-                $query->orderBy('views','desc');
-            else
-                $query->orderBy('start_date');
+               ->onLive($start_date, $end_date)//event scope onLive get only live events
+               ->orderBy($orderBy['field'],$orderBy['order']);
         }]);
 
     }

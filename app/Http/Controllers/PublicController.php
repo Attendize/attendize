@@ -44,47 +44,30 @@ class PublicController extends Controller
         ]);
     }
 
-    public function showEvents($cat_id = null, Request $request){
-        $date = $request->get('date');
-        //$cat_id = $request->get('cat_id');
-
-        $e_query = Event::onLive();
-        $nav_query = Category::select('id','title_tk','title_ru','parent_id')
-            ->orderBy('lft','asc');
-        $category = null;
-        if(!empty($cat_id)){
-            $category = Category::findOrFail($cat_id);
-
-            if($category->parent_id > 0){
-                $e_query->where('sub_category_id',$category->id);
-                $nav_query->where('parent_id',$category->parent_id);
-            }
-            else{
-                $e_query->where('category_id',$category->id);
-                $nav_query->where('parent_id',$category->id);
-            }
-
-        }else{
-            $nav_query->main();
-        }
-
-        if(!empty($date)){
-            $e_query->whereDate('start_date','>=',Carbon::parse($date));
-        }
-
-        $events = $e_query->with('images')->paginate(5);
-        $navigation = $nav_query->get();
-//        dd($events);
-        return view('Bilettm.Public.EventsPage')->with([
-            'events' => $events,
-            'category' => $category,
-            'navigation' => $navigation
-        ]);
-    }
-
     public function showCategoryEvents($cat_id, Request $request){
         $date = $request->get('date');
-        $popular = $request->get('popular');
+        $sort = $request->get('sort');
+        $filter =$request->get('filter');//today,tomorrow,week,month,date
+
+        if($sort == 'new')
+            $orderBy = ['field'=>'created_at','order'=>'desc'];
+        if ($sort =='pop')
+            $orderBy = ['field'=>'views','order'=>'desc'];
+        else
+        {
+            $orderBy =['field'=>'start_date','order'=>'asc'];
+            $sort = 'start_date';
+        }
+
+        switch ($filter){
+            case 'today'    : $date_start = Carbon::now(); $date_end = $date_start->endOfDay(); break;
+            case 'tomorrow' : $date_start = Carbon::tomorrow(); $date_end = $date_start->endOfDay();break;
+            case 'week'     : $date_start = Carbon::now(); $date_end = $date_start->endOfWeek(); break;
+            case 'month'    : $date_start = Carbon::now(); $date_end = $date_start->endOfMonth(); break;
+            case 'date'     : $date_start = Carbon::parse($date); $date_end = $date_start->endOfDay(); break;
+            default : $date_start = null; $date_end = null;
+        }
+//        dd(url('path'));
 //        setlocale(LC_TIME, 'tk');
 //        Carbon::setLocale('tk');
 //        dd(Carbon::parse('2019-01-01',config('app.timezone')) ->formatLocalized('%d %B'));
@@ -92,27 +75,27 @@ class PublicController extends Controller
         $category = Category::select('id','title_tk','title_ru','view_type','events_limit','parent_id')
             ->findOrFail($cat_id);
 
+        $data = ['sort' => $sort, 'category' => $category, 'filter' => $filter];
+
         if($category->parent_id >0 || $category->view_type === 'concert'){
             $events = $category->cat_events()
-                ->onLive($date)
-                ->orderBy($popular ? 'start_date' : 'views')
+                ->onLive($date_start,$date_end)
+                ->orderBy($orderBy)
                 ->get();
-            return view("Bilettm.EventsList.subCategoryList")->with([
-                'category' => $category,
-                'events' => $events
-            ]);
+            $data['events'] = $events;
+
+            return view("Bilettm.Public.CategoryEventsPage")->with($data);
         }
         else{
             $subCats = $category->children()
-                ->withLiveEvents($date,$category->events_limit,$popular)
-                ->whereHas('cat_events',function ($query) use($date){
-                    $query->onLive($date);
+                ->withLiveEvents($orderBy, $date_start, $date_end, $category->events_limit)
+                ->whereHas('cat_events',
+                    function ($query) use($date_start, $date_end){
+                        $query->onLive($date_start, $date_end);
                 })->get();
-//dd($subCats);
-            return view("Bilettm.Layouts.EventsPage")->with([
-                'sub_cats' => $subCats,
-                'category' => $category,
-            ]);
+            $data['sub_cats'] = $subCats;
+
+            return view("Bilettm.Public.EventsPage")->with($data);
         }
     }
 

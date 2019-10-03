@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\EventAccessCodes;
 use App\Models\EventStats;
 use Auth;
+use Carbon\Carbon;
 use Cookie;
 use Illuminate\Http\Request;
 use Mail;
@@ -33,6 +34,7 @@ class EventViewController extends Controller
         }
 
         $tickets = $event->tickets()->where('is_hidden', false)
+            ->whereDate('ticket_date','>=',Carbon::now(config('app.timezone')))
             ->orderBy('sort_order', 'asc')->get();
 
         $ticket_dates = array();

@@ -476,10 +476,15 @@ ICSTemplate;
         return (is_null($this->access_codes()->where('id', $accessCodeId)->first()) === false);
     }
 
-    public function scopeOnLive($query, $date = null){
+    public function scopeOnLive($query, $start_date = null, $end_date = null){
         //if date is null carbon creates now date instance
-        return $query->whereDate('end_date','>=',Carbon::parse($date,config('app.timezone')))
-            ->where('is_live',1)
+        if(isset($start_date) && isset($end_date))
+            $query->whereDate('start_date','<=',$start_date)
+                ->whereDate('end_date','>=',$end_date);
+        else
+            $query->whereDate('end_date','>=',Carbon::now(config('app.timezone')));
+
+        return $query->where('is_live',1)
             ->withCount(['images as image_url' => function($q){
                 $q->select(DB::raw("image_path as imgurl"))
                     ->orderBy('created_at','desc')
