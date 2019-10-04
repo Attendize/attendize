@@ -1,4 +1,4 @@
-@if(!empty($theatre->events))
+@if(!empty($theatre->events) && $theatre->events->count()>0)
 <section id="teator " class="container teator">
     <div class="tab-header d-flex justify-content-between col-12">
         <h2 class="font-weight-bold">{{$theatre->title}}</h2>

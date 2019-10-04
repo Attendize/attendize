@@ -34,7 +34,7 @@ class Category extends \Illuminate\Database\Eloquent\Model{
      * @var bool $softDelete
      */
     protected $softDelete = false;
-    protected $fillable = ['title_tk','title_ru','view_type','lft','rgt','parent_id','depth'];
+    protected $fillable = ['title_tk','title_ru','view_type','lft','rgt','parent_id','depth','events_limit'];
 
     /**
      * Get the url of the event.
