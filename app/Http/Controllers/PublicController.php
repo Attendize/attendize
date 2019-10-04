@@ -22,6 +22,7 @@ use Carbon\Carbon;
 class PublicController extends Controller
 {
     public function showHomePage(){
+
         $cinema = Category::where('view_type','cinema')
             ->categoryLiveEvents(21)
             ->first();
