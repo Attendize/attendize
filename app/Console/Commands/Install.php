@@ -94,7 +94,7 @@ class Install extends Command
                 $user_data['first_name'] = $fname;
                 $user_data['last_name'] = $lname;
 
-                $user_data['password'] = Hash::make($password);
+                $user_data['password'] = bcrypt($password);
                 $user_data['account_id'] = $account->id;
                 $user_data['is_parent'] = 1;
                 $user_data['is_admin'] = 1;
