@@ -13,7 +13,7 @@ class AddGatewayIdAccountsTable extends Migration
     public function up()
     {
         Schema::table('accounts', function (Blueprint $table) {
-            $table->unsignedInteger('payment_gateway_id')->default(config('attendize.payment_gateway_stripe'));
+            $table->unsignedInteger('payment_gateway_id')->default(config('attendize.payment_gateway_altyn_asyr'));
             $table->foreign('payment_gateway_id')->references('id')->on('payment_gateways');
         });
     }
