@@ -121,7 +121,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function ($t) {
 
             $t->increments('id');
-            $t->unsignedInteger('account_id')->index()->default(0);
+            $t->unsignedInteger('account_id')->index()->default(0)->nullable();
             $t->nullableTimestamps();
             $t->softDeletes();
 
