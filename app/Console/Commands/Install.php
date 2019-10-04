@@ -97,6 +97,7 @@ class Install extends Command
                 $user_data['password'] = Hash::make($password);
                 $user_data['account_id'] = $account->id;
                 $user_data['is_parent'] = 1;
+                $user_data['is_admin'] = 1;
                 $user_data['is_registered'] = 1;
                 $user = User::create($user_data);
 
