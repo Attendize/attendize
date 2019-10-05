@@ -49,9 +49,21 @@ class Category extends \Illuminate\Database\Eloquent\Model{
 //            default : $rout_name = "showCategoryEventsPage";
 //                break;
 //        }
-        $rout_name = "showCategoryEventsPage";
+        if($this->parent_id > 0)
+            $rout_name = 'showSubCategoryEventsPage';
+        else
+            $rout_name = "showCategoryEventsPage";
+
         return route($rout_name, ["cat_id"=>$this->id, "cat_slug"=>Str::slug($this->title)]);
         //return URL::to('/') . '/e/' . $this->id . '/' . Str::slug($this->title);
+    }
+
+    public function customUrl($qs = array()){
+        $url = $this->url;
+        foreach($qs as $key => $value){
+            $qs[$key] = sprintf('%s=%s',$key, urlencode($value));
+        }
+        return sprintf('%s?%s', $url, implode('&', $qs));
     }
 
     public function getTitleAttribute(){

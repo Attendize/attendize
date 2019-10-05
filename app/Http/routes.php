@@ -120,7 +120,7 @@ Route::group(
         ]);
         Route::get('/sub/{cat_id}/{cat_slug?}', [
             'as'   => 'showSubCategoryEventsPage',
-            'uses' => 'PublicController@showEvents',
+            'uses' => 'PublicController@showSubCategoryEvents',
         ]);
 
         Route::post('/{cat_id}/{cat_slug?}', [

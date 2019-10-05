@@ -8,7 +8,8 @@
         </div>
     </div>
     <div class="">
-        <form action="" class="row w-100 m-auto">
+        <form action="{{route('add_event')}}" class="row w-100 m-auto" method="post">
+            @csrf
             <div class="form-group col-6">
                 <label for="">First Name*</label>
                 <input type="text" placeholder="Orazgeldi" class="form-control">
@@ -30,6 +31,6 @@
                 <textarea name="" id="" cols="30" rows="5" placeholder="Message" class="form-control"></textarea>
             </div>
         </form>
-        <p style="padding: 0 5px; color: #000000; margin: auto; font-size: 13px; font-weight: bold">*Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam ea exercitationem rerum tempore voluptate. Cumque distinctio est in, itaque laboriosam magni natus nesciunt nihil officia placeat quia reprehenderit sunt voluptates.</p>
+        <p style="padding: 0 5px; color: #000000; margin: auto; font-size: 13px; font-weight: bold">* Gechirmek isleyan charaniz  barada maglumatlary doldyryp bize ugradyn! maglumatlarynyzy seljerip siz bilen habarlasharys.</p>
     </div>
 </div>

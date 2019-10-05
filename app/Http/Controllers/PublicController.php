@@ -45,30 +45,9 @@ class PublicController extends Controller
         ]);
     }
 
-    public function showCategoryEvents($cat_id, Request $request){
-        $date = $request->get('date');
-        $sort = $request->get('sort');
-        $filter =$request->get('filter');//today,tomorrow,week,month,date
+    public function showCategoryEvents($cat_id){
 
-        if($sort == 'new')
-            $orderBy = ['field'=>'created_at','order'=>'desc'];
-        if ($sort =='pop')
-            $orderBy = ['field'=>'views','order'=>'desc'];
-        else
-        {
-            $orderBy =['field'=>'start_date','order'=>'asc'];
-            $sort = 'start_date';
-        }
-
-        switch ($filter){
-            case 'today'    : $date_start = Carbon::now(); $date_end = $date_start->endOfDay(); break;
-            case 'tomorrow' : $date_start = Carbon::tomorrow(); $date_end = $date_start->endOfDay();break;
-            case 'week'     : $date_start = Carbon::now(); $date_end = $date_start->endOfWeek(); break;
-            case 'month'    : $date_start = Carbon::now(); $date_end = $date_start->endOfMonth(); break;
-            case 'date'     : $date_start = Carbon::parse($date); $date_end = $date_start->endOfDay(); break;
-            default : $date_start = null; $date_end = null;
-        }
-//        dd(url('path'));
+//        dd(Carbon::parse('aasddwawda') ?? null);/
 //        setlocale(LC_TIME, 'tk');
 //        Carbon::setLocale('tk');
 //        dd(Carbon::parse('2019-01-01',config('app.timezone')) ->formatLocalized('%d %B'));
@@ -76,28 +55,52 @@ class PublicController extends Controller
         $category = Category::select('id','title_tk','title_ru','view_type','events_limit','parent_id')
             ->findOrFail($cat_id);
 
-        $data = ['sort' => $sort, 'category' => $category, 'filter' => $filter];
-
-        if($category->parent_id >0 || $category->view_type === 'concert'){
-            $events = $category->cat_events()
-                ->onLive($date_start,$date_end)
-                ->orderBy($orderBy)
-                ->get();
-            $data['events'] = $events;
-
-            return view("Bilettm.Public.CategoryEventsPage")->with($data);
-        }
-        else{
-            $subCats = $category->children()
-                ->withLiveEvents($orderBy, $date_start, $date_end, $category->events_limit)
-                ->whereHas('cat_events',
-                    function ($query) use($date_start, $date_end){
-                        $query->onLive($date_start, $date_end);
+        [$order, $data] = $this->sorts_filters();
+        $data['category'] = $category;
+        $data['sub_cats'] = $category->children()
+            ->withLiveEvents($order, $data['start'], $data['end'], $category->events_limit)
+            ->whereHas('cat_events',
+                function ($query) use($data){
+                    $query->onLive($data['start'], $data['end']);
                 })->get();
-            $data['sub_cats'] = $subCats;
 
-            return view("Bilettm.Public.EventsPage")->with($data);
+
+        return view("Bilettm.Public.EventsPage")->with($data);
+    }
+
+    public function showSubCategoryEvents($cat_id){
+        $category = Category::select('id','title_tk','title_ru','view_type','events_limit','parent_id')
+            ->findOrFail($cat_id);
+
+        [$order, $data] = $this->sorts_filters();
+
+        $data['category'] = $category;
+
+        $data['events'] = $category->cat_events()
+            ->onLive($data['start'],$data['end'])
+            ->orderBy($order['field'],$order['order'])
+            ->get();
+
+        return view("Bilettm.Public.CategoryEventsPage")->with($data);
+    }
+
+    private function sorts_filters(){
+        $data['start'] = \request()->get('start') ?? Carbon::today();
+        $data['end'] = \request()->get('end');
+        $sort = \request()->get('sort');
+
+        if($sort == 'new')
+            $orderBy = ['field'=>'created_at','order'=>'desc'];
+        if ($sort =='popular')
+            $orderBy = ['field'=>'views','order'=>'desc'];
+        else
+        {
+            $orderBy =['field'=>'start_date','order'=>'asc'];
+            $sort = 'start_date';
         }
+        $data['sort'] = $sort;
+        //todo check date formats;
+        return [$orderBy, $data];
     }
 
     public function search(SearchRequest $request){
