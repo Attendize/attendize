@@ -1,9 +1,5 @@
 @extends('Bilettm.Layouts.BilettmLayout')
 
-@section('after_styles')
-    <link href="{{asset('vendor/gijgo/gijgo.min.css')}}" rel="stylesheet" type="text/css" />
-@endsection
-
 @section('content')
     {{\DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::render('category',$category)}}
     @include("Bilettm.Partials.FilterMenu")
@@ -15,8 +11,8 @@
                 <div class="row kinoteator tab-part">
                     <div class="tab-header d-flex justify-content-between col-12">
                         <h2  class="font-weight-bold">{{$cat->title}}</h2>
-                        <div style="height: 5px; position: absolute; bottom: 0px; width: 100px; background-color: rgba(211,61,51,1)"></div>
-                        <a class="red_button" href="{{$cat->url}}">Весь репертуар</a>
+                        <div style="height: 5px; position: absolute; bottom: 10px; width: 100px; background-color: rgba(211,61,51,1)"></div>
+                        <a class="red_button red-button" href="{{$cat->url}}">Весь репертуар</a>
                     </div>
                     <div class="tab-ozi col-12" style="margin-top: 10px">
 
@@ -63,16 +59,3 @@
     }
 </style>
 @endpush
-@section('after_scripts')
-
-    <script src="{{asset('vendor/gijgo/gijgo.min.js')}}" type="text/javascript"></script>
-    <script>
-        $('#datepicker').datepicker({
-            uiLibrary: 'bootstrap4',
-            icons: {
-                rightIcon: 'Дата <i class="fa fa-caret-down"></i>'
-            }
-        });
-    </script>
-
-@endsection

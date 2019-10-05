@@ -6,10 +6,10 @@
         <div class="container">
             <div class="row kinoteator tab-part">
                 <div class="tab-header d-flex justify-content-between col-12">
-                    <h2>{{$category->title}}</h2>
-                    <div style="height: 5px; margin-left: 5px; position: absolute; bottom: 10px; width: 100px; background-color: rgba(211,61,51,1)"></div>
+                    <h2 class="font-weight-bold">{{$category->title}}</h2>
+                    <div style="height: 5px; margin-left: 5px; position: absolute; bottom: 0; width: 100px; background-color: rgba(211,61,51,1)"></div>
                 </div>
-                <div class="tab-ozi col-12">
+                <div class="tab-ozi col-12 pt-3">
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="container">

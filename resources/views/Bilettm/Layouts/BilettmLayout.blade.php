@@ -58,7 +58,7 @@
     $('document').ready(function(){
         $('#top-header-submit').click(function(){
             $('#main-header-search-form').submit();
-        })
+        });
     });
 </script>
 @if(session()->get('message'))
