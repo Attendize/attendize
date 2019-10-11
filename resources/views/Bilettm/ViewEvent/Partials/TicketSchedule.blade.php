@@ -11,10 +11,10 @@
 
         <h4 class="date-small-title">Дата проведения</h4>
         <div class="date-box-wrap">
-            <ul class="nav nav-pills">
+            <ul class="nav nav-pills details-page">
 
                 @foreach($ticket_dates as $date =>$ticket)
-                    <li><a class="active" href="#{{$date}}">{{$date}}</a></li>
+                    <li><a class="tablinks" style="cursor: pointer" onclick="openContent(event, '{{$date}}')">{{$date}}</a></li>
                 @endforeach
 
             </ul>
@@ -26,7 +26,7 @@
 
                 <div class="tab-content" id="myTabContent">
                     @foreach($ticket_dates as $date =>$tickets)
-                        <div class="tab-pane fade show active" id="{{$date}}" role="tabpanel" aria-labelledby="{{$date}}-tab">
+                        <div class="tab-pane fade show active tabcontent" id="{{$date}}" role="tabpanel" aria-labelledby="{{$date}}-tab">
                             <div class="tickets_table_wrap">
                                 {!! Form::open(['url' => route('postValidateTickets', ['event_id' => $event->id]), 'class' => 'ajax']) !!}
                                 <table class="table">
@@ -95,12 +95,12 @@
                                     @endforeach
 
                                     <tr>
-                                        <td colspan="3" style="text-align: center">
+                                        <td colspan="4" style="text-align: center">
                                             @lang("Public_ViewEvent.below_tickets")
                                         </td>
                                     </tr>
                                     <tr class="checkout">
-                                        <td colspan="3">
+                                        <td colspan="4">
                                             @if(!$is_free_event)
                                                 <div class="hidden-xs pull-left">
                                                     @if($event->enable_offline_payments)
@@ -131,3 +131,21 @@
         @endif
     @endif
 </div>
+
+@section('after_scripts')
+    <script>
+        function openContent(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+@endsection

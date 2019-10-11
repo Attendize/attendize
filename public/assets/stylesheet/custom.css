@@ -330,13 +330,22 @@ article.u-block-hover img {
 #kinoteator-tab1 .owl-next, .movie-items-group .owl-next {
   background-image: url(../images/icons/right.png);
   background-size: 56px !important;
+  transition-property: opacity;
+  transition-duration: .3s;
   width: 56px;
   border: none !important; }
 #kinoteator-tab1 .owl-prev, .movie-items-group .owl-prev {
   background-image: url(../images/icons/left.png);
   background-size: 56px !important;
+  transition-property: opacity;
+  transition-duration: .3s;
   width: 56px;
   border: none !important; }
+
+#kinoteator-tab1 .owl-prev:hover, .movie-items-group .owl-prev:hover, #kinoteator-tab1 .owl-next:hover, .movie-items-group .owl-next:hover{
+  opacity: .5;
+}
+
 #kinoteator-tab1 .owl-prev:hover, #kinoteator-tab1 .owl-next:hover, .movie-items-group .owl-prev:hover, .movie-items-group .owl-next:hover {
   border: 1px solid #7e7e7e; }
   #kinoteator-tab1 .owl-prev:hover span, #kinoteator-tab1 .owl-next:hover span, .movie-items-group .owl-prev:hover span, .movie-items-group .owl-next:hover span {
@@ -392,13 +401,20 @@ article.u-block-hover img {
 #konserty-tab1 .owl-next {
   background-image: url(../images/icons/w-right.png);
   background-size: 56px !important;
+  transition-property: opacity;
+  transition-duration: .3s;
   width: 56px;
   border: none !important; }
 #konserty-tab1 .owl-prev {
   background-image: url(../images/icons/w-left.png);
   background-size: 56px !important;
+  transition-property: opacity;
+  transition-duration: .3s;
   width: 56px;
   border: none !important; }
+#konserty-tab1 .owl-prev:hover, #konserty-tab1 .owl-next:hover{
+  opacity: .5;
+}
 #konserty-tab1 .owl-prev:hover, #konserty-tab1 .owl-next:hover {
   border: 1px solid rgba(255, 255, 255, 0.5); }
   #konserty-tab1 .owl-prev:hover span, #konserty-tab1 .owl-next:hover span {
@@ -509,10 +525,12 @@ img.d2-img {
     text-align: center; }
   .overlay-details h2.title {
     font-size: 40px;
+    font-weight: bold;
     line-height: 40px;
   margin-bottom: 20px;}
   .big-cinema-item-col6 .overlay-details h2.title {
     font-size: 60px;
+    font-weight: bold;
     line-height: 60px;
     margin-bottom: 20px;}
     @media only screen and (max-width: 1600px) {
@@ -702,11 +720,18 @@ img.d2-img {
   background-image: url(../images/icons/t-left.png) !important;
   background-color: transparent !important;
   background-repeat: no-repeat;
-  background-size: 20px; }
+  background-size: 20px;
+  transition-property: opacity;
+  transition-duration: .3s;}
   #carousel-09-1 .js-prev::before {
     content: unset;
     color: #ffffff;
     font-size: 40px; }
+
+#carousel-09-1 .js-prev:hover{
+  opacity: .7;
+}
+
 #carousel-09-1 .js-next {
   left: calc(100% - 46px) !important;
   top: 50% !important;
@@ -714,11 +739,18 @@ img.d2-img {
   background-image: url(../images/icons/t-right.png) !important;
   background-color: transparent !important;
   background-repeat: no-repeat;
-  background-size: 20px; }
+  background-size: 20px;
+  transition-property: opacity;
+  transition-duration: .3s;}
   #carousel-09-1 .js-next::before {
     content: unset;
     color: #ffffff;
     font-size: 40px; }
+
+#carousel-09-1 .js-next:hover{
+  opacity: .7;
+}
+
 #carousel-09-1 .js-slide a {
   margin-right: 0;
   position: relative !important; }
@@ -1820,4 +1852,102 @@ input.reserved-seats ~ label svg {
 
 .calendar-form td.selected{
     background-color: red;
+}
+
+.filter-menu a.dropdown-item{
+  text-align: center;
+  padding-right: 0;
+  transition-property: opacity;
+  transition-duration: .3s;
+}
+
+.filter-menu a.dropdown-item:last-child{
+  border-bottom: none;
+}
+
+.filter-menu a.dropdown-item:hover{
+  background-color: unset;
+  opacity: .7;
+  text-decoration: none;
+}
+
+.filter-menu{
+  padding: 10px;
+}
+
+.red_button:hover{
+  background-color: #db635b;
+  text-decoration: none;
+}
+
+.red_button:focus{
+  text-decoration: none;
+  background-color: #ff4159;
+}
+
+.breadcrumbs-ul li, .breadcrumbs-ul li a{
+  font-size: 16px !important;
+}
+
+.big-cinema-item-col6 .overlay-details p{
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.overlay-details-bottom-part a.share svg, .overlay-details-bottom-part a.like svg{
+  width: 20px;
+}
+
+.big-cinema-item-col6 .overlay-details-bottom-part a.share svg, .big-cinema-item-col6 .overlay-details-bottom-part a.like svg{
+  width: 40px;
+}
+
+.big-cinema-item-col6 .overlay-details .overlay-details-bottom-part span.cost{
+  font-size: 30px;
+}
+
+.it-detail p, .it-detail{
+  color: #000000;
+  font-size: 20px;
+}
+
+.nav.nav-pills.details-page .tablinks:hover{
+  color: #ffffff
+}
+
+.nav.nav-pills.details-page .tablinks.active{
+  color: #ffffff;
+  background-color: #d43d34;
+  border-color: #d43d34;
+}
+
+#myTabContent .tabcontent{
+  display: none;
+}
+
+.tickets_table_wrap tr.checkout input[type=submit]{
+  width: 100%;
+  color: #ffffff;
+  background-color: #d33d33;
+  height: fit-content;
+  font-size: 20px;
+  padding: 12px 60px;
+  border-radius: 5px;
+  margin-right: 0;
+  transition-property: background-color;
+  transition-duration: .2s;
+  border: #d33d33;
+}
+
+.tickets_table_wrap tr.checkout input[type=submit]:hover{
+  background-color: #db635b;
+  text-decoration: none;
+}
+
+.tickets_table_wrap tr.checkout input[type=submit]:active{
+  background-color: #d33d33;
+}
+
+.tickets_table_wrap tr.checkout input[type=submit]:focus{
+  box-shadow: none !important;
 }

@@ -3,7 +3,7 @@
         <h4 class="font-weight-bold">Добавить событие</h4>
         <div style="height: 5px; position: absolute; bottom: 15px; width: 100px; background-color: rgba(211,61,51,1)"></div>
         <div class="">
-            <a class="modal-send" style="float: right" href="">Send</a>
+            <a class="modal-send red_button" style="float: right" href="">Send</a>
             <span style="float: right; font-size: 12px" class="text-right font-weight-bold">*Required field(s)</span>
         </div>
     </div>

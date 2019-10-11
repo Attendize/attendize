@@ -790,8 +790,8 @@ class EventCheckoutController extends Controller
             return view('Public.ViewEvent.Embedded.EventPageViewOrder', $data);
         }
 
-//        return view('Bilettm.ViewEvent.ViewOrderPage', $data);
-        return view('Public.ViewEvent.EventPageViewOrder', $data);
+        return view('Bilettm.ViewEvent.ViewOrderPage', $data);
+//        return view('Public.ViewEvent.EventPageViewOrder', $data);
     }
 
     /**

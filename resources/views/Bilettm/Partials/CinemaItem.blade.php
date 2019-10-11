@@ -3,7 +3,7 @@
         <img class="d-flex align-items-end" src="{{asset($event->image_url ?? '#')}}">
     </div>
     <div class="u-block-hover__additional--partially-slide-up h-100 text-center g-z-index-1 mt-auto" style="background-image: url({{asset('assets/images/overlay/1.svg')}})">
-        <div class="overlay-details smalll">
+        <div class="overlay-details">
             <h2 class="title">{{$event->title}}</h2>
             <h4 class="date">В кино с {{$event->start_date->formatLocalized('%d %B')}} </h4>
             @if(isset($size))

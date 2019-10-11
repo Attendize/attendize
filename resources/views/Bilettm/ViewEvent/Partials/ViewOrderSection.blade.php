@@ -13,7 +13,7 @@
             </h2>
         </div>
     </div>
-
+    {{--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab commodi consequatur dignissimos impedit officia omnis porro quas repellat rerum vitae.--}}
     <div class="row">
         <div class="col-md-12">
             <div class="content event_view_order">

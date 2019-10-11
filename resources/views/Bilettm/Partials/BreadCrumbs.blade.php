@@ -2,7 +2,7 @@
 <section class="page-breadcrumbs">
     <div class="container">
         <div class="row">
-            <ul style="padding-left: 15px">
+            <ul style="padding-left: 15px" class="breadcrumbs-ul">
                 @foreach ($breadcrumbs as $breadcrumb)
                     @if ($breadcrumb->url && !$loop->last)
                         <li>
@@ -12,7 +12,7 @@
                             <i class="fa fa-caret-right"></i>
                         </li>
                     @else
-                        <li class="page-name">
+                        <li class="page-name" style="color: #7f7f7f">
                             {{ $breadcrumb->title }}
                         </li>
                     @endif
