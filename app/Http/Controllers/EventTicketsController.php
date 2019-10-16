@@ -106,7 +106,7 @@ class EventTicketsController extends MyBaseController
         $ticket->max_per_person = $request->get('max_per_person');
         $ticket->description = strip_tags($request->get('description'));
         $ticket->is_hidden = $request->get('is_hidden') ? 1 : 0;
-
+        $ticket->account_id = auth()->user()->account_id;
         $ticket->save();
 
         // Attach the access codes to the ticket if it's hidden and the code ids have come from the front
