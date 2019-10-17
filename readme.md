@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="http://attendize.website/assets/images/logo-dark.png" alt="Attendize"/>
-  <img style='border: 1px solid #444;' src="https://www.attendize.com/images/screenshots/screen1.PNG" alt="Attendize"/>
+  <img src="http://attendise.website/assets/images/logo-dark.png" alt="Attendise"/>
+  <img style='border: 1px solid #444;' src="https://www.attendise.com/images/screenshots/screen1.PNG" alt="Attendise"/>
 </p>
 
 <h1>Attendise</h1>
@@ -9,15 +9,15 @@ Open-source ticket selling and event management platform
 </p>
 
 
-> Please report bugs here: https://github.com/Attendize/Attendize/issues. Detailed bug reports are more likely to be looked at. Simple creating an issue and saying "it doesn't work" is not useful. Providing some steps to reproduce your problem as well as details about your operating system, PHP version etc can help. <br />
+> Please report bugs here: https://github.com/Attendise/Attendise/issues. Detailed bug reports are more likely to be looked at. Simple creating an issue and saying "it doesn't work" is not useful. Providing some steps to reproduce your problem as well as details about your operating system, PHP version etc can help. <br />
 
-> Take a look http://www.attendize.com/troubleshooting.html and follow the http://www.attendize.com/getting_started.html guide to make sure you have configured attendize correctly.  
+> Take a look http://www.attendize.com/troubleshooting.html and follow the http://www.attendise.com/getting_started.html guide to make sure you have configured attendize correctly.  
 
 Documentation Website: http://www.attendize.com<br />
 Demo Event Page: http://attendize.website/e/799/attendize-test-event-w-special-guest-attendize<br />
 Demo Back-end Demo: http://attendize.website/signup<br />
 
-*Attendise* is an open-source event ticketing and event management application built using the Laravel PHP framework. Attendize was created to offer event organisers a simple solution to managing general admission events, without paying extortionate service fees.
+*Attendise* is an open-source event ticketing and event management application built using the Laravel PHP framework. Attendise was created to offer event organisers a simple solution to managing general admission events, without paying extortionate service fees.
 
 ### Current Features (v1.X.X)
 ---
