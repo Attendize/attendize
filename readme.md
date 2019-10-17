@@ -3,7 +3,7 @@
   <img style='border: 1px solid #444;' src="https://www.attendize.com/images/screenshots/screen1.PNG" alt="Attendize"/>
 </p>
 
-<h1>Attendize</h1>
+<h1>Attendise</h1>
 <p>
 Open-source ticket selling and event management platform
 </p>
@@ -17,7 +17,7 @@ Documentation Website: http://www.attendize.com<br />
 Demo Event Page: http://attendize.website/e/799/attendize-test-event-w-special-guest-attendize<br />
 Demo Back-end Demo: http://attendize.website/signup<br />
 
-*Attendize* is an open-source event ticketing and event management application built using the Laravel PHP framework. Attendize was created to offer event organisers a simple solution to managing general admission events, without paying extortionate service fees.
+*Attendise* is an open-source event ticketing and event management application built using the Laravel PHP framework. Attendize was created to offer event organisers a simple solution to managing general admission events, without paying extortionate service fees.
 
 ### Current Features (v1.X.X)
 ---
