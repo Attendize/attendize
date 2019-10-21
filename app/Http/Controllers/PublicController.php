@@ -86,7 +86,7 @@ class PublicController extends Controller
 
     private function sorts_filters(){
         $data['start'] = \request()->get('start') ?? Carbon::today();
-        $data['end'] = \request()->get('end');
+        $data['end'] = \request()->get('end')?? Carbon::today()->endOfCentury();
         $sort = \request()->get('sort');
 
         if($sort == 'new')

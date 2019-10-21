@@ -132,7 +132,7 @@
     @endif
 </div>
 
-@section('after_scripts')
+@push('after_scripts')
     <script>
         function openContent(evt, cityName) {
             var i, tabcontent, tablinks;
@@ -148,4 +148,4 @@
             evt.currentTarget.className += " active";
         }
     </script>
-@endsection
+@endpush
