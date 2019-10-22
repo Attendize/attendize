@@ -82,6 +82,17 @@ class Organiser extends MyBaseModel implements AuthenticatableContract
     }
 
     /**
+     * The valid active attendees associated with the organizer.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function validAttendees()
+    {
+        return $this->hasManyThrough(\App\Models\Attendee::class, \App\Models\Event::class)
+            ->where('is_cancelled', 0);
+    }
+
+    /**
      * Get the orders related to an organiser
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
