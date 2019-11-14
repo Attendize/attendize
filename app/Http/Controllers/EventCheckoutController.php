@@ -332,6 +332,13 @@ class EventCheckoutController extends Controller
             ]);
         }
 
+        $ticket_order = session()->get('ticket_order_' . $event_id);
+
+        $event = Event::findOrFail($event_id);
+
+        $order_requires_payment = $ticket_order['order_requires_payment'];
+
+        if($order_requires_payment){
         return response()->json([
             'status'      => 'success',
             'redirectUrl' => route('showEventPayment', [
@@ -339,6 +346,10 @@ class EventCheckoutController extends Controller
                     'is_embedded' => $this->is_embedded
                 ])
         ]);
+        }
+        else{
+            return $this->postCreateOrder($request, $event_id);
+        }
 
     }
 
