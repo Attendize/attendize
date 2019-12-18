@@ -10,16 +10,7 @@ use Log;
 
 class OrderCancel extends OrderRefundAbstract
 {
-    protected $order;
-    protected $attendees;
-    protected $currency;
-    protected $organiserAmount;
-    protected $refundedAmount;
-    protected $maximumRefundableAmount;
-    protected $organiserTaxRate;
-    protected $refundAmount;
-    protected $gateway;
-
+    
     public function __construct($order, $attendees)
     {
         $this->order = $order;
@@ -74,5 +65,5 @@ class OrderCancel extends OrderRefundAbstract
             }
         });
     }
-    
+
 }

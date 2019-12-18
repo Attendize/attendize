@@ -8,15 +8,6 @@ use Log;
 
 class OrderRefund extends OrderRefundAbstract
 {
-    protected $order;
-    protected $attendees;
-    protected $currency;
-    protected $organiserAmount;
-    protected $refundedAmount;
-    protected $maximumRefundableAmount;
-    protected $organiserTaxRate;
-    protected $refundAmount;
-    protected $gateway;
 
     public function __construct($order, $attendees)
     {

@@ -8,6 +8,16 @@ use Log;
 
 abstract class  OrderRefundAbstract
 {
+    protected $order;
+    protected $attendees;
+    protected $currency;
+    protected $organiserAmount;
+    protected $refundedAmount;
+    protected $maximumRefundableAmount;
+    protected $organiserTaxRate;
+    protected $refundAmount;
+    protected $gateway;
+
     protected function setRefundAmounts()
     {
         $this->currency = $this->order->getEventCurrency();
