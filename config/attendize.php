@@ -72,5 +72,6 @@ return [
     'cdn_url_static_assets' => '',
 
     'google_analytics_id' => env('GOOGLE_ANALYTICS_ID'),
-    'google_maps_geocoding_key' => env('GOOGLE_MAPS_GEOCODING_KEY')
+    'google_maps_geocoding_key' => env('GOOGLE_MAPS_GEOCODING_KEY'),
+    'google_maps_embed_key' => env('GOOGLE_MAPS_EMBED_KEY')
 ];
