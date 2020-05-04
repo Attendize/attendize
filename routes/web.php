@@ -522,6 +522,21 @@ Route::group(
 
             /*
              * -------
+             * Delete Event
+             * -------
+             */
+             /*Route::post('{event_id}/delete', [
+                 'as' => 'postDeleteEvent',
+                 'uses' => 'EventController@postDeleteEvent',
+                 ]);*/
+
+             Route::post('postDeleteEvent', [
+                 'as' => 'postDeleteEvent',
+                  'uses' => 'EventController@postDeleteEvent',
+             ]);
+            
+            /*
+             * -------
              * Customize Design etc.
              * -------
              */
