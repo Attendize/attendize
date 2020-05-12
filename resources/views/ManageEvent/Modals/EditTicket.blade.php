@@ -137,8 +137,12 @@
             <div class="modal-footer">
                 {!! Form::button(trans("basic.cancel"), ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}
                 {!! Form::submit(trans("ManageEvent.save_ticket"), ['class'=>"btn btn-success"]) !!}
+                {!! Form::close() !!}
+                {!! Form::model($ticket, ['url' => route('postDeleteTicket', ['ticket_id' => $ticket->id, 'event_id' => $event->id]), 'class' => 'ajax']) !!}
+                {!! Form::submit(trans("ManageEvent.delete_ticket"), ['class'=>"btn btn-warning pull-left"]) !!}
+                {!! Form::close() !!} 
             </div>
         </div><!-- /end modal content-->
-       {!! Form::close() !!}
+
     </div>
 </div>
