@@ -137,8 +137,61 @@
             <div class="modal-footer">
                 {!! Form::button(trans("basic.cancel"), ['class'=>"btn modal-close btn-danger",'data-dismiss'=>'modal']) !!}
                 {!! Form::submit(trans("ManageEvent.save_ticket"), ['class'=>"btn btn-success"]) !!}
+                {!! Form::close() !!}
+                <div class="delTkPreModal">
+                    {!! Form::open(array('url' => route('postDeleteTicket',['ticket_id' => $ticket->id, 'event_id' => $event->id]), 'class'=>'ajax','id'=>'delTicketPost'. $event->id)) !!}
+                      
+                      <button type="submit" class="btn btn-warning pull-left">Delete</button>
+                    {!! Form::close() !!}
+                </div>                                                        
             </div>
         </div><!-- /end modal content-->
-       {!! Form::close() !!}
+
     </div>
 </div>
+
+  <script>
+  (function(){
+      var confModal =
+  '    <div class="modal" role="dialog" id="delTkConfirmDialog">'+
+  '    <div class="modal-dialog modal-md">'+
+  '        <div class="modal-content">'+
+  '            <div class="modal-header">'+
+  '                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+  '                <h4 class="modal-title" id="myModalLabel">Are you sure you want to delete the ticket?</h4>'+
+  '            </div>'+
+  '            <div class="modal-footer">'+
+  '                <button type="button" class="btn btn-default" id="modal-btn-si1">Yes</button>'+
+  '                <button type="button" class="btn btn-primary" id="modal-btn-no2">No</button>'+
+  '            </div>'+
+  '        </div>'+
+  '    </div>'+
+  '</div>';
+      var modalConfirm = function(callback){
+          $(".delTkPreModal").on("click", function(e){
+              $('#delTkConfirmDialog').remove();
+              $('body').append(confModal);
+              e.stopPropagation();
+              e.preventDefault();
+              selectedDelTk = $(this).find('form').attr('id').split('delTicketPost')[1];
+              $("#delTkConfirmDialog").modal('show');
+              $("#modal-btn-si1").on("click", function(){
+                  callback(true);
+              });
+              $("#modal-btn-no2").on("click", function(){
+                  callback(false);
+              });
+          });
+      };
+      modalConfirm(function(confirm){
+          $("#delTkConfirmDialog").modal('hide');
+          if(confirm){
+              setTimeout(function(){
+                  $("#delTicketPost" + selectedDelTk).submit();
+              },200);
+          }else{
+              selectedDelTk = null;
+          }
+      });
+  })();
+  </script>

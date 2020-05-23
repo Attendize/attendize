@@ -9,6 +9,7 @@ use Validator;
 use App\Models\Event;
 use App\Models\Organiser;
 use App\Models\EventImage;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Spatie\GoogleCalendar\Event as GCEvent;
 
@@ -309,6 +310,31 @@ class EventController extends MyBaseController
             'redirectUrl' => '',
         ]);
     }
+
+        /**
+      * Delete an event
+      *
+      * @param Request $request
+      * @return \Illuminate\Http\JsonResponse
+      */
+     public function postDeleteEvent(Request $request) {
+         $evId = strip_tags($request->get('event_id'));
+         $event = Event::scope()->findOrFail($evId);
+         if($event->tickets()->count() <1 && $event->attendees()->count() <1){
+             $event->delete();
+              return response()->json([
+                         'status' => 'success',
+                     'message' => ['Event Successfully Deleted'],
+                     'redirectUrl' => ''
+             ]);
+         }
+         else{
+             return response()->json([
+                             'status' => 'success',
+                             'message' => ['Event can not be deleted because it has tickets or atendees.'],
+                 ]);
+         }
+     }
 
     /**
      * Upload event image

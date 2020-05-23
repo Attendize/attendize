@@ -17,6 +17,7 @@ return array (
   'customize' => 'Customize',
   'dashboard' => 'Dashboard',
   'days' => 'days',
+  'delete' => 'Delete',    
   'disable' => 'Disable',
   'disabled' => 'Disabled',
   'drag_to_reorder' => 'Drag to re-order',

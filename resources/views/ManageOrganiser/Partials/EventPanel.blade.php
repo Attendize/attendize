@@ -60,6 +60,58 @@
                     <i class="ico-cog"></i> @lang("basic.manage")
                 </a>
             </li>
+            <li class="delEvPreModal">
+                 {!! Form::open(array('url' => route('postDeleteEvent'), 'class'=>'ajax','id'=>'delEventPost'. $event->id)) !!}
+                     {!! Form::hidden('event_id',$event->id)  !!}
+                     <button type="submit" class="btn btn-link"><i class="ico-remove2"></i> Delete</button>
+                 {!! Form::close() !!}
+             </li>            
         </ul>
     </div>
 </div>
+
+ <script>
+ (function(){
+     var confModal =
+ '    <div class="modal" role="dialog" id="delEvConfirmDialog">'+
+ '    <div class="modal-dialog modal-md">'+
+ '        <div class="modal-content">'+
+ '            <div class="modal-header">'+
+ '                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+ '                <h4 class="modal-title" id="myModalLabel">Are you sure you want to delete the event?</h4>'+
+ '            </div>'+
+ '            <div class="modal-footer">'+
+ '                <button type="button" class="btn btn-default" id="modal-btn-si1">Yes</button>'+
+ '                <button type="button" class="btn btn-primary" id="modal-btn-no2">No</button>'+
+ '            </div>'+
+ '        </div>'+
+ '    </div>'+
+ '</div>';
+     var modalConfirm = function(callback){
+         $(".delEvPreModal").on("click", function(e){
+             $('#delEvConfirmDialog').remove();
+             $('body').append(confModal);
+             e.stopPropagation();
+             e.preventDefault();
+             selectedDelEv = $(this).find('form').attr('id').split('delEventPost')[1];
+             $("#delEvConfirmDialog").modal('show');
+             $("#modal-btn-si1").on("click", function(){
+                 callback(true);
+             });
+             $("#modal-btn-no2").on("click", function(){
+                 callback(false);
+             });
+         });
+     };
+     modalConfirm(function(confirm){
+         $("#delEvConfirmDialog").modal('hide');
+         if(confirm){
+             setTimeout(function(){
+                 $("#delEventPost" + selectedDelEv).submit();
+             },200);
+         }else{
+             selectedDelEv = null;
+         }
+     });
+ })();
+ </script>
