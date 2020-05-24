@@ -88,4 +88,8 @@ return [
 
     'google_analytics_id'       => env('GOOGLE_ANALYTICS_ID'),
     'google_maps_geocoding_key' => env('GOOGLE_MAPS_GEOCODING_KEY')
+=======
+    'recaptcha_site' => env('GOOGLE_RECAPTCHA_SITE_KEY'),
+    'recaptcha_secret' => env('GOOGLE_RECAPTCHA_SECRET_KEY')
+
 ];

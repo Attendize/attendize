@@ -45,7 +45,35 @@ class UserSignupController extends Controller
             'password'     => 'required|min:8|confirmed',
             'first_name'   => 'required',
             'terms_agreed' => $is_attendize ? 'required' : '',
+            'grecaptcha'   => 'nullable',
         ]);
+
+        if (config('attendize.recaptcha_secret')) {
+            $captcha = $request->get('grecaptcha');
+            $client = new \GuzzleHttp\Client();
+            $res = $client->request('POST', 'https://www.recaptcha.net/recaptcha/api/siteverify', [
+                'form_params' => [
+                    'secret' => config('attendize.recaptcha_secret'),
+                    'response' => $captcha,
+                    // 'remoteip' => ''
+                ]
+            ]);
+            if (!$res->getStatusCode() == 200) {
+                return Redirect::back()
+                    ->with(['message' => trans("Controllers.incorrect_captcha"), 'failed' => true])
+                    ->withInput();
+            }
+            $data = json_decode($res->getBody());
+            if (!$data->success || !$data->action == 'login' || $data->score <= 0.6) {
+                if (isset($data->score)) {
+                    \Log::info($data->score);
+                }
+                return Redirect::back()
+                    ->with(['message' => trans("Controllers.incorrect_captcha"), 'failed' => true])
+                    ->withInput();
+            }
+            \Log::info($data->score);
+        }
 
         $account_data = $request->only(['email', 'first_name', 'last_name']);
         $account_data['currency_id'] = config('attendize.default_currency');

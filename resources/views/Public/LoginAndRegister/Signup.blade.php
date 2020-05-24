@@ -74,7 +74,17 @@
                     </div>
                 </div>
                 @endif
-
+                @if(config('attendize.recaptcha_site'))
+                    <input id="captcha" type="hidden" name="grecaptcha">
+                    <script src="https://www.recaptcha.net/recaptcha/api.js?render={{config('attendize.recaptcha_site')}}"></script>
+                    <script>
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('{{config('attendize.recaptcha_site')}}', {action: 'login'}).then(function(token) {
+                            document.getElementById('captcha').value = token
+                        });
+                    });
+                    </script>
+                @endif
                 <div class="form-group ">
                    {!! Form::submit(trans("User.sign_up"), array('class'=>"btn btn-block btn-success")) !!}
                 </div>
