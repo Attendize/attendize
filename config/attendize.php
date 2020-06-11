@@ -84,6 +84,6 @@ return [
 
     'captcha' => [
         'recaptcha_is_on' => false,
-        'hcaptcha_is_on' => true
+        'hcaptcha_is_on' => false
     ]
 ];

@@ -84,13 +84,13 @@ class UserLoginController extends Controller
                         ->withInput();
                 }
                 \Log::info($data->score);
-            }
-
-            $hcapture = new HCaptureService($request);
-            if (!$hcapture->isHuman()) {
-                return Redirect::back()
-                    ->with(['message' => trans("Controllers.incorrect_captcha"), 'failed' => true])
-                    ->withInput();
+            } else if ($hcaptchaIsOn) {
+                $hcapture = new HCaptureService($request);
+                if (!$hcapture->isHuman()) {
+                    return Redirect::back()
+                        ->with(['message' => trans("Controllers.incorrect_captcha"), 'failed' => true])
+                        ->withInput();
+                }
             }
         }
         if (Auth::attempt(['email' => $email, 'password' => $password], true) === false) {
