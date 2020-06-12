@@ -83,7 +83,7 @@ return [
     'google_maps_geocoding_key' => env('GOOGLE_MAPS_GEOCODING_KEY'),
 
     'captcha' => [
-        'recaptcha_is_on' => false,
-        'hcaptcha_is_on' => false
+        'recaptcha_is_on' => env('RECAPTCHA_IS_ON', false),
+        'hcaptcha_is_on' => env('HCAPTCHA_IS_ON', false)
     ]
 ];
