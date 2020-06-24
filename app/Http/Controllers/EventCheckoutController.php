@@ -184,7 +184,7 @@ class EventCheckoutController extends Controller
 
         $activeAccountPaymentGateway = $event->account->getGateway($event->account->payment_gateway_id);
         //if no payment gateway configured and no offline pay, don't go to the next step and show user error
-        if (empty($activeAccountPaymentGateway) && !$event->enable_offline_payments) {
+        if (empty($activeAccountPaymentGateway) && !$event->enable_offline_payments && collect($tickets)->sum('price') > 0) {
             return response()->json([
                 'status'  => 'error',
                 'message' => 'No payment gateway configured',
